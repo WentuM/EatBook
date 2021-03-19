@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    tools:context=".ui.dashboard.DashboardFragment"
     >
-<!--    tools:context=".ui.home.HomeFragment"-->
     <include
         android:id="@+id/include"
         layout="@layout/toolbar"/>
