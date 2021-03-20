@@ -7,4 +7,7 @@
 <!--    color for button profile-->
     <color name="colorBtnProfile1">#EE0000</color>
     <color name="colorBtnProfile2">#100E0E</color>
+    <color name="panelRegistrationText">#100E0E</color>
+    <color name="whiteText">#FFFFFF</color>
+    <color name="panelRegistrationHint">#787474</color>
 </resources>

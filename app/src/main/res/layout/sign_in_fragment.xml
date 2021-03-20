@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.sign.up.SignInFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="224dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/whiteText"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/panel_registration"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:orientation="vertical"
+        android:background="@drawable/roundness">
+
+        <TextView
+            android:id="@+id/panel_reg_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/panel_registration"
+            android:layout_marginTop="8dp"
+            android:textSize="24sp"
+            android:text="Регистрация профиля"
+            android:textColor="@color/panelRegistrationText"
+            android:gravity="center" />
+
+        <EditText
+            android:id="@+id/panel_reg_edt_email"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/panel_reg_title"
+            android:textColor="@color/panelRegistrationText"
+            android:layout_marginTop="16dp"
+            android:inputType="textEmailAddress"
+            android:hint="Ваш E-Mail"
+            android:textColorHint="@color/panelRegistrationHint"/>
+
+        <EditText
+            android:id="@+id/panel_reg_edt_password"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/panel_reg_edt_email"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/panelRegistrationText"
+            android:textColorHint="@color/panelRegistrationHint"
+            android:hint="Ваш Пароль"/>
+
+        <Button
+            android:id="@+id/panel_reg_btn_registration"
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_button_rounded"
+            android:text="Авторизироваться"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/panel_reg_edt_password" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/txv_redirect_sign_in"
+        android:layout_width="396dp"
+        android:layout_height="48dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/whiteText"
+        android:text="Ещё нет аккаунта? Зарегистрируйтесь"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/panel_registration" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

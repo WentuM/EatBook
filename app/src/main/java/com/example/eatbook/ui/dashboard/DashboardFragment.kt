@@ -48,6 +48,7 @@ class DashboardFragment : Fragment() {
         txv_profile_city.text = "Kazan"
         txv_profile_email.text = "kesand@mail.ru"
         txv_profile_number.text = "89993332211"
+        imgv_profile_edit.visibility = View.VISIBLE
     }
 
     private fun initClickListener() {
