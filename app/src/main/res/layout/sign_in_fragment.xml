@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.sign.up.SignInFragment">
+    tools:context=".ui.sign.in.SignInFragment">
 
     <TextView
         android:id="@+id/textView"
@@ -22,10 +22,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/panel_registration"
+        android:id="@+id/panel_auth"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="96dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -41,37 +41,40 @@
             app:layout_constraintTop_toTopOf="@+id/panel_registration"
             android:layout_marginTop="8dp"
             android:textSize="24sp"
-            android:text="Регистрация профиля"
+            android:text="Авторизация профиля"
             android:textColor="@color/panelRegistrationText"
             android:gravity="center" />
 
         <EditText
-            android:id="@+id/panel_reg_edt_email"
+            android:id="@+id/panel_auth_name"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:maxLength="20"
             app:layout_constraintTop_toBottomOf="@id/panel_reg_title"
             android:textColor="@color/panelRegistrationText"
             android:layout_marginTop="16dp"
             android:inputType="textEmailAddress"
-            android:hint="Ваш E-Mail"
+            android:hint="Ваше Имя"
             android:textColorHint="@color/panelRegistrationHint"/>
 
         <EditText
-            android:id="@+id/panel_reg_edt_password"
+            android:id="@+id/panel_auth_number"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/panel_reg_edt_email"
+            app:layout_constraintTop_toBottomOf="@id/panel_auth_name"
             android:layout_marginTop="16dp"
+            android:inputType="number"
+            android:maxLength="11"
             android:textColor="@color/panelRegistrationText"
             android:textColorHint="@color/panelRegistrationHint"
-            android:hint="Ваш Пароль"/>
+            android:hint="Ваш телефон"/>
 
         <Button
-            android:id="@+id/panel_reg_btn_registration"
+            android:id="@+id/panel_auth_btn"
             android:layout_width="196dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -79,21 +82,8 @@
             android:text="Авторизироваться"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/panel_reg_edt_password" />
+            app:layout_constraintTop_toBottomOf="@+id/panel_auth_number" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/txv_redirect_sign_in"
-        android:layout_width="396dp"
-        android:layout_height="48dp"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        android:textColor="@color/whiteText"
-        android:text="Ещё нет аккаунта? Зарегистрируйтесь"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/panel_registration" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

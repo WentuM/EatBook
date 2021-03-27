@@ -10,4 +10,5 @@
     <color name="panelRegistrationText">#100E0E</color>
     <color name="whiteText">#FFFFFF</color>
     <color name="panelRegistrationHint">#787474</color>
+    <color name="blackText">#100E0E</color>
 </resources>
