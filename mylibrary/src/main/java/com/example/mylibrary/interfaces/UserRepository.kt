@@ -7,7 +7,5 @@ interface UserRepository {
 
     fun getUserById(id: String): User
 
-    fun authUser(credential: PhoneAuthCredential): String
-
-    fun updateUser(name: String): String
+    fun createUser(id: String, username: String, phoneNumber: String)
 }

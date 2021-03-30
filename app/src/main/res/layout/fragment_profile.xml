@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.dashboard.DashboardFragment"
+    tools:context=".ui.dashboard.ProfileFragment"
     >
     <include
         android:id="@+id/include"
@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="264dp"
         android:background="@drawable/bg_top"
-        app:layout_constraintBottom_toTopOf="@id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
@@ -73,34 +72,37 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_button_rounded"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout1">
+<!--    <FrameLayout-->
+<!--        android:id="@+id/frameLayout"-->
+<!--        android:layout_width="240dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:background="@drawable/bg_button_rounded"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/constraintLayout1">-->
 
-        <Button
-            android:id="@+id/btn_profile_book"
-            style="@style/RoundedCornerButton"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_button_rounded"
-            android:elevation="6dp"
-            android:stateListAnimator="@null"
-            android:text="Мои бронирования"
-            android:translationZ="6dp" />
-    </FrameLayout>
+    <Button
+        android:id="@+id/btn_profile_book"
+        style="@style/RoundedCornerButton"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_button_rounded"
+        android:elevation="6dp"
+        android:stateListAnimator="@null"
+        android:text="Мои бронирования"
+        android:translationZ="6dp"
+        app:layout_constraintEnd_toEndOf="@+id/include"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1" />
+<!--    </FrameLayout>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="440dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frameLayout"
+        app:layout_constraintTop_toBottomOf="@id/btn_profile_book"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
@@ -198,6 +200,21 @@
             app:layout_constraintBottom_toBottomOf="@+id/img_profile_city"
             app:layout_constraintStart_toEndOf="@id/img_profile_city"
             app:layout_constraintTop_toTopOf="@+id/img_profile_city" />
+
+        <Button
+            android:id="@+id/btn_profile_sign_out"
+            style="@style/RoundedCornerButton"
+            android:layout_width="240dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_button_rounded"
+            android:elevation="6dp"
+            android:layout_marginTop="30dp"
+            android:stateListAnimator="@null"
+            android:text="Выйти из профиля"
+            android:translationZ="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtx_profile_city" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

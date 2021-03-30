@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.data.firebase.utilits.AUTH
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
 import com.google.firebase.FirebaseException
@@ -20,11 +21,11 @@ import kotlinx.android.synthetic.main.sign_in_fragment.*
 import java.util.concurrent.TimeUnit
 
 class SignInFragment : Fragment() {
-    lateinit var auth: FirebaseAuth
     lateinit var storedVerificationId: String
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     private lateinit var application: EatBookApp
+    private lateinit var username: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +37,8 @@ class SignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         application = activity?.application as (EatBookApp)
-        auth = FirebaseAuth.getInstance()
 
-        var currentUser = auth.currentUser
+        var currentUser = AUTH.currentUser
         if (currentUser != null) {
             findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_profile)
         }
@@ -56,11 +56,10 @@ class SignInFragment : Fragment() {
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_profile)
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
-                Toast.makeText(activity, "Некорректный формат телефона", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "${e.toString()}", Toast.LENGTH_LONG).show()
             }
 
             override fun onCodeSent(
@@ -68,11 +67,12 @@ class SignInFragment : Fragment() {
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
 
-                Log.d("TAG","onCodeSent:$verificationId")
+                Log.d("qwe1","onCodeSent:   $verificationId")
                 storedVerificationId = verificationId
                 resendToken = token
                 var bundle = Bundle()
                 bundle.putString("storedVerificationId", storedVerificationId)
+                bundle.putString("username", username)
                 findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_verify, bundle)
 
 //                var intent = Intent(applicationContext,Verify::class.java)
@@ -84,17 +84,17 @@ class SignInFragment : Fragment() {
 
     private fun login() {
         var number = panel_auth_number.text.toString().trim()
-
-        if (!number.isEmpty()) {
-            number = "" + number
+        username = panel_auth_name.text.toString().trim()
+        if (!number.isEmpty() || !username.isEmpty()) {
+            number = "+7$number"
             sendVerificationcode(number)
         } else {
-            Toast.makeText(activity, "Enter mobile number", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Заполните все поля", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun sendVerificationcode(number: String) {
-        val options = PhoneAuthOptions.newBuilder(auth)
+        val options = PhoneAuthOptions.newBuilder(AUTH)
             .setPhoneNumber(number) // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
             .setActivity(activity) // Activity (for callback binding)

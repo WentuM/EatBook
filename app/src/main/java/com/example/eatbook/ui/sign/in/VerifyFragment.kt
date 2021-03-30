@@ -1,11 +1,16 @@
 package com.example.eatbook.ui.sign.`in`
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.data.firebase.utilits.*
+import com.example.data.repository.UserRepositoryImpl
+import com.example.domain.UserInteractor
 import com.example.eatbook.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -16,6 +21,8 @@ import kotlinx.android.synthetic.main.fragment_verify_number.*
 class VerifyFragment : Fragment() {
     lateinit var auth: FirebaseAuth
     lateinit var storedVerificationId: String
+    private lateinit var username: String
+    private lateinit var userInteractor: UserInteractor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +35,15 @@ class VerifyFragment : Fragment() {
 //        val otpGiven=findViewById<EditText>(R.id.id_otp)
         arguments?.getString("storedVerificationId")?.let {
             storedVerificationId = it
+            Log.d("qwe5", it)
         }
+        arguments?.getString("username")?.let {
+            username = it
+            Log.d("qwe6", it)
+
+        }
+        init()
+
     }
 
     override fun onCreateView(
@@ -62,19 +77,25 @@ class VerifyFragment : Fragment() {
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        activity?.let {
-            auth.signInWithCredential(credential)
-                .addOnCompleteListener(it) { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(activity, "Успешный вход в аккаунт", Toast.LENGTH_LONG).show()
-                    } else {
-                        // Sign in failed, display a message and update the UI
-                        if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                            // The verification code entered was invalid
-                            Toast.makeText(activity, "Неправильный код", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
+        var result = userInteractor.authUser(credential)
+        if (result == "Успешный вход в аккаунт") {
+            Toast.makeText(
+                activity,
+                result,
+                Toast.LENGTH_LONG
+            ).show()
+            findNavController().navigate(R.id.action_navigation_verify_to_navigation_profile)
+        } else {
+            Toast.makeText(
+                activity,
+                result,
+                Toast.LENGTH_LONG
+            ).show()
+            findNavController().navigate(R.id.action_navigation_verify_to_navigation_profile)
         }
+    }
+
+    private fun init() {
+        userInteractor = UserInteractor(UserRepositoryImpl())
     }
 }

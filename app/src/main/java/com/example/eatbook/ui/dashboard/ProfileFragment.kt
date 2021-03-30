@@ -5,33 +5,47 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import com.example.data.firebase.utilits.AUTH
+import com.example.data.firebase.utilits.CHILD_ID
+import com.example.data.firebase.utilits.NODE_USERS
+import com.example.data.firebase.utilits.REF_DATABASE_ROOT
+import com.example.data.repository.UserRepositoryImpl
+import com.example.domain.UserInteractor
 import com.example.eatbook.R
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class DashboardFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var userInteractor: UserInteractor
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (AUTH.currentUser == null) {
+            findNavController().navigate(R.id.action_navigation_profile_to_navigation_sign_in)
+        }
+        init()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-            ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        profileViewModel =
+            ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        profileViewModel.text.observe(viewLifecycleOwner, Observer {
             txv_profile_city.text = it
         })
         return root
@@ -45,9 +59,12 @@ class DashboardFragment : Fragment() {
 
     private fun initFields() {
         profile_image.setImageResource(R.drawable.prifile)
+//        REF_DATABASE_ROOT.child(NODE_USERS).child(CHILD_ID).
         txv_profile_city.text = "Kazan"
         txv_profile_email.text = "kesand@mail.ru"
         txv_profile_number.text = "89993332211"
+
+//        txv_profile_fullname.text =
         imgv_profile_edit.visibility = View.VISIBLE
     }
 
@@ -58,6 +75,10 @@ class DashboardFragment : Fragment() {
                 "qweqw",
                 Snackbar.LENGTH_LONG
             ).show()
+        }
+        btn_profile_sign_out.setOnClickListener {
+            AUTH.signOut()
+            findNavController().navigate(R.id.action_navigation_profile_to_navigation_sign_in)
         }
 
         imgv_profile_edit.setOnClickListener {
@@ -110,5 +131,9 @@ class DashboardFragment : Fragment() {
         etView.text = etEdit.text.toString()
         etView.visibility = View.VISIBLE
         etEdit.visibility = View.INVISIBLE
+    }
+
+    private fun init() {
+        userInteractor = UserInteractor(UserRepositoryImpl())
     }
 }
