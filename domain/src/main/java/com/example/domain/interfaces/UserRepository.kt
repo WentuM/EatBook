@@ -7,7 +7,7 @@ interface UserRepository {
 
     fun getUserById(id: String): User
 
-    fun authUser(credential: PhoneAuthCredential): String
+    suspend fun authUser(credential: PhoneAuthCredential): String
 
-    fun updateUser(name: String): String
+    suspend fun updateUser(name: String): String
 }

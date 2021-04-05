@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="12dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        cardview:cardCornerRadius="4dp"
+        cardview:layout_constraintEnd_toEndOf="parent"
+        cardview:layout_constraintStart_toStartOf="parent"
+        cardview:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/rest_image"
+                android:layout_width="200dp"
+                android:layout_height="120dp"
+                android:background="#2d2d2d"
+                android:scaleType="centerCrop"
+                cardview:layout_constraintStart_toStartOf="parent"
+                cardview:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/btn_rest_favourite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="12dp"
+                android:src="@drawable/ic_favorite_24"
+                cardview:layout_constraintEnd_toEndOf="parent"
+                cardview:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/rest_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="8dp"
+                android:text="Book Title"
+                android:textColor="#2d2d2d"
+                android:textSize="13sp"
+                cardview:layout_constraintTop_toTopOf="parent"
+                cardview:layout_constraintStart_toEndOf="@+id/rest_image" />
+
+            <TextView
+                android:id="@+id/rest_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="Book Title"
+                android:textColor="#2d2d2d"
+                android:textSize="13sp"
+                cardview:layout_constraintStart_toEndOf="@+id/rest_image"
+                cardview:layout_constraintTop_toBottomOf="@id/rest_title" />
+
+            <TextView
+                android:id="@+id/rest_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="Book Title"
+                android:textColor="#2d2d2d"
+                android:textSize="13sp"
+                cardview:layout_constraintBottom_toBottomOf="parent"
+                cardview:layout_constraintStart_toEndOf="@+id/rest_image"/>
+
+            <Button
+                android:layout_width="94dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:text="Забронировать"
+                android:textSize="8sp"
+                android:background="@drawable/bg_button_rounded"
+                cardview:layout_constraintBottom_toBottomOf="@id/rest_price"
+                cardview:layout_constraintEnd_toEndOf="parent"
+                cardview:layout_constraintStart_toEndOf="@+id/rest_price"
+                cardview:layout_constraintTop_toTopOf="@+id/rest_price" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

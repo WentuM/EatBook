@@ -18,7 +18,6 @@ import com.example.data.repository.UserRepositoryImpl
 import com.example.domain.UserInteractor
 import com.example.eatbook.R
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -30,10 +29,6 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (AUTH.currentUser == null) {
-            findNavController().navigate(R.id.action_navigation_profile_to_navigation_sign_in)
-        }
-        init()
     }
 
     override fun onCreateView(
@@ -41,13 +36,10 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        profileViewModel =
-            ViewModelProviders.of(this).get(ProfileViewModel::class.java)
+        if (AUTH.currentUser == null) {
+            findNavController().navigate(R.id.action_navigation_profile_to_navigation_sign_in)
+        }
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
-
-        profileViewModel.text.observe(viewLifecycleOwner, Observer {
-            txv_profile_city.text = it
-        })
         return root
     }
 
@@ -59,7 +51,6 @@ class ProfileFragment : Fragment() {
 
     private fun initFields() {
         profile_image.setImageResource(R.drawable.prifile)
-//        REF_DATABASE_ROOT.child(NODE_USERS).child(CHILD_ID).
         txv_profile_city.text = "Kazan"
         txv_profile_email.text = "kesand@mail.ru"
         txv_profile_number.text = "89993332211"
@@ -133,7 +124,7 @@ class ProfileFragment : Fragment() {
         etEdit.visibility = View.INVISIBLE
     }
 
-    private fun init() {
-        userInteractor = UserInteractor(UserRepositoryImpl())
-    }
+//    private fun init() {
+//        userInteractor = UserInteractor(UserRepositoryImpl())
+//    }
 }

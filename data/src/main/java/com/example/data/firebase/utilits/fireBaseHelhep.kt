@@ -15,6 +15,14 @@ const val CHILD_ID = "id"
 const val CHILD_PHONE = "phone"
 const val CHILD_USERNAME = "username"
 
+const val NODE_RESTAURANTS = "restaurants"
+const val REST_ID = "id"
+const val REST_TITLE = "title"
+const val REST_DESCRIPTION = "description"
+const val REST_PRICE = "price"
+const val REST_RAITING = "raiting"
+
+
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference

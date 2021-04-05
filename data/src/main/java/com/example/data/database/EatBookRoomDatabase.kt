@@ -4,14 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.data.database.dao.RestaurantDao
 import com.example.data.database.dao.UserDao
+import com.example.data.database.entity.Restaurant
 import com.example.data.database.entity.User
 
-@Database(entities = arrayOf(User::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(User::class, Restaurant::class), version = 1, exportSchema = false)
 
 abstract class EatBookRoomDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun restaurantDao(): RestaurantDao
 
     companion object {
         @Volatile

@@ -3,11 +3,11 @@ package com.example.eatbook.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.domain.RestaurantInteractor
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val restaurantInteractor: RestaurantInteractor
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
+
 }

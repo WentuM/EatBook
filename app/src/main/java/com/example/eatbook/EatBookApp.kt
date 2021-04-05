@@ -2,6 +2,9 @@ package com.example.eatbook
 
 import android.app.Application
 import com.example.data.database.EatBookRoomDatabase
+import com.example.data.repository.RestaurantRepositoryImpl
+import com.example.data.repository.UserRepositoryImpl
+import com.example.domain.interfaces.RestaurantRepository
 
 class EatBookApp : Application() {
 
@@ -9,11 +12,16 @@ class EatBookApp : Application() {
         EatBookRoomDatabase.getDataBase(this)
     }
 
-//    val repository by lazy {
-//        CharacterRepositoryImpl(
-//            ApiFactory.characterApi,
-//            database.characterDao(),
-//            applicationContext
-//        )
-//    }
+    val repositoryUser by lazy {
+        UserRepositoryImpl(
+            database.userDao(),
+            applicationContext
+        )
+    }
+    val repositoryRestaurant by lazy {
+        RestaurantRepositoryImpl(
+            database.restaurantDao(),
+            applicationContext
+        )
+    }
 }

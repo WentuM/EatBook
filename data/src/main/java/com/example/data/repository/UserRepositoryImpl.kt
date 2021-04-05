@@ -19,7 +19,7 @@ class UserRepositoryImpl(
         return User("", "", "")
     }
 
-    override fun authUser(credential: PhoneAuthCredential): String {
+    override suspend fun authUser(credential: PhoneAuthCredential): String {
         var result = ""
         AUTH.signInWithCredential(credential)
             .addOnCompleteListener { task ->
@@ -36,7 +36,7 @@ class UserRepositoryImpl(
         return result
     }
 
-    override fun updateUser(name: String): String {
+    override suspend fun updateUser(name: String): String {
         var result = ""
         val uid = AUTH.currentUser?.uid.toString()
         REF_DATABASE_ROOT.child(NODE_USERS).child(uid).child(CHILD_USERNAME).setValue(name)

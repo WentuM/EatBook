@@ -1,3 +1,5 @@
 package com.example.domain.model
 
-class Restaurant
+data class Restaurant(
+    private val id: String
+)
