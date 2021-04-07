@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.example.domain.RestaurantInteractor
 import com.example.domain.UserInteractor
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
@@ -17,7 +18,7 @@ import com.example.eatbook.ui.ViewModelFactory
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.Dispatchers
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), RestaurantAdapter.RestItemHandler {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var application: EatBookApp
@@ -36,12 +37,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         search_view.visibility = View.VISIBLE
+        
         createSearchView()
     }
 
 
     private fun initFactory(): ViewModelFactory = ViewModelFactory(
-        userInteractor = UserInteractor(application.repository, Dispatchers.IO)
+        userInteractor = UserInteractor(application.repositoryUser, Dispatchers.IO),
+        restaurantInteractor = RestaurantInteractor(application.repositoryRestaurant, Dispatchers.IO)
     )
 
 
@@ -57,5 +60,13 @@ class HomeFragment : Fragment() {
                 return true
             }
         })
+    }
+
+    override fun onClick(idRestaurant: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFavourite(idRestaurant: String) {
+        TODO("Not yet implemented")
     }
 }

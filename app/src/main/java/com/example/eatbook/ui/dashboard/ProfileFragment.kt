@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.data.firebase.utilits.AUTH
@@ -15,17 +16,21 @@ import com.example.data.firebase.utilits.CHILD_ID
 import com.example.data.firebase.utilits.NODE_USERS
 import com.example.data.firebase.utilits.REF_DATABASE_ROOT
 import com.example.data.repository.UserRepositoryImpl
+import com.example.domain.RestaurantInteractor
 import com.example.domain.UserInteractor
+import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
+import com.example.eatbook.ui.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.coroutines.Dispatchers
 
 
 class ProfileFragment : Fragment() {
 
     private lateinit var profileViewModel: ProfileViewModel
-    private lateinit var userInteractor: UserInteractor
+    private lateinit var application: EatBookApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,25 +44,36 @@ class ProfileFragment : Fragment() {
         if (AUTH.currentUser == null) {
             findNavController().navigate(R.id.action_navigation_profile_to_navigation_sign_in)
         }
+        application = activity?.application as (EatBookApp)
+        profileViewModel = ViewModelProvider(this, initFactory()).get(ProfileViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AUTH.currentUser?.uid?.let { profileViewModel.onGetUser(it) }
         initFields()
         initClickListener()
     }
 
     private fun initFields() {
-        profile_image.setImageResource(R.drawable.prifile)
-        txv_profile_city.text = "Kazan"
-        txv_profile_email.text = "kesand@mail.ru"
-        txv_profile_number.text = "89993332211"
-
-//        txv_profile_fullname.text =
+        with(profileViewModel) {
+            getUser().observe(viewLifecycleOwner, Observer {
+                profile_image.setImageResource(R.drawable.prifile)
+                txv_profile_city.text = "Казань"
+                txv_profile_email.text = "kesand@mail.ru"
+                txv_profile_number.text = "+7" + it.numberPhone
+                txv_profile_fullname.text = it.username
+            })
+        }
         imgv_profile_edit.visibility = View.VISIBLE
     }
+
+    private fun initFactory(): ViewModelFactory = ViewModelFactory(
+        userInteractor = UserInteractor(application.repositoryUser, Dispatchers.IO),
+        restaurantInteractor = RestaurantInteractor(application.repositoryRestaurant, Dispatchers.IO)
+    )
 
     private fun initClickListener() {
         btn_profile_book.setOnClickListener {
@@ -87,16 +103,18 @@ class ProfileFragment : Fragment() {
         }
 
         imgv_profile_active.setOnClickListener {
-            edit(txv_profile_fullname, edtx_profile_fullname)
-            edit(txv_profile_city, edtx_profile_city)
-            edit(txv_profile_number, edtx_profile_number)
-            edit(txv_profile_email, edtx_profile_email)
+            profileViewModel.onUpdateUserClick(edtx_profile_fullname.text.toString(), profile_image.toString())
+            with(profileViewModel) {
+                updateUser().observe(viewLifecycleOwner, Observer {
+                    edit(txv_profile_fullname, edtx_profile_fullname)
+                    Snackbar.make(
+                        requireActivity().findViewById(android.R.id.content),
+                        it,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                })
+            }
             enableProfileInfo()
-            Snackbar.make(
-                requireActivity().findViewById(android.R.id.content),
-                "Изменения сохранены",
-                Snackbar.LENGTH_LONG
-            ).show()
         }
     }
 
@@ -123,8 +141,4 @@ class ProfileFragment : Fragment() {
         etView.visibility = View.VISIBLE
         etEdit.visibility = View.INVISIBLE
     }
-
-//    private fun init() {
-//        userInteractor = UserInteractor(UserRepositoryImpl())
-//    }
 }

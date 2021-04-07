@@ -25,7 +25,6 @@ class SignInFragment : Fragment() {
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     private lateinit var application: EatBookApp
-    private lateinit var username: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +71,6 @@ class SignInFragment : Fragment() {
                 resendToken = token
                 var bundle = Bundle()
                 bundle.putString("storedVerificationId", storedVerificationId)
-                bundle.putString("username", username)
                 findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_verify, bundle)
 
 //                var intent = Intent(applicationContext,Verify::class.java)
@@ -84,12 +82,12 @@ class SignInFragment : Fragment() {
 
     private fun login() {
         var number = panel_auth_number.text.toString().trim()
-        username = panel_auth_name.text.toString().trim()
-        if (!number.isEmpty() || !username.isEmpty()) {
+//        username = panel_auth_name.text.toString().trim()
+        if (!number.isEmpty()) {
             number = "+7$number"
             sendVerificationcode(number)
         } else {
-            Toast.makeText(activity, "Заполните все поля", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Введите корректный номер телефона", Toast.LENGTH_SHORT).show()
         }
     }
 

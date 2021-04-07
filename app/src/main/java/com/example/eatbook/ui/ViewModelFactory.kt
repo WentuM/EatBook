@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.domain.RestaurantInteractor
 import com.example.domain.UserInteractor
+import com.example.eatbook.ui.dashboard.ProfileViewModel
 import com.example.eatbook.ui.home.HomeViewModel
 import com.example.eatbook.ui.sign.`in`.VerifyViewModel
 import java.lang.IllegalArgumentException
@@ -20,6 +21,10 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(restaurantInteractor) as? T
+                    ?: throw IllegalArgumentException("Unknown ViewModel class")
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(userInteractor) as? T
                     ?: throw IllegalArgumentException("Unknown ViewModel class")
             }
             else -> {

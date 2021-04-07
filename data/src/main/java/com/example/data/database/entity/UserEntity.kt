@@ -4,17 +4,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "restaurant")
-data class Restaurant(
+@Entity(tableName = "user")
+data class UserEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
     var id: String,
-    @ColumnInfo(name = "title")
-    var title: String,
-    @ColumnInfo(name = "description")
-    var description: String,
-    @ColumnInfo(name = "rating")
-    var rating: Double,
+    @ColumnInfo(name = "phone")
+    var phone: String,
+    @ColumnInfo(name = "username")
+    var username: String,
     @ColumnInfo(name = "image")
     var image: String
 )

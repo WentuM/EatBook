@@ -6,10 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.data.database.dao.RestaurantDao
 import com.example.data.database.dao.UserDao
-import com.example.data.database.entity.Restaurant
-import com.example.data.database.entity.User
+import com.example.data.database.entity.RestaurantEntity
+import com.example.data.database.entity.UserEntity
 
-@Database(entities = arrayOf(User::class, Restaurant::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(UserEntity::class, RestaurantEntity::class), version = 2, exportSchema = false)
 
 abstract class EatBookRoomDatabase : RoomDatabase() {
 

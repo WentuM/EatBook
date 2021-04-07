@@ -42,11 +42,6 @@ class VerifyFragment : Fragment() {
             storedVerificationId = it
             Log.d("qwe5", it)
         }
-        arguments?.getString("username")?.let {
-            username = it
-            Log.d("qwe6", it)
-
-        }
     }
 
     override fun onCreateView(

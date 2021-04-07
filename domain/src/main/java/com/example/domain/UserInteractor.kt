@@ -11,8 +11,9 @@ class UserInteractor(
     private val context: CoroutineContext
 ) {
 
-    fun getUserByid(id: String): User {
-        return userRepository.getUserById(id)
+    suspend fun getUserByid(id: String): User =
+        withContext(context) {
+            userRepository.getUserById(id)
     }
 
     suspend fun authUser(credential: PhoneAuthCredential): String =
@@ -21,8 +22,8 @@ class UserInteractor(
         }
 
 
-    suspend fun updateUser(nameUser: String): String =
+    suspend fun updateUser(nameUser: String, imageUser: String): String =
         withContext(context) {
-            userRepository.updateUser(nameUser)
+            userRepository.updateUser(nameUser, imageUser)
         }
 }
