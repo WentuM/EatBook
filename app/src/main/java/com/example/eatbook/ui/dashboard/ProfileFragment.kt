@@ -9,13 +9,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.data.firebase.utilits.AUTH
-import com.example.data.firebase.utilits.CHILD_ID
-import com.example.data.firebase.utilits.NODE_USERS
-import com.example.data.firebase.utilits.REF_DATABASE_ROOT
-import com.example.data.repository.UserRepositoryImpl
 import com.example.domain.RestaurantInteractor
 import com.example.domain.UserInteractor
 import com.example.eatbook.EatBookApp
@@ -52,6 +47,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+            //ToDO вынести логику с firebase всю во viewmodel
         AUTH.currentUser?.uid?.let { profileViewModel.onGetUser(it) }
         initFields()
         initClickListener()
@@ -63,7 +59,7 @@ class ProfileFragment : Fragment() {
                 profile_image.setImageResource(R.drawable.prifile)
                 txv_profile_city.text = "Казань"
                 txv_profile_email.text = "kesand@mail.ru"
-                txv_profile_number.text = "+7" + it.numberPhone
+                txv_profile_number.text = it.numberPhone
                 txv_profile_fullname.text = it.username
             })
         }
@@ -72,7 +68,10 @@ class ProfileFragment : Fragment() {
 
     private fun initFactory(): ViewModelFactory = ViewModelFactory(
         userInteractor = UserInteractor(application.repositoryUser, Dispatchers.IO),
-        restaurantInteractor = RestaurantInteractor(application.repositoryRestaurant, Dispatchers.IO)
+        restaurantInteractor = RestaurantInteractor(
+            application.repositoryRestaurant,
+            Dispatchers.IO
+        )
     )
 
     private fun initClickListener() {
@@ -103,7 +102,10 @@ class ProfileFragment : Fragment() {
         }
 
         imgv_profile_active.setOnClickListener {
-            profileViewModel.onUpdateUserClick(edtx_profile_fullname.text.toString(), profile_image.toString())
+            profileViewModel.onUpdateUserClick(
+                edtx_profile_fullname.text.toString(),
+                profile_image.toString()
+            )
             with(profileViewModel) {
                 updateUser().observe(viewLifecycleOwner, Observer {
                     edit(txv_profile_fullname, edtx_profile_fullname)

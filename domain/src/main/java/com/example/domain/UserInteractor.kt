@@ -14,7 +14,7 @@ class UserInteractor(
     suspend fun getUserByid(id: String): User =
         withContext(context) {
             userRepository.getUserById(id)
-    }
+        }
 
     suspend fun authUser(credential: PhoneAuthCredential): String =
         withContext(context) {
@@ -22,8 +22,17 @@ class UserInteractor(
         }
 
 
-    suspend fun updateUser(nameUser: String, imageUser: String): String =
-        withContext(context) {
+    suspend fun updateUser(nameUser: String, imageUser: String): String {
+        return withContext(context) {
+//            return runCatching {
+//                return@runCatching withContext(context) {
             userRepository.updateUser(nameUser, imageUser)
+////                }
+//            }
         }
+        //result<string> cannot return
+        //withcontext внутри runcatching
+        //if syncResult.
+
+    }
 }

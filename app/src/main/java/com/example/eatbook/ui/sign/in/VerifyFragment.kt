@@ -57,7 +57,10 @@ class VerifyFragment : Fragment() {
 
     private fun initFactory(): ViewModelFactory = ViewModelFactory(
         userInteractor = UserInteractor(application.repositoryUser, Dispatchers.IO),
-        restaurantInteractor = RestaurantInteractor(application.repositoryRestaurant, Dispatchers.IO)
+        restaurantInteractor = RestaurantInteractor(
+            application.repositoryRestaurant,
+            Dispatchers.IO
+        )
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

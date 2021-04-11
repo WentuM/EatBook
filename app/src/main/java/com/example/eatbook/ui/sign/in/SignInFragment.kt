@@ -1,6 +1,5 @@
 package com.example.eatbook.ui.sign.`in`
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import com.example.data.firebase.utilits.AUTH
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider

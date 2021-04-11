@@ -13,36 +13,58 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-
 class UserRepositoryImpl(
     private val userDao: UserDao,
     private val context: Context
 ) : UserRepository {
 
+    companion object {
+        private const val USER_TABLE = "users"
+        private const val USER_TABLE_COLUMN_ID = "id"
+        private const val USER_TABLE_COLUMN_PHONE = "phone"
+        private const val USER_TABLE_COLUMN_USERNAME = "username"
+        private const val USER_TABLE_COLUMN_IMAGE = "image"
+    }
+
     override suspend fun getUserById(id: String): User {
         var userEntity: UserEntity
         var user: User = User("", "")
-        REF_DATABASE_ROOT.child(NODE_USERS).child(id)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
+//        REF_DATABASE_ROOT.child(NODE_USERS).child(id)
+//            .addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onCancelled(error: DatabaseError) {
+//                    TODO("Not yet implemented")
+//                }
+//
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    var userMap: HashMap<String, String> = snapshot.value as HashMap<String, String>
+//                    var username = userMap[CHILD_USERNAME]
+//                    var userPhone = userMap[CHILD_PHONE]
+//                    if (username != null && userPhone != null) {
+//                        user = User(username, userPhone)
+//                    }
+//                    Log.d("qwe10", snapshot.value.toString())
+//                }
+//
+//            })
+        REF_DATABASE_ROOT.child(USER_TABLE).child(id).get().addOnSuccessListener {
+            Log.d("qwe12", it.value.toString())
+            var userMap: HashMap<String, String> = it.value as HashMap<String, String>
+            var username = userMap[USER_TABLE_COLUMN_USERNAME]
+            var userPhone = userMap[USER_TABLE_COLUMN_PHONE]
+            Log.d("qwe1", "$username")
+            Log.d("qwe2", "$userPhone")
+            if (username != null && userPhone != null) {
+//                user = User(username, userPhone)
+//                user.username = username
+//                user.numberPhone = userPhone
+            }
+        }.addOnFailureListener {
 
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    var userMap: HashMap<String, String> = snapshot.value as HashMap<String, String>
-                    var username = userMap[CHILD_USERNAME]
-                    var userPhone = userMap[CHILD_PHONE]
-                    if (username != null && userPhone != null) {
-                        user = User(username, userPhone)
-                    }
-                    Log.d("qwe10", snapshot.value.toString())
-                }
-
-            })
+        }
         Log.d("qwe11", user.toString())
         //fireBaseHelper(в дагере задавать всё это, в классы inject созданное)?
         // Flow вместо LiveData in ViewModel
-        // 11 раньше 10 выполняется, callback как фиксить((
+        // 11 раньше 10 выполняется, callback как фиксить(( (решение продумать, flow, блокировка)
         // как отлавливать, что интернета нет, где должен упасть UnkonwnHostException
         return user
     }
@@ -74,9 +96,9 @@ class UserRepositoryImpl(
 //                }
 //            }
         val dateMap = mutableMapOf<String, Any>()
-        dateMap[CHILD_USERNAME] = userName
-        dateMap[CHILD_IMAGE] = userImage
-        REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
+        dateMap[USER_TABLE_COLUMN_USERNAME] = userName
+        dateMap[USER_TABLE_COLUMN_IMAGE] = userImage
+        REF_DATABASE_ROOT.child(USER_TABLE).child(uid).updateChildren(dateMap)
             .addOnCompleteListener { task2 ->
                 if (task2.isSuccessful) {
                     result = "Данные успешно изменены"
@@ -91,12 +113,12 @@ class UserRepositoryImpl(
         var result = ""
         val uid = AUTH.currentUser?.uid.toString()
         val dateMap = mutableMapOf<String, Any>()
-        dateMap[CHILD_ID] = uid
-        dateMap[CHILD_PHONE] = AUTH.currentUser?.phoneNumber.toString()
+        dateMap[USER_TABLE_COLUMN_ID] = uid
+        dateMap[USER_TABLE_COLUMN_PHONE] = AUTH.currentUser?.phoneNumber.toString()
         Log.d("qwe2", AUTH.currentUser?.phoneNumber.toString())
-        dateMap[CHILD_USERNAME] = ""
+        dateMap[USER_TABLE_COLUMN_USERNAME] = ""
 
-        REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
+        REF_DATABASE_ROOT.child(USER_TABLE).child(uid).updateChildren(dateMap)
             .addOnCompleteListener { task2 ->
                 if (task2.isSuccessful) {
                     result = "Успешный вход в аккаунт"
