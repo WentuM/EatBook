@@ -10,15 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.data.firebase.utilits.*
-import com.example.data.repository.UserRepositoryImpl
 import com.example.domain.RestaurantInteractor
 import com.example.domain.UserInteractor
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
 import com.example.eatbook.ui.ViewModelFactory
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.fragment_verify_number.*

@@ -13,7 +13,6 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    //интерфейс или его реализацию?
     fun provideUserRepository(userDao: UserDao, context: Context): UserRepository =
         UserRepositoryImpl(userDao, context)
 }

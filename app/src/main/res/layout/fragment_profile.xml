@@ -59,7 +59,7 @@
 
         <EditText
             android:id="@+id/edtx_profile_fullname"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/eater"
@@ -104,41 +104,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@id/btn_profile_book"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/img_profile_email"
-            android:layout_width="36dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="36dp"
-            android:src="@drawable/ic_profile_email"
-            app:layout_constraintEnd_toStartOf="@+id/txv_profile_email"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <ImageView-->
+<!--            android:id="@+id/img_profile_email"-->
+<!--            android:layout_width="36dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="36dp"-->
+<!--            android:src="@drawable/ic_profile_email"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/txv_profile_email"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-        <TextView
-            android:id="@+id/txv_profile_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:fontFamily="@font/eater"
-            android:textColor="@color/whiteText"
-            app:layout_constraintBottom_toBottomOf="@+id/img_profile_email"
-            app:layout_constraintStart_toEndOf="@id/img_profile_email"
-            app:layout_constraintTop_toTopOf="@+id/img_profile_email" />
+<!--        <TextView-->
+<!--            android:id="@+id/txv_profile_email"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="18dp"-->
+<!--            android:fontFamily="@font/eater"-->
+<!--            android:textColor="@color/whiteText"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/img_profile_email"-->
+<!--            app:layout_constraintStart_toEndOf="@id/img_profile_email"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/img_profile_email" />-->
 
-        <EditText
-            android:id="@+id/edtx_profile_email"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:fontFamily="@font/eater"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/img_profile_email"
-            app:layout_constraintStart_toEndOf="@id/img_profile_email"
-            app:layout_constraintTop_toTopOf="@+id/img_profile_email" />
+<!--        <EditText-->
+<!--            android:id="@+id/edtx_profile_email"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="18dp"-->
+<!--            android:fontFamily="@font/eater"-->
+<!--            android:visibility="invisible"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/img_profile_email"-->
+<!--            app:layout_constraintStart_toEndOf="@id/img_profile_email"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/img_profile_email" />-->
 
         <ImageView
             android:id="@+id/img_profile_number"
@@ -149,7 +150,7 @@
             android:src="@drawable/ic_profile_phone"
             app:layout_constraintEnd_toStartOf="@+id/txv_profile_number"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_profile_email" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txv_profile_number"
@@ -211,7 +212,7 @@
             android:layout_height="48dp"
             android:background="@drawable/bg_button_rounded"
             android:elevation="6dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="88dp"
             android:stateListAnimator="@null"
             android:textColor="@color/whiteText"
             android:text="Выйти из профиля"

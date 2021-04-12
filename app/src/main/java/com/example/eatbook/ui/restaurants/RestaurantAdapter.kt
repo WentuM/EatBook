@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.home
+package com.example.eatbook.ui.restaurants
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

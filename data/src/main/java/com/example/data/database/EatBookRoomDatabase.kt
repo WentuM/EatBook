@@ -9,7 +9,7 @@ import com.example.data.database.dao.UserDao
 import com.example.data.database.entity.RestaurantEntity
 import com.example.data.database.entity.UserEntity
 
-@Database(entities = arrayOf(UserEntity::class, RestaurantEntity::class), version = 2, exportSchema = false)
+@Database(entities = arrayOf(UserEntity::class, RestaurantEntity::class), version = 3, exportSchema = false)
 
 abstract class EatBookRoomDatabase : RoomDatabase() {
 

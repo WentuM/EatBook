@@ -1,4 +1,4 @@
-package com.example.data.di.module
+package com.example.eatbook.di.module
 
 import android.app.Application
 import android.content.Context

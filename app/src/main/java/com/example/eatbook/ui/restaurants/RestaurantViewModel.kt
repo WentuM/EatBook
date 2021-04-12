@@ -1,11 +1,9 @@
-package com.example.eatbook.ui.home
+package com.example.eatbook.ui.restaurants
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.RestaurantInteractor
 
-class HomeViewModel(
+class RestaurantViewModel(
     private val restaurantInteractor: RestaurantInteractor
 ) : ViewModel() {
 

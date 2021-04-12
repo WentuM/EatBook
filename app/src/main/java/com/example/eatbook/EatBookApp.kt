@@ -2,18 +2,18 @@ package com.example.eatbook
 
 import android.app.Application
 import com.example.data.database.EatBookRoomDatabase
-import com.example.data.di.component.AppComponent
-import com.example.data.di.component.DaggerAppComponent
-import com.example.data.di.module.AppModule
+import com.example.data.di.component.FBComponent
 import com.example.data.repository.RestaurantRepositoryImpl
 import com.example.data.repository.UserRepositoryImpl
-import com.example.domain.interfaces.RestaurantRepository
+import com.example.eatbook.di.component.AppComponent
 
 class EatBookApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
+        appComponent = DaggerAppComponent.builder().application(this).build()
+//        fbComponent = DaggerFBComponent.builder().fbModule(FireBaseModule(this)).build()
+
 //        appComponent = DaggerAppComponent.builder()
 //            .appModule(AppModule(this))
 //            .netModule(NetModule())
@@ -28,6 +28,7 @@ class EatBookApp : Application() {
 
     companion object {
         lateinit var appComponent: AppComponent
+        lateinit var fbComponent: FBComponent
     }
 
     val database by lazy {

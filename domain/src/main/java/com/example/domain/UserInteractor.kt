@@ -11,10 +11,10 @@ class UserInteractor(
     private val context: CoroutineContext
 ) {
 
-    suspend fun getUserByid(id: String): User =
+    suspend fun getUserById(): User =
         withContext(context) {
-            userRepository.getUserById(id)
-        }
+            userRepository.getUserById()
+    }
 
     suspend fun authUser(credential: PhoneAuthCredential): String =
         withContext(context) {
@@ -35,4 +35,9 @@ class UserInteractor(
         //if syncResult.
 
     }
+
+    suspend fun signOutUser(): String =
+        withContext(context) {
+            userRepository.signOut()
+        }
 }

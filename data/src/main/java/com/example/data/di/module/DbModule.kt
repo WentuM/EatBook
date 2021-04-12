@@ -12,13 +12,13 @@ import javax.inject.Singleton
 @Module
 class DbModule {
 
-    @Provides
-    @Singleton
-    fun provideEatBookRoomDb(appModule: AppModule): EatBookRoomDatabase = Room.databaseBuilder(
-        appModule.provideContext(),
-        EatBookRoomDatabase::class.java,
-        "eatbook_database"
-    ).build()
+//    @Provides
+//    @Singleton
+//    fun provideEatBookRoomDb(appModule: com.example.eatbook.di.AppModule): EatBookRoomDatabase = Room.databaseBuilder(
+//        appModule.provideContext(),
+//        EatBookRoomDatabase::class.java,
+//        "eatbook_database"
+//    ).build()
 
     @Provides
     @Singleton

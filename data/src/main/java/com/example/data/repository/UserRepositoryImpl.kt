@@ -7,16 +7,25 @@ import com.example.data.database.entity.UserEntity
 import com.example.data.firebase.utilits.*
 import com.example.domain.interfaces.UserRepository
 import com.example.domain.model.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.DatabaseReference
+import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class UserRepositoryImpl(
     private val userDao: UserDao,
     private val context: Context
 ) : UserRepository {
+
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
+
+    @Inject
+    lateinit var databaseReference: DatabaseReference
 
     companion object {
         private const val USER_TABLE = "users"
@@ -26,7 +35,8 @@ class UserRepositoryImpl(
         private const val USER_TABLE_COLUMN_IMAGE = "image"
     }
 
-    override suspend fun getUserById(id: String): User {
+    override suspend fun getUserById(): User {
+//        com.example.eatbook.EatBookApp.appComponent.inject(this)
         var userEntity: UserEntity
         var user: User = User("", "")
 //        REF_DATABASE_ROOT.child(NODE_USERS).child(id)
@@ -46,30 +56,34 @@ class UserRepositoryImpl(
 //                }
 //
 //            })
-        REF_DATABASE_ROOT.child(USER_TABLE).child(id).get().addOnSuccessListener {
-            Log.d("qwe12", it.value.toString())
-            var userMap: HashMap<String, String> = it.value as HashMap<String, String>
-            var username = userMap[USER_TABLE_COLUMN_USERNAME]
-            var userPhone = userMap[USER_TABLE_COLUMN_PHONE]
-            Log.d("qwe1", "$username")
-            Log.d("qwe2", "$userPhone")
-            if (username != null && userPhone != null) {
-//                user = User(username, userPhone)
-//                user.username = username
-//                user.numberPhone = userPhone
+        firebaseAuth.uid?.let {
+            return suspendCoroutine { continuation ->
+                //suspendCancellableCoroutine
+                REF_DATABASE_ROOT.child(USER_TABLE).child(it).get().addOnSuccessListener {
+                    Log.d("qwe12", it.value.toString())
+                    var userMap: HashMap<String, String> = it.value as HashMap<String, String>
+                    var username = userMap[USER_TABLE_COLUMN_USERNAME]
+                    var userPhone = userMap[USER_TABLE_COLUMN_PHONE]
+                    Log.d("qwe1", "$username")
+                    Log.d("qwe2", "$userPhone")
+                    if (username != null && userPhone != null) {
+                        user.username = username
+                        user.numberPhone = userPhone
+                    }
+                    continuation.resume(user)
+                }.addOnFailureListener {
+                    continuation.resumeWithException(it)
+                    Log.d("qwe165", it.toString())
+                }
             }
-        }.addOnFailureListener {
-
         }
         Log.d("qwe11", user.toString())
-        //fireBaseHelper(в дагере задавать всё это, в классы inject созданное)?
-        // Flow вместо LiveData in ViewModel
         // 11 раньше 10 выполняется, callback как фиксить(( (решение продумать, flow, блокировка)
-        // как отлавливать, что интернета нет, где должен упасть UnkonwnHostException
         return user
     }
 
     override suspend fun authUser(credential: PhoneAuthCredential): String {
+//        com.example.eatbook.EatBookApp.appComponent.inject(this)
         var result = ""
         AUTH.signInWithCredential(credential)
             .addOnCompleteListener { task ->
@@ -127,6 +141,13 @@ class UserRepositoryImpl(
                     Log.d("qwe0", task2.exception?.message.toString())
                 }
             }
+        return result
+    }
+
+    override suspend fun signOut(): String {
+//        com.example.eatbook.EatBookApp.appComponent.inject(this)
+        var result = "Выход выполнен успешно"
+        firebaseAuth.signOut()
         return result
     }
 }

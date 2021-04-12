@@ -20,11 +20,13 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var profileViewModel: ProfileViewModel
+    @Inject
+    lateinit var profileViewModel: ProfileViewModel
     private lateinit var application: EatBookApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +41,6 @@ class ProfileFragment : Fragment() {
         if (AUTH.currentUser == null) {
             findNavController().navigate(R.id.action_navigation_profile_to_navigation_sign_in)
         }
-        application = activity?.application as (EatBookApp)
         profileViewModel = ViewModelProvider(this, initFactory()).get(ProfileViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
         return root
@@ -47,10 +48,12 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            //ToDO вынести логику с firebase всю во viewmodel
-        AUTH.currentUser?.uid?.let { profileViewModel.onGetUser(it) }
+        //ToDO вынести логику с firebase всю во viewmodel
+        profileViewModel.onGetUser()
         initFields()
         initClickListener()
+        EatBookApp.appComponent.profileComponentFactory.create(this)
+            .inject(this)
     }
 
     private fun initFields() {
@@ -83,8 +86,17 @@ class ProfileFragment : Fragment() {
             ).show()
         }
         btn_profile_sign_out.setOnClickListener {
-            AUTH.signOut()
-            findNavController().navigate(R.id.action_navigation_profile_to_navigation_sign_in)
+            profileViewModel.onSignOut()
+            with(profileViewModel) {
+                signOutUser().observe(viewLifecycleOwner, Observer {
+                    Snackbar.make(
+                        requireActivity().findViewById(android.R.id.content),
+                        it,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                })
+                findNavController().navigate(R.id.action_navigation_profile_to_navigation_sign_in)
+            }
         }
 
         imgv_profile_edit.setOnClickListener {

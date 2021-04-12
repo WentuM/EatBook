@@ -15,7 +15,12 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.sign_in_fragment.*
+import ru.tinkoff.decoro.Mask
+import ru.tinkoff.decoro.MaskImpl
+import ru.tinkoff.decoro.parser.PhoneNumberUnderscoreSlotsParser
+import ru.tinkoff.decoro.slots.PredefinedSlots
 import java.util.concurrent.TimeUnit
 
 class SignInFragment : Fragment() {
@@ -34,17 +39,18 @@ class SignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         application = activity?.application as (EatBookApp)
-
         var currentUser = AUTH.currentUser
         if (currentUser != null) {
             findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_profile)
         }
         return inflater.inflate(R.layout.sign_in_fragment, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var slots = PhoneNumberUnderscoreSlotsParser().parseSlots("+7(___)___-__-__")
+        var inputMask = MaskImpl.createTerminated(slots)
+        inputMask.insertFront(panel_auth_number.text.toString())
         panel_auth_btn.setOnClickListener {
             login()
         }
@@ -56,7 +62,7 @@ class SignInFragment : Fragment() {
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
-                Toast.makeText(activity, "${e.toString()}", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "$e", Toast.LENGTH_LONG).show()
             }
 
             override fun onCodeSent(

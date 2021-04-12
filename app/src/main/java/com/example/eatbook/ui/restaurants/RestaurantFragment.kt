@@ -1,15 +1,12 @@
-package com.example.eatbook.ui.home
+package com.example.eatbook.ui.restaurants
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.example.domain.RestaurantInteractor
 import com.example.domain.UserInteractor
 import com.example.eatbook.EatBookApp
@@ -18,9 +15,9 @@ import com.example.eatbook.ui.ViewModelFactory
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.Dispatchers
 
-class HomeFragment : Fragment(), RestaurantAdapter.RestItemHandler {
+class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var restaurantViewModel: RestaurantViewModel
     private lateinit var application: EatBookApp
 
     override fun onCreateView(
@@ -29,7 +26,7 @@ class HomeFragment : Fragment(), RestaurantAdapter.RestItemHandler {
             savedInstanceState: Bundle?
     ): View? {
         application = activity?.application as (EatBookApp)
-        homeViewModel = ViewModelProvider(this, initFactory()).get(HomeViewModel::class.java)
+        restaurantViewModel = ViewModelProvider(this, initFactory()).get(RestaurantViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         return root
     }

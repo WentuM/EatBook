@@ -1,5 +1,6 @@
 package com.example.eatbook.ui.dashboard
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,9 +16,11 @@ class ProfileViewModel(
 
     private val mUpdateUser: MutableLiveData<String> = MutableLiveData()
     private val mGetUser: MutableLiveData<User> = MutableLiveData()
+    private val signOut: MutableLiveData<String> = MutableLiveData()
 
     fun updateUser(): LiveData<String> = mUpdateUser
     fun getUser(): LiveData<User> = mGetUser
+    fun signOutUser(): LiveData<String> = signOut
 
     fun onUpdateUserClick(newUsername: String, newUserImage: String) {
         viewModelScope.launch {
@@ -29,13 +32,19 @@ class ProfileViewModel(
         }
     }
 
-    fun onGetUser(idUser: String) {
+    fun onGetUser() {
         viewModelScope.launch {
             try {
-                mGetUser.value = userInteractor.getUserByid(idUser)
+                mGetUser.value = userInteractor.getUserById()
             } catch (e: Exception) {
-
+                Log.d("qwe166", e.toString())
             }
+        }
+    }
+
+    fun onSignOut() {
+        viewModelScope.launch {
+            signOut.value = userInteractor.signOutUser()
         }
     }
 }
