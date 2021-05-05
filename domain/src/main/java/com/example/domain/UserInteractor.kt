@@ -1,10 +1,13 @@
 package com.example.domain
 
+import android.app.Activity
 import com.example.domain.interfaces.UserRepository
 import com.example.domain.model.User
 import com.google.firebase.auth.PhoneAuthCredential
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Named
 
 class UserInteractor(
     private val userRepository: UserRepository,
@@ -14,11 +17,11 @@ class UserInteractor(
     suspend fun getUserById(): User =
         withContext(context) {
             userRepository.getUserById()
-    }
+        }
 
-    suspend fun authUser(credential: PhoneAuthCredential): String =
+    suspend fun authUser(storedVerificationId: String, otp: String): String =
         withContext(context) {
-            userRepository.authUser(credential)
+            userRepository.authUser(storedVerificationId, otp)
         }
 
 
@@ -40,4 +43,10 @@ class UserInteractor(
         withContext(context) {
             userRepository.signOut()
         }
+
+    fun getCurrentUser(): Boolean =
+        userRepository.getCurrentUser()
+
+//    fun getVerificationCode(numberPhone: String, activity: Activity): String =
+//        userRepository.signIn(numberPhone, activity)
 }

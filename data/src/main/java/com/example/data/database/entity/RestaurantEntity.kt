@@ -18,5 +18,7 @@ data class RestaurantEntity(
     @ColumnInfo(name = "image")
     var image: String,
     @ColumnInfo(name = "price")
-    var price: Int
+    var price: Int,
+    @ColumnInfo(name = "address")
+    var address: String
 )

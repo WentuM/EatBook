@@ -55,14 +55,15 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
+        style="@style/SearchView"
         android:layout_width="196dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:inputType="text"
         android:visibility="invisible"
-        style="@style/SearchView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nameApplication"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 

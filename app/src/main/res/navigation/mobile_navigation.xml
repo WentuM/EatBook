@@ -7,9 +7,18 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.eatbook.ui.restaurants.RestaurantFragment"
+        android:name="com.example.eatbook.ui.restaurants.list.RestaurantFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_rest_detail"
+            app:destination="@id/navigation_rest_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_rest_detail"
+        android:name="com.example.eatbook.ui.restaurants.detail.RestaurantDetailFragment"
+        tools:layout="@layout/fragment_restaurant_detail"/>
 
     <fragment
         android:id="@+id/navigation_verify"
@@ -22,7 +31,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.eatbook.ui.dashboard.ProfileFragment"
+        android:name="com.example.eatbook.ui.profile.ProfileFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_profile" >
         <action

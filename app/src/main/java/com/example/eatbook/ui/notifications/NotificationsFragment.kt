@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.eatbook.R
+import javax.inject.Inject
 
 class NotificationsFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    @Inject
+    lateinit var notificationsViewModel: NotificationsViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,

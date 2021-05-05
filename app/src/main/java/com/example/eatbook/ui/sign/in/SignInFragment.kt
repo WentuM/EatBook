@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.data.firebase.utilits.AUTH
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
 import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
@@ -22,10 +22,14 @@ import ru.tinkoff.decoro.MaskImpl
 import ru.tinkoff.decoro.parser.PhoneNumberUnderscoreSlotsParser
 import ru.tinkoff.decoro.slots.PredefinedSlots
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class SignInFragment : Fragment() {
     lateinit var storedVerificationId: String
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
+
+    @Inject
+    lateinit var signInViewModel: SignInViewModel
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     private lateinit var application: EatBookApp
 
@@ -38,9 +42,10 @@ class SignInFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        application = activity?.application as (EatBookApp)
-        var currentUser = AUTH.currentUser
-        if (currentUser != null) {
+        EatBookApp.appComponent.signInComponentFactory()
+            .create(this)
+            .inject(this)
+        if (signInViewModel.getCurrentUser()) {
             findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_profile)
         }
         return inflater.inflate(R.layout.sign_in_fragment, container, false)
@@ -89,14 +94,23 @@ class SignInFragment : Fragment() {
 //        username = panel_auth_name.text.toString().trim()
         if (!number.isEmpty()) {
             number = "+7$number"
+//            storedVerificationId =
+//                activity?.let { signInViewModel.getVerificationCode(number, it) }.toString()
             sendVerificationcode(number)
+//            Log.d("qwe111", storedVerificationId)
+//            var bundle = Bundle()
+//            bundle.putString("storedVerificationId", storedVerificationId)
+//            findNavController().navigate(
+//                R.id.action_navigation_sign_in_to_navigation_verify,
+//                bundle
+//            )
         } else {
             Toast.makeText(activity, "Введите корректный номер телефона", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun sendVerificationcode(number: String) {
-        val options = PhoneAuthOptions.newBuilder(AUTH)
+        val options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
             .setPhoneNumber(number) // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
             .setActivity(activity) // Activity (for callback binding)

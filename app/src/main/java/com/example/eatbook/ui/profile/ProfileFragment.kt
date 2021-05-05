@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.dashboard
+package com.example.eatbook.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,18 +8,12 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.data.firebase.utilits.AUTH
-import com.example.domain.RestaurantInteractor
-import com.example.domain.UserInteractor
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
-import com.example.eatbook.ui.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 
@@ -38,22 +32,21 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (AUTH.currentUser == null) {
+        EatBookApp.appComponent.profileComponentFactory()
+            .create(this)
+            .inject(this)
+        if (!profileViewModel.getCurrentUser()) {
             findNavController().navigate(R.id.action_navigation_profile_to_navigation_sign_in)
         }
-        profileViewModel = ViewModelProvider(this, initFactory()).get(ProfileViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //ToDO вынести логику с firebase всю во viewmodel
         profileViewModel.onGetUser()
         initFields()
         initClickListener()
-        EatBookApp.appComponent.profileComponentFactory.create(this)
-            .inject(this)
     }
 
     private fun initFields() {
@@ -61,21 +54,12 @@ class ProfileFragment : Fragment() {
             getUser().observe(viewLifecycleOwner, Observer {
                 profile_image.setImageResource(R.drawable.prifile)
                 txv_profile_city.text = "Казань"
-                txv_profile_email.text = "kesand@mail.ru"
                 txv_profile_number.text = it.numberPhone
                 txv_profile_fullname.text = it.username
             })
         }
         imgv_profile_edit.visibility = View.VISIBLE
     }
-
-    private fun initFactory(): ViewModelFactory = ViewModelFactory(
-        userInteractor = UserInteractor(application.repositoryUser, Dispatchers.IO),
-        restaurantInteractor = RestaurantInteractor(
-            application.repositoryRestaurant,
-            Dispatchers.IO
-        )
-    )
 
     private fun initClickListener() {
         btn_profile_book.setOnClickListener {
@@ -134,18 +118,18 @@ class ProfileFragment : Fragment() {
 
     private fun enableProfileInfo() {
         txv_profile_number.visibility = View.INVISIBLE
-        txv_profile_email.visibility = View.INVISIBLE
+//        txv_profile_email.visibility = View.INVISIBLE
         txv_profile_city.visibility = View.INVISIBLE
-        edtx_profile_email.visibility = View.VISIBLE
+//        edtx_profile_email.visibility = View.VISIBLE
         edtx_profile_number.visibility = View.VISIBLE
         edtx_profile_city.visibility = View.VISIBLE
     }
 
     private fun disableProfileInfo() {
         txv_profile_number.visibility = View.VISIBLE
-        txv_profile_email.visibility = View.VISIBLE
+//        txv_profile_email.visibility = View.VISIBLE
         txv_profile_city.visibility = View.VISIBLE
-        edtx_profile_email.visibility = View.INVISIBLE
+//        edtx_profile_email.visibility = View.INVISIBLE
         edtx_profile_number.visibility = View.INVISIBLE
         edtx_profile_city.visibility = View.INVISIBLE
     }

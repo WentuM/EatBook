@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.restaurants
+package com.example.eatbook.ui.restaurants.detail
 
 import androidx.fragment.app.Fragment
 

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.UserInteractor
-import com.google.firebase.auth.PhoneAuthCredential
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -17,12 +16,11 @@ class VerifyViewModel(
 
     fun verify(): LiveData<String> = mVerify
 
-    fun onVerifyClick(credential: PhoneAuthCredential) {
+    fun onVerifyClick(storedVerificationId: String, otp: String) {
         viewModelScope.launch {
             try {
-               mVerify.value = userInteractor.authUser(credential)
+               mVerify.value = userInteractor.authUser(storedVerificationId, otp)
             } catch (e: Exception) {
-
             }
         }
     }

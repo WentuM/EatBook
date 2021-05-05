@@ -1,7 +1,7 @@
-package com.example.eatbook.ui.dashboard.di
+package com.example.eatbook.ui.profile.di
 
 import androidx.fragment.app.Fragment
-import com.example.eatbook.ui.dashboard.ProfileFragment
+import com.example.eatbook.ui.profile.ProfileFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 

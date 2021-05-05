@@ -9,9 +9,10 @@ class RestaurantConverterImpl : RestaurantConverter {
             restaurantEntity.id,
             restaurantEntity.title,
             restaurantEntity.description,
+            restaurantEntity.rating,
             restaurantEntity.image,
             restaurantEntity.price,
-            restaurantEntity.rating
+            restaurantEntity.address
         )
     }
 
@@ -22,7 +23,8 @@ class RestaurantConverterImpl : RestaurantConverter {
             restaurant.description,
             restaurant.raiting,
             restaurant.imageRest,
-            restaurant.price
+            restaurant.price,
+            restaurant.address
         )
     }
 }

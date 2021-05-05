@@ -3,7 +3,6 @@ package com.example.eatbook
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import com.example.data.firebase.utilits.initFirebase
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -13,7 +12,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        initFirebase()
 
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)

@@ -1,9 +1,10 @@
-package com.example.eatbook.ui.restaurants
+package com.example.eatbook.ui.restaurants.list
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.domain.model.Restaurant
+import com.example.eatbook.ui.restaurants.list.RestaurantAdapter
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_item_restaurant.*
 

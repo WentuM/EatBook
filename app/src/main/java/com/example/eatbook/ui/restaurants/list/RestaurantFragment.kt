@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.restaurants
+package com.example.eatbook.ui.restaurants.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,27 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.domain.RestaurantInteractor
-import com.example.domain.UserInteractor
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
-import com.example.eatbook.ui.ViewModelFactory
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
 class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
 
-    private lateinit var restaurantViewModel: RestaurantViewModel
+    @Inject
+    lateinit var restaurantViewModel: RestaurantViewModel
     private lateinit var application: EatBookApp
+    private val restaurantAdapter =
+        RestaurantAdapter(this)
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        application = activity?.application as (EatBookApp)
-        restaurantViewModel = ViewModelProvider(this, initFactory()).get(RestaurantViewModel::class.java)
+        EatBookApp.appComponent.restaurantsListComponentFactory()
+            .create(this).inject(this)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         return root
     }
@@ -34,15 +36,16 @@ class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         search_view.visibility = View.VISIBLE
-        
+
+        rest_list.adapter = restaurantAdapter
+
+        restaurantViewModel.restaurants().observe(viewLifecycleOwner, Observer {
+            restaurantAdapter.submitList(it)
+        })
+
+        restaurantViewModel.getAllRestaurants()
         createSearchView()
     }
-
-
-    private fun initFactory(): ViewModelFactory = ViewModelFactory(
-        userInteractor = UserInteractor(application.repositoryUser, Dispatchers.IO),
-        restaurantInteractor = RestaurantInteractor(application.repositoryRestaurant, Dispatchers.IO)
-    )
 
 
     private fun createSearchView() {
@@ -60,7 +63,9 @@ class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
     }
 
     override fun onClick(idRestaurant: String) {
-        TODO("Not yet implemented")
+        var bundle = Bundle()
+        bundle.putString("idRestaurant", idRestaurant)
+        findNavController().navigate(R.id.action_navigation_home_to_navigation_rest_detail, bundle)
     }
 
     override fun onFavourite(idRestaurant: String) {

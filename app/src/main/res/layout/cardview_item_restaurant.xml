@@ -24,7 +24,7 @@
 
             <ImageView
                 android:id="@+id/rest_image"
-                android:layout_width="200dp"
+                android:layout_width="160dp"
                 android:layout_height="120dp"
                 android:background="#2d2d2d"
                 android:scaleType="centerCrop"
@@ -48,6 +48,7 @@
                 android:layout_margin="8dp"
                 android:text="Book Title"
                 android:textColor="#2d2d2d"
+                android:maxLength="15"
                 android:textSize="13sp"
                 cardview:layout_constraintTop_toTopOf="parent"
                 cardview:layout_constraintStart_toEndOf="@+id/rest_image" />
@@ -59,6 +60,7 @@
                 android:layout_margin="8dp"
                 android:gravity="center"
                 android:text="Book Title"
+                android:maxLength="30"
                 android:textColor="#2d2d2d"
                 android:textSize="13sp"
                 cardview:layout_constraintStart_toEndOf="@+id/rest_image"

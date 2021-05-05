@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.dashboard
+package com.example.eatbook.ui.profile
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -32,12 +32,15 @@ class ProfileViewModel(
         }
     }
 
+    fun getCurrentUser(): Boolean = userInteractor.getCurrentUser()
+
     fun onGetUser() {
         viewModelScope.launch {
             try {
                 mGetUser.value = userInteractor.getUserById()
             } catch (e: Exception) {
                 Log.d("qwe166", e.toString())
+//                resultString.value = e.toString()
             }
         }
     }
