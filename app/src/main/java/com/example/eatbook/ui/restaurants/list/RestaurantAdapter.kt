@@ -10,7 +10,7 @@ import com.example.eatbook.R
 class RestaurantAdapter(
     private val itemHandler: RestItemHandler
 ) : ListAdapter<Restaurant, RestaurantHolder>(
-    userCallback
+    restCallback
 ) {
 
     interface RestItemHandler {
@@ -29,7 +29,7 @@ class RestaurantAdapter(
     }
 }
 
-private val userCallback = object : DiffUtil.ItemCallback<Restaurant>() {
+private val restCallback = object : DiffUtil.ItemCallback<Restaurant>() {
 
     override fun areItemsTheSame(oldItem: Restaurant, newItem: Restaurant): Boolean {
         return oldItem.id == newItem.id

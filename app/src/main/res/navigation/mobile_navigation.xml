@@ -5,6 +5,8 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_sign_in">
 
+
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.eatbook.ui.restaurants.list.RestaurantFragment"
@@ -41,16 +43,9 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.eatbook.ui.notifications.NotificationsFragment"
+        android:name="com.example.eatbook.ui.sales.list.SaleFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
-
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_sign_up"-->
-<!--        android:name="com.example.eatbook.ui.sign.up.SignUpFragment"-->
-<!--        android:label="@string/title_sign_in"-->
-<!--        tools:layout="@layout/sign_up_fragment" >-->
-<!--    </fragment>-->
 
     <fragment
         android:id="@+id/navigation_sign_in"

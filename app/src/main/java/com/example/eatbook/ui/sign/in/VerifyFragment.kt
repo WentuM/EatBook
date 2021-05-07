@@ -16,20 +16,12 @@ import javax.inject.Inject
 
 class VerifyFragment : Fragment() {
     lateinit var storedVerificationId: String
-    private lateinit var username: String
-    
+
     @Inject
     lateinit var verifyViewModel: VerifyViewModel
-    private lateinit var application: EatBookApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        val storedVerificationId=intent.getStringExtra("storedVerificationId")
-
-//        Reference
-//        val verify=findViewById<Button>(R.id.verifyBtn)
-//        val otpGiven=findViewById<EditText>(R.id.id_otp)
         arguments?.getString("storedVerificationId")?.let {
             storedVerificationId = it
             Log.d("qwe5", it)
@@ -80,36 +72,10 @@ class VerifyFragment : Fragment() {
         verifyBtn.setOnClickListener {
             var otp = id_otp.text.toString().trim()
             if (!otp.isEmpty()) {
-//                val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(
-//                    storedVerificationId, otp
-//                )
                 verifyViewModel.onVerifyClick(storedVerificationId, otp)
             } else {
                 Toast.makeText(activity, "Введите ваш код", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
-//    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-//        var result = userInteractor.authUser(credential)
-//        if (result == "Успешный вход в аккаунт") {
-//            Toast.makeText(
-//                activity,
-//                result,
-//                Toast.LENGTH_LONG
-//            ).show()
-//            findNavController().navigate(R.id.action_navigation_verify_to_navigation_profile)
-//        } else {
-//            Toast.makeText(
-//                activity,
-//                result,
-//                Toast.LENGTH_LONG
-//            ).show()
-//            findNavController().navigate(R.id.action_navigation_verify_to_navigation_profile)
-//        }
-    }
-
-//    private fun init() {
-//        userInteractor = UserInteractor(UserRepositoryImpl())
-//    }
-//}
+}

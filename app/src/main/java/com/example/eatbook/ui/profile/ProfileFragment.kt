@@ -21,7 +21,6 @@ class ProfileFragment : Fragment() {
 
     @Inject
     lateinit var profileViewModel: ProfileViewModel
-    private lateinit var application: EatBookApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

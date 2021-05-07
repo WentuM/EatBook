@@ -8,6 +8,7 @@ import com.example.eatbook.di.module.AppModule
 import com.example.eatbook.ui.profile.di.ProfileComponent
 import com.example.eatbook.ui.restaurants.detail.di.RestaurantDetailComponent
 import com.example.eatbook.ui.restaurants.list.di.RestaurantComponent
+import com.example.eatbook.ui.sales.list.di.SaleComponent
 import com.example.eatbook.ui.sign.`in`.di.SignInComponent
 import com.example.eatbook.ui.sign.`in`.di.VerifyComponent
 import dagger.BindsInstance
@@ -37,6 +38,8 @@ interface AppComponent {
     fun restaurantsListComponentFactory(): RestaurantComponent.Factory
 
     fun restaurantDetailComponentFactory(): RestaurantDetailComponent.Factory
+
+    fun salesListComponentFactory(): SaleComponent.Factory
 
 //    fun userDetailsComponentFactory(): UserDetailsComponent.Factory
 

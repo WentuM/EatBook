@@ -14,5 +14,5 @@ interface RestaurantDao {
     suspend fun insert(restaurantEntity: RestaurantEntity)
 
     @Query("SELECT * FROM restaurant WHERE id = :idRestaurant")
-    suspend fun getUserById(idRestaurant: String): RestaurantEntity
+    suspend fun getRestaurantById(idRestaurant: String): RestaurantEntity
 }

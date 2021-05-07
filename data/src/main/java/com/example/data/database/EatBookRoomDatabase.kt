@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.data.database.dao.RestaurantDao
+import com.example.data.database.dao.SaleDao
 import com.example.data.database.dao.UserDao
 import com.example.data.database.entity.RestaurantEntity
 import com.example.data.database.entity.UserEntity
@@ -15,6 +16,7 @@ abstract class EatBookRoomDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun restaurantDao(): RestaurantDao
+    abstract fun saleDao(): SaleDao
 
     companion object {
         @Volatile
