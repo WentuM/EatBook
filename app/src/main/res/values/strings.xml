@@ -5,4 +5,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="edit_btn_profile">Edit Button</string>
     <string name="title_sign_in">Войти</string>
+    <string name="book_table">Забронировать</string>
+    <string name="cancel_table">Отмена</string>
 </resources>

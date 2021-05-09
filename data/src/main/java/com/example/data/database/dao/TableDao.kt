@@ -12,6 +12,6 @@ interface TableDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(tableEntity: TableEntity)
 
-    @Query("SELECT * FROM restaurant WHERE id = :idTable")
+    @Query("SELECT * FROM `table` WHERE id = :idTable")
     suspend fun getTableById(idTable: String): TableEntity
 }

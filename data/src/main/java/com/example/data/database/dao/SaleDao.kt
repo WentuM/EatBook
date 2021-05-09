@@ -12,6 +12,6 @@ interface SaleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(saleEntity: SaleEntity)
 
-    @Query("SELECT * FROM restaurant WHERE id = :idSale")
+    @Query("SELECT * FROM sale WHERE id = :idSale")
     suspend fun getSaleById(idSale: String): SaleEntity
 }

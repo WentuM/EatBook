@@ -3,6 +3,7 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="book_date_time">#4A5DD2</color>
 
 <!--    color for button profile-->
     <color name="colorBtnProfile1">#EE0000</color>

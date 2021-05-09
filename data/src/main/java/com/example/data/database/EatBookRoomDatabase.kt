@@ -13,7 +13,8 @@ import com.example.data.database.entity.SaleEntity
 import com.example.data.database.entity.TableEntity
 import com.example.data.database.entity.UserEntity
 
-@Database(entities = arrayOf(UserEntity::class, RestaurantEntity::class, SaleEntity::class, TableEntity::class), version = 5, exportSchema = false)
+@Database(entities = arrayOf(UserEntity::class, RestaurantEntity::class,
+    SaleEntity::class, TableEntity::class), version = 6, exportSchema = false)
 
 abstract class EatBookRoomDatabase : RoomDatabase() {
 

@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_list_rest.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
