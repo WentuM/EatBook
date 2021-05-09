@@ -9,9 +9,12 @@ import com.example.domain.interfaces.RestaurantRepository
 import com.example.domain.model.Restaurant
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
+
 
 class RestaurantRepositoryImpl(
     private val restaurantDao: RestaurantDao,
@@ -79,6 +82,20 @@ class RestaurantRepositoryImpl(
                         restaurantConverterImpl.dbtoModel(restaurantEntity = restaurantEntity)
                     continuation.resume(restaurantModel)
                 }
+        }
+    }
+
+    override suspend fun getRestaurantImage(): String {
+        var storage = FirebaseStorage.getInstance()
+        val storageRef: StorageReference = storage.reference
+        return suspendCoroutine { continuation ->
+            storageRef.child("images/Warface_sample.jpg").downloadUrl.addOnSuccessListener {
+                Log.d("qwe0", it.toString())
+                continuation.resume(it.toString())
+            }.addOnFailureListener {
+                Log.d("qweeee", it.toString())
+                continuation.resumeWithException(it)
+            }
         }
     }
 }

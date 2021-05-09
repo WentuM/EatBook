@@ -3,7 +3,7 @@ package com.example.eatbook.ui.sales.list.di
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.domain.SaleInteractor
+import com.example.domain.interactor.SaleInteractor
 import com.example.eatbook.di.component.ViewModelKey
 import com.example.eatbook.di.module.ViewModelModule
 import com.example.eatbook.ui.sales.list.SaleViewModel

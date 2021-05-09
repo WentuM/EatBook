@@ -11,6 +11,7 @@ import com.example.eatbook.ui.restaurants.list.di.RestaurantComponent
 import com.example.eatbook.ui.sales.list.di.SaleComponent
 import com.example.eatbook.ui.sign.`in`.di.SignInComponent
 import com.example.eatbook.ui.sign.`in`.di.VerifyComponent
+import com.example.eatbook.ui.tables.di.TableComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -41,6 +42,6 @@ interface AppComponent {
 
     fun salesListComponentFactory(): SaleComponent.Factory
 
-//    fun userDetailsComponentFactory(): UserDetailsComponent.Factory
+    fun tableListComponentFactory(): TableComponent.Factory
 
 }

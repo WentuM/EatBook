@@ -2,10 +2,16 @@ package com.example.data.di.module
 
 import android.content.Context
 import com.example.data.database.dao.RestaurantDao
+import com.example.data.database.dao.SaleDao
+import com.example.data.database.dao.TableDao
 import com.example.data.database.dao.UserDao
 import com.example.data.repository.RestaurantRepositoryImpl
+import com.example.data.repository.SaleRepositoryImpl
+import com.example.data.repository.TableRepositoryImpl
 import com.example.data.repository.UserRepositoryImpl
 import com.example.domain.interfaces.RestaurantRepository
+import com.example.domain.interfaces.SaleRepository
+import com.example.domain.interfaces.TableRepository
 import com.example.domain.interfaces.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,4 +31,14 @@ class RepositoryModule {
     @Singleton
     fun provideRestaurantRepository(restaurantDao: RestaurantDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): RestaurantRepository =
         RestaurantRepositoryImpl(restaurantDao, context, firebaseAuth, firestore)
+
+    @Provides
+    @Singleton
+    fun provideSaleRepository(saleDao: SaleDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): SaleRepository =
+        SaleRepositoryImpl(saleDao, context, firebaseAuth, firestore)
+
+    @Provides
+    @Singleton
+    fun provideTableRepository(tableDao: TableDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): TableRepository =
+        TableRepositoryImpl(tableDao, context, firebaseAuth, firestore)
 }

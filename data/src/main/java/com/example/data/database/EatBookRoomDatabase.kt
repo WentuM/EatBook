@@ -6,17 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.data.database.dao.RestaurantDao
 import com.example.data.database.dao.SaleDao
+import com.example.data.database.dao.TableDao
 import com.example.data.database.dao.UserDao
 import com.example.data.database.entity.RestaurantEntity
+import com.example.data.database.entity.SaleEntity
+import com.example.data.database.entity.TableEntity
 import com.example.data.database.entity.UserEntity
 
-@Database(entities = arrayOf(UserEntity::class, RestaurantEntity::class), version = 3, exportSchema = false)
+@Database(entities = arrayOf(UserEntity::class, RestaurantEntity::class, SaleEntity::class, TableEntity::class), version = 5, exportSchema = false)
 
 abstract class EatBookRoomDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun restaurantDao(): RestaurantDao
     abstract fun saleDao(): SaleDao
+    abstract fun tableDao(): TableDao
 
     companion object {
         @Volatile

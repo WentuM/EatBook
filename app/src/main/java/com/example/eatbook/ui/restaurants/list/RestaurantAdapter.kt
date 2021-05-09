@@ -9,9 +9,7 @@ import com.example.eatbook.R
 
 class RestaurantAdapter(
     private val itemHandler: RestItemHandler
-) : ListAdapter<Restaurant, RestaurantHolder>(
-    restCallback
-) {
+) : ListAdapter<Restaurant, RestaurantHolder>(restCallback) {
 
     interface RestItemHandler {
         fun onClick(idRestaurant: String)
@@ -19,8 +17,7 @@ class RestaurantAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantHolder =
-        RestaurantHolder(
-            LayoutInflater.from(parent.context)
+        RestaurantHolder(LayoutInflater.from(parent.context)
                 .inflate(R.layout.cardview_item_restaurant, parent, false)
         )
 

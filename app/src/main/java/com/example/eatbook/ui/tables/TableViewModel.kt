@@ -1,25 +1,26 @@
-package com.example.eatbook.ui.sales.list
+package com.example.eatbook.ui.tables
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.interactor.SaleInteractor
+import com.example.domain.interactor.TableInteractor
 import com.example.domain.model.Sale
+import com.example.domain.model.Table
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class SaleViewModel(
-    private val saleInteractor: SaleInteractor
-) : ViewModel() {
+class TableViewModel(
+    private val tableInteractor: TableInteractor
+): ViewModel() {
 
-    private val _sales = MutableLiveData<List<Sale>>()
-    fun sales(): LiveData<List<Sale>> = _sales
+    private val _tables = MutableLiveData<List<Table>>()
+    fun tables(): LiveData<List<Table>> = _tables
 
     fun getAllSales() {
         viewModelScope.launch {
             try {
-                _sales.value = saleInteractor.getAllSale()
+                _tables.value = tableInteractor.getAllTable()
             } catch (e: Exception) {
 
             }

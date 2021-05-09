@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.domain.interactor
 
 import com.example.domain.interfaces.RestaurantRepository
 import com.example.domain.model.Restaurant
@@ -17,5 +17,10 @@ class RestaurantInteractor(
     suspend fun getAllRestaurant(): ArrayList<Restaurant> =
         withContext(context) {
             restaurantRepository.getListRestaurant() as ArrayList<Restaurant>
+        }
+
+    suspend fun getImage(): String =
+        withContext(context) {
+            restaurantRepository.getRestaurantImage()
         }
 }

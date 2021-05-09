@@ -1,6 +1,7 @@
 package com.example.eatbook.ui.restaurants.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,7 @@ class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
     ): View? {
         EatBookApp.appComponent.restaurantsListComponentFactory()
             .create(this).inject(this)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val root = inflater.inflate(R.layout.fragment_list_rest, container, false)
         return root
     }
 
@@ -63,12 +64,14 @@ class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
     }
 
     override fun onClick(idRestaurant: String) {
+        Log.d("qwe12312321", "qwef")
         var bundle = Bundle()
         bundle.putString("idRestaurant", idRestaurant)
         findNavController().navigate(R.id.action_navigation_home_to_navigation_rest_detail, bundle)
     }
 
     override fun onFavourite(idRestaurant: String) {
+        Log.d("qwe121234321", "qwef")
         TODO("Not yet implemented")
     }
 }

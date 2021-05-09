@@ -1,25 +1,23 @@
 package com.example.data.repository
 
 import android.content.Context
-import com.example.data.database.dao.SaleDao
-import com.example.domain.interfaces.SaleRepository
-import com.example.domain.model.Restaurant
-import com.example.domain.model.Sale
+import com.example.data.database.dao.TableDao
+import com.example.domain.interfaces.TableRepository
+import com.example.domain.model.Table
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class SaleRepositoryImpl(
-    private val saleDao: SaleDao,
+class TableRepositoryImpl(
+    private val tableDao: TableDao,
     private val context: Context,
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore
-) : SaleRepository {
-
-    override suspend fun getListSales(): List<Sale> {
+) : TableRepository {
+    override suspend fun getListTable(): List<Table> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getSalesById(id: String): Sale {
+    override suspend fun getTableById(id: String): Table {
         TODO("Not yet implemented")
     }
 }

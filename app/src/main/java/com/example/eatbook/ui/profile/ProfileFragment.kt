@@ -54,7 +54,7 @@ class ProfileFragment : Fragment() {
                 profile_image.setImageResource(R.drawable.prifile)
                 txv_profile_city.text = "Казань"
                 txv_profile_number.text = it.numberPhone
-                txv_profile_fullname.text = it.username
+                txv_profile_name.text = it.username
             })
         }
         imgv_profile_edit.visibility = View.VISIBLE
@@ -98,12 +98,12 @@ class ProfileFragment : Fragment() {
 
         imgv_profile_active.setOnClickListener {
             profileViewModel.onUpdateUserClick(
-                edtx_profile_fullname.text.toString(),
+                edtx_profile_name.text.toString(),
                 profile_image.toString()
             )
             with(profileViewModel) {
                 updateUser().observe(viewLifecycleOwner, Observer {
-                    edit(txv_profile_fullname, edtx_profile_fullname)
+                    edit(txv_profile_name, edtx_profile_name)
                     Snackbar.make(
                         requireActivity().findViewById(android.R.id.content),
                         it,

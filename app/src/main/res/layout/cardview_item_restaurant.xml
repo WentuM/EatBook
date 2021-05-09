@@ -57,7 +57,8 @@
                 android:id="@+id/rest_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:text="Book Title"
                 android:maxLength="30"
@@ -72,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:gravity="center"
+                android:maxLength="5"
                 android:text="Book Title"
                 android:textColor="#2d2d2d"
                 android:textSize="13sp"
@@ -85,10 +87,11 @@
                 android:gravity="center"
                 android:text="Забронировать"
                 android:textSize="8sp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/whiteText"
                 android:background="@drawable/bg_button_rounded"
                 cardview:layout_constraintBottom_toBottomOf="@id/rest_price"
                 cardview:layout_constraintEnd_toEndOf="parent"
-                cardview:layout_constraintStart_toEndOf="@+id/rest_price"
                 cardview:layout_constraintTop_toTopOf="@+id/rest_price" />
 
 

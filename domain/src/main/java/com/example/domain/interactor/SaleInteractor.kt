@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.domain.interactor
 
 import com.example.domain.interfaces.SaleRepository
 import com.example.domain.model.Sale

@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.domain.interactor
 
 import android.app.Activity
 import com.example.domain.interfaces.UserRepository

@@ -17,26 +17,10 @@ class RestaurantHolder(override val containerView: View) :
             rest_description.text = restaurant.description
             rest_price.text = restaurant.price.toString()
             Glide.with(containerView).load(restaurant.imageRest).into(rest_image)
-
             setOnClickListener {
                 itemHandler.onClick(restaurant.id)
-                itemHandler.onFavourite(restaurant.id)
             }
         }
 
     }
-
-//    companion object {
-//        fun create(parent: ViewGroup, itemClick: (Int) -> Unit, favouriteClick: (Int) -> Unit): RestaurantHolder =
-//            RestaurantHolder(
-//                LayoutInflater.from(parent.context).inflate(
-//                    R.layout.cardview_item_restaurant,
-//                    parent,
-//                    false
-//                ),
-//                itemClick,
-//                favouriteClick
-//            )
-//    }
-
 }

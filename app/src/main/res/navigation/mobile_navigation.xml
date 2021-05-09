@@ -11,7 +11,7 @@
         android:id="@+id/navigation_home"
         android:name="com.example.eatbook.ui.restaurants.list.RestaurantFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_list_rest" >
         <action
             android:id="@+id/action_navigation_home_to_navigation_rest_detail"
             app:destination="@id/navigation_rest_detail" />
