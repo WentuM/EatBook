@@ -1,10 +1,28 @@
 <resources>
     <string name="app_name">EatBook</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="ic_restaurants_title">Рестораны</string>
+    <string name="ic_sale_title">Предложения</string>
+    <string name="ic_favourite_title">Избранное</string>
+    <string name="ic_profile_title">Профиль</string>
     <string name="edit_btn_profile">Edit Button</string>
     <string name="title_sign_in">Войти</string>
     <string name="book_table">Забронировать</string>
+    <string name="txv_description">Описание</string>
+    <string name="btn_redirect_rest">Перейти к ресторану</string>
     <string name="cancel_table">Отмена</string>
+    <string name="profile_title">Мой профиль</string>
+    <string name="profile_my_book_rest">Мои бронирования</string>
+    <string name="profile_logout">Выйти из профиля</string>
+    <string name="book_rest_choose_date">Выберите дату</string>
+    <string name="book_rest_choose_time">Выберите время</string>
+    <string name="book_rest_count_hours">На сколько часов?</string>
+    <string name="btn_reviews">Отзывы</string>
+    <string name="code_verify">Введите код подтверждения</string>
+    <string name="btn_verify">Подтвердить</string>
+    <string name="authorization">Авторизация</string>
+    <string name="begin_number">+7</string>
+    <string name="btn_sign_in">Войти</string>
+    <string name="panel_reg_title">Авторизация профиля</string>
+    <string name="prompt_number">Ваш телефон без (+7)</string>
+    <string name="btn_sign_up">Авторизироваться</string>
 </resources>

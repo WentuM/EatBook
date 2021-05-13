@@ -1,98 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".ui.sign.in.SignInFragment">
-
-<TextView
-    android:id="@+id/textView"
-    android:layout_width="224dp"
-    android:layout_height="64dp"
-    android:layout_marginTop="64dp"
-    android:gravity="center"
-    android:text="@string/app_name"
-    android:textColor="@color/blackText"
-    android:textSize="32sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/panel_auth"
-    android:layout_width="300dp"
-    android:layout_height="244dp"
-    android:layout_marginTop="64dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView"
-    android:orientation="vertical"
-    android:background="@drawable/roundness">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/panel_reg_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/panel_auth"
-        android:layout_marginTop="8dp"
-        android:textSize="24sp"
-        android:text="Авторизация профиля"
+        android:id="@+id/textView"
+        android:layout_width="224dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:text="@string/app_name"
         android:textColor="@color/blackText"
-        android:gravity="center" />
-
-    <!--        <EditText-->
-    <!--            android:id="@+id/panel_auth_name"-->
-    <!--            android:layout_width="200dp"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            android:maxLength="20"-->
-    <!--            app:layout_constraintTop_toBottomOf="@id/panel_reg_title"-->
-    <!--            android:textColor="@color/panelRegistrationText"-->
-    <!--            android:layout_marginTop="16dp"-->
-    <!--            android:inputType="textEmailAddress"-->
-    <!--            android:hint="Ваше Имя"-->
-    <!--            android:textColorHint="@color/panelRegistrationHint"/>-->
-
-    <EditText
-        android:id="@+id/panel_auth_number"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/panel_reg_title"
-        android:layout_marginTop="24dp"
-        android:inputType="number"
-        android:maxLength="11"
-        android:textColor="@color/panelRegistrationText"
-        android:textColorHint="@color/panelRegistrationHint"
-        android:hint="Ваш телефон без (+7)"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/panel_auth_btn"
-        android:layout_width="196dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/bg_button_rounded"
-        android:text="Авторизироваться"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/panel_auth"
+        android:layout_width="300dp"
+        android:layout_height="244dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/roundness"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/panel_auth_number" />
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/panel_reg_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/panel_reg_title"
+            android:textColor="@color/blackText"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/panel_auth" />
 
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/unnamed"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="1.0"
-    app:layout_constraintStart_toStartOf="parent"
-    tools:layout_editor_absoluteY="447dp" />
+        <EditText
+            android:id="@+id/panel_auth_number"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="@string/prompt_number"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColor="@color/panelRegistrationText"
+            android:textColorHint="@color/panelRegistrationHint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/panel_reg_title" />
+
+        <Button
+            android:id="@+id/panel_auth_btn"
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_button_rounded"
+            android:text="@string/btn_sign_up"
+            android:textColor="@color/whiteText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/panel_auth_number" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

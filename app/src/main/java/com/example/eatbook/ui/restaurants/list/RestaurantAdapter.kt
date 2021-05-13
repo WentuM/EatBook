@@ -12,8 +12,8 @@ class RestaurantAdapter(
 ) : ListAdapter<Restaurant, RestaurantHolder>(restCallback) {
 
     interface RestItemHandler {
-        fun onClick(idRestaurant: String)
-        fun onFavourite(idRestaurant: String)
+        fun onItemClick(idRestaurant: String)
+//        fun onFavourite(idRestaurant: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantHolder =

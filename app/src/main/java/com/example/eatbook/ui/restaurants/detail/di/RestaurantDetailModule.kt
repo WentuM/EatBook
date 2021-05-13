@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.domain.interactor.RestaurantInteractor
+import com.example.domain.interactor.UserInteractor
 import com.example.eatbook.di.component.ViewModelKey
 import com.example.eatbook.di.module.ViewModelModule
 import com.example.eatbook.ui.restaurants.detail.RestaurantDetailViewModel
@@ -17,9 +18,10 @@ class RestaurantDetailModule {
     @Provides
     @IntoMap
     @ViewModelKey(RestaurantDetailViewModel::class)
-    fun provideViewModel(interactor: RestaurantInteractor): ViewModel {
+    fun provideViewModel(interactor: RestaurantInteractor, userInteractor: UserInteractor): ViewModel {
         return RestaurantDetailViewModel(
-            interactor
+            interactor,
+            userInteractor
         )
     }
 

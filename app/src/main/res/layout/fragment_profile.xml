@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Мой профиль"
+            android:text="@string/profile_title"
             android:textColor="@color/blackText"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,40 +45,8 @@
             app:srcCompat="@mipmap/ic_launcher"
             tools:ignore="MissingClass" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/txv_profile_fullname"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="12dp"-->
-<!--            android:fontFamily="@font/eater"-->
-<!--            android:textSize="24sp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/profile_image" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/edtx_profile_fullname"-->
-<!--            android:layout_width="200dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="12dp"-->
-<!--            android:fontFamily="@font/eater"-->
-<!--            android:textSize="24sp"-->
-<!--            android:visibility="invisible"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/profile_image" />-->
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <FrameLayout-->
-<!--        android:id="@+id/frameLayout"-->
-<!--        android:layout_width="240dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:background="@drawable/bg_button_rounded"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/constraintLayout1">-->
 
     <Button
         android:id="@+id/btn_profile_book"
@@ -91,12 +59,11 @@
         android:layout_marginTop="16dp"
         android:textColor="@color/whiteText"
         android:stateListAnimator="@null"
-        android:text="Мои бронирования"
+        android:text="@string/profile_my_book_rest"
         android:translationZ="6dp"
         app:layout_constraintEnd_toEndOf="@+id/include"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout1" />
-<!--    </FrameLayout>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -107,38 +74,6 @@
         app:layout_constraintTop_toBottomOf="@id/btn_profile_book"
         app:layout_constraintStart_toStartOf="parent">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/img_profile_email"-->
-<!--            android:layout_width="36dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginTop="36dp"-->
-<!--            android:src="@drawable/ic_profile_email"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/txv_profile_email"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/txv_profile_email"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="18dp"-->
-<!--            android:fontFamily="@font/eater"-->
-<!--            android:textColor="@color/whiteText"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/img_profile_email"-->
-<!--            app:layout_constraintStart_toEndOf="@id/img_profile_email"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/img_profile_email" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/edtx_profile_email"-->
-<!--            android:layout_width="200dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="18dp"-->
-<!--            android:fontFamily="@font/eater"-->
-<!--            android:visibility="invisible"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/img_profile_email"-->
-<!--            app:layout_constraintStart_toEndOf="@id/img_profile_email"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/img_profile_email" />-->
 
         <ImageView
             android:id="@+id/img_profile_name"
@@ -245,10 +180,10 @@
             android:layout_height="48dp"
             android:background="@drawable/bg_button_rounded"
             android:elevation="6dp"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="44dp"
             android:stateListAnimator="@null"
             android:textColor="@color/whiteText"
-            android:text="Выйти из профиля"
+            android:text="@string/profile_logout"
             android:translationZ="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

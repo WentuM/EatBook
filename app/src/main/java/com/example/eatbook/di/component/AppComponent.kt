@@ -8,9 +8,11 @@ import com.example.eatbook.di.module.AppModule
 import com.example.eatbook.ui.profile.di.ProfileComponent
 import com.example.eatbook.ui.restaurants.detail.di.RestaurantDetailComponent
 import com.example.eatbook.ui.restaurants.list.di.RestaurantComponent
+import com.example.eatbook.ui.sales.detail.di.SaleDetailComponent
 import com.example.eatbook.ui.sales.list.di.SaleComponent
 import com.example.eatbook.ui.sign.`in`.di.SignInComponent
 import com.example.eatbook.ui.sign.`in`.di.VerifyComponent
+import com.example.eatbook.ui.tables.booking.di.BookTableComponent
 import com.example.eatbook.ui.tables.di.TableComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -28,8 +30,6 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
-//    fun provideApp(): Context
-
     fun profileComponentFactory(): ProfileComponent.Factory
 
     fun verifyComponentFactory():  VerifyComponent.Factory
@@ -43,5 +43,9 @@ interface AppComponent {
     fun salesListComponentFactory(): SaleComponent.Factory
 
     fun tableListComponentFactory(): TableComponent.Factory
+
+    fun tableBookComponentFactory(): BookTableComponent.Factory
+
+    fun saleDetailComponentFactory(): SaleDetailComponent.Factory
 
 }

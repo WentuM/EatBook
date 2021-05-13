@@ -4,6 +4,7 @@ data class Sale (
     val id: String,
     val title: String,
     val description: String,
-    val imageRest: String,
-    val price: Int
+    val imageSale: String,
+    val idRestaurant: String,
+    val titleRestaurant: String
 )

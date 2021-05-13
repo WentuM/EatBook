@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollW"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.restaurants.detail.RestaurantDetailFragment">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/toolbar" />
+
+        <ImageView
+            android:id="@+id/imgv_sale"
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+
+        <TextView
+            android:id="@+id/sale_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/eater"
+            tools:text="Nasi Padang"
+            android:textColor="@color/blackText"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgv_sale" />
+
+
+        <TextView
+            android:id="@+id/txv_rest_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/eater"
+            tools:text="Пикник у дома"
+            android:textColor="@color/blackText"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sale_title" />
+
+        <TextView
+            android:id="@+id/txv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/eater"
+            android:textColor="@color/blackText"
+            tools:text="@string/txv_description"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/sale_title"
+            app:layout_constraintTop_toBottomOf="@+id/btn_rest_redirect" />
+
+        <TextView
+            android:id="@+id/sale_descr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/eater"
+            android:lineSpacingExtra="2dp"
+            tools:text="Nasi Padang is a Padang steamed rice served with various choices of pre-cooked dishes originated from West Sumatra, Indonesia. It is known across Indonesia as Nasi Padang, after the city of Padang the capital of West Sumatra province."
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/sale_title"
+            app:layout_constraintTop_toBottomOf="@+id/txv_description" />
+
+        <Button
+            android:id="@+id/btn_rest_redirect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_button_rounded"
+            android:fontFamily="@font/eater"
+            android:text="@string/btn_redirect_rest"
+            android:textColor="@color/whiteText"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/txv_rest_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

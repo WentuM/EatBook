@@ -43,9 +43,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
-            android:paddingLeft="40dp"
+            android:paddingStart="40dp"
             android:paddingBottom="15dp"
-            android:text="Verify mobile"
+            android:text="@string/code_verify"
             android:textColor="#444444"
             android:textSize="20sp" />
 
@@ -71,7 +71,7 @@
             android:layout_margin="40dp"
             android:background="#6372FF"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Verify"
+            android:text="@string/btn_verify"
             android:textAllCaps="false"
             android:textColor="#ffffff" />
     </LinearLayout>

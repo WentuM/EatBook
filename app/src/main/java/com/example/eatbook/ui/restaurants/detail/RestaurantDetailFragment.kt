@@ -13,6 +13,7 @@ import com.example.domain.model.Restaurant
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
 import com.example.eatbook.ui.profile.ProfileViewModel
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_restaurant_detail.*
 import javax.inject.Inject
 
@@ -38,27 +39,40 @@ class RestaurantDetailFragment : Fragment() {
             .create(this)
             .inject(this)
         val root = inflater.inflate(R.layout.fragment_restaurant_detail, container, false)
+        restaurantDetailViewModel.getRestaurantById(idRestaurant)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var restaurant: Restaurant = Restaurant("", "", "", 0.0, "", 0, "")
-        restaurantDetailViewModel.getRestaurant().observe(viewLifecycleOwner, Observer {
-            restaurant = it
-        })
-        restaurantDetailViewModel.getRestaurantById(idRestaurant)
-
-        initFields(restaurant)
+        initFields()
+        initClick()
     }
 
-    private fun initFields(restaurant: Restaurant) {
-        txv_rest_title.text = restaurant.title
-        txv_rest_descr.text = restaurant.description
-        txv_rest_raiting.text = restaurant.raiting.toString()
-        txv_rest_price.text = restaurant.price.toString()
-        ratingbar_rest.rating = restaurant.raiting.toFloat()
-//        Glide.with(this).load(restaurant.imageRest).into(imgv_rest)
+    private fun initFields() {
+        with(restaurantDetailViewModel) {
+            getRestaurant().observe(viewLifecycleOwner, Observer {
+                txv_rest_title.text = it.title
+                txv_rest_descr.text = it.description
+                txv_rest_raiting.text = it.raiting.toString()
+                txv_rest_price.text = it.price.toString() + " ₽"
+                ratingbar_rest.rating = it.raiting.toFloat()
+                Glide.with(this@RestaurantDetailFragment).load(it.imageRest).into(imgv_rest)
+            })
+        }
+
+    }
+
+    private fun initClick() {
+        btn_rest_book.setOnClickListener {
+            if (!restaurantDetailViewModel.getCurrentUser()) {
+                findNavController().navigate(R.id.action_navigation_rest_detail_to_navigation_sign_in)
+            } else {
+                var bundle = Bundle()
+                bundle.putString("idRestaurant", idRestaurant)
+                findNavController().navigate(R.id.action_navigation_rest_detail_to_navigation_rest_tables, bundle)
+            }
+        }
     }
 
 }

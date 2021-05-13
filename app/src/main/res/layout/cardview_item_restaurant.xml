@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="12dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview_id"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardview_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        cardview:cardCornerRadius="4dp"
-        cardview:layout_constraintEnd_toEndOf="parent"
-        cardview:layout_constraintStart_toStartOf="parent"
-        cardview:layout_constraintTop_toTopOf="parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    cardview:cardCornerRadius="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -44,14 +36,14 @@
                 android:id="@+id/rest_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_margin="8dp"
-                android:text="Book Title"
-                android:textColor="#2d2d2d"
+                android:gravity="center"
                 android:maxLength="15"
+                tools:text="Book Title"
+                android:textColor="#2d2d2d"
                 android:textSize="13sp"
-                cardview:layout_constraintTop_toTopOf="parent"
-                cardview:layout_constraintStart_toEndOf="@+id/rest_image" />
+                cardview:layout_constraintStart_toEndOf="@+id/rest_image"
+                cardview:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/rest_description"
@@ -60,8 +52,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="Book Title"
                 android:maxLength="30"
+                tools:text="Book Title"
                 android:textColor="#2d2d2d"
                 android:textSize="13sp"
                 cardview:layout_constraintStart_toEndOf="@+id/rest_image"
@@ -74,30 +66,27 @@
                 android:layout_margin="8dp"
                 android:gravity="center"
                 android:maxLength="5"
-                android:text="Book Title"
+                tools:text="Book Title"
                 android:textColor="#2d2d2d"
                 android:textSize="13sp"
                 cardview:layout_constraintBottom_toBottomOf="parent"
-                cardview:layout_constraintStart_toEndOf="@+id/rest_image"/>
+                cardview:layout_constraintStart_toEndOf="@+id/rest_image" />
 
             <Button
                 android:layout_width="94dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:text="Забронировать"
-                android:textSize="8sp"
                 android:layout_marginEnd="8dp"
-                android:textColor="@color/whiteText"
                 android:background="@drawable/bg_button_rounded"
+                android:gravity="center"
+                android:text="@string/book_table"
+                android:textColor="@color/whiteText"
+                android:textSize="8sp"
                 cardview:layout_constraintBottom_toBottomOf="@id/rest_price"
                 cardview:layout_constraintEnd_toEndOf="parent"
                 cardview:layout_constraintTop_toTopOf="@+id/rest_price" />
 
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>

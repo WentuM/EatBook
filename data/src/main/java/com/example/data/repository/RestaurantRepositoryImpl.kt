@@ -38,7 +38,7 @@ class RestaurantRepositoryImpl(
         var restaurantConverterImpl = RestaurantConverterImpl()
         var listResult: ArrayList<Restaurant> = ArrayList()
         return suspendCoroutine { continuation ->
-            val listRestaurant = firestore.collection(RESTAURANTS_TABLE).get()
+            firestore.collection(RESTAURANTS_TABLE).get()
                 .addOnSuccessListener {
                     for (document in it.documents) {
                         var restaurantMap: HashMap<String, String> = document.data as HashMap<String, String>
@@ -65,9 +65,9 @@ class RestaurantRepositoryImpl(
 
     override suspend fun getRestaurantById(id: String): Restaurant {
         return suspendCoroutine { continuation ->
-            val restaurant = firestore.collection(RESTAURANTS_TABLE).document(id).get()
+            firestore.collection(RESTAURANTS_TABLE).document(id).get()
                 .addOnSuccessListener {
-                    var restaurantMap: HashMap<String, String> = it.data as HashMap<String, String>
+                    var restaurantMap: HashMap<String, String?> = it.data as HashMap<String, String?>
                     var restaurantEntity = RestaurantEntity(
                         restaurantMap[REST_TABLE_COLUMN_ID].toString(),
                         restaurantMap[REST_TABLE_COLUMN_TITLE].toString(),

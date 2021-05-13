@@ -15,6 +15,8 @@ data class SaleEntity(
     val description: String,
     @ColumnInfo(name = "image")
     val imageSale: String,
-    @ColumnInfo(name = "price")
-    val price: Int
+    @ColumnInfo(name = "id_rest")
+    val idRestaurant: String,
+    @ColumnInfo(name = "id_title")
+    val titleRestaurant: String
 )

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
 import kotlinx.android.synthetic.main.fragment_list_table.*
@@ -45,6 +46,7 @@ class TableFragment : Fragment(), TableAdapter.TableItemHandler {
 
     override fun onClick(idTable: String) {
         var bundle = Bundle()
-        bundle.putString("idSale", idTable)
+        bundle.putString("idTable", idTable)
+        findNavController().navigate(R.id.action_navigation_rest_tables_to_navigation_rest_book, bundle)
     }
 }

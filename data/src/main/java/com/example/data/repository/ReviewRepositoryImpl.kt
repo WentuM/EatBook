@@ -6,8 +6,10 @@ import com.example.data.database.entity.RestaurantEntity
 import com.example.data.database.entity.SaleEntity
 import com.example.data.mappers.RestaurantConverterImpl
 import com.example.data.mappers.SaleConverterImpl
+import com.example.domain.interfaces.ReviewRepository
 import com.example.domain.interfaces.SaleRepository
 import com.example.domain.model.Restaurant
+import com.example.domain.model.Review
 import com.example.domain.model.Sale
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,24 +17,22 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class SaleRepositoryImpl(
+class ReviewRepositoryImpl(
     private val saleDao: SaleDao,
     private val context: Context,
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore
-) : SaleRepository {
+) : ReviewRepository {
 
     companion object {
-        private const val SALES_TABLE = "sales"
-        private const val SALE_TABLE_COLUMN_ID = "id"
-        private const val SALE_TABLE_COLUMN_TITLE = "title"
-        private const val SALE_TABLE_COLUMN_DESC = "description"
-        private const val SALE_TABLE_COLUMN_ID_REST = "id_rest"
-        private const val SALE_TABLE_COLUMN_TITLE_REST = "title_restaurant"
-        private const val SALE_TABLE_COLUMN_IMAGE = "image"
+        private const val REVIEW_TABLE = "sales"
+        private const val REVIEW_TABLE_TABLE_COLUMN_ID = "id"
+        private const val REVIEW_TABLE_TABLE_COLUMN_TITLE = "title"
+        private const val REVIEW_TABLE_TABLE_COLUMN_DESC = "description"
+        private const val REVIEW_TABLE_TABLE_COLUMN_ID_REST = "id_rest"
     }
 
-    override suspend fun getListSales(): List<Sale> {
+    override suspend fun getListReview(): List<Review> {
         var saleConverterImpl = SaleConverterImpl()
         var listResult: ArrayList<Sale> = ArrayList()
         return suspendCoroutine { continuation ->

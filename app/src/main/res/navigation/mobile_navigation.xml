@@ -8,9 +8,9 @@
 
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_restaurants"
         android:name="com.example.eatbook.ui.restaurants.list.RestaurantFragment"
-        android:label="@string/title_home"
+        android:label="@string/ic_restaurants_title"
         tools:layout="@layout/fragment_list_rest" >
         <action
             android:id="@+id/action_navigation_home_to_navigation_rest_detail"
@@ -20,7 +20,48 @@
     <fragment
         android:id="@+id/navigation_rest_detail"
         android:name="com.example.eatbook.ui.restaurants.detail.RestaurantDetailFragment"
-        tools:layout="@layout/fragment_restaurant_detail"/>
+        tools:layout="@layout/fragment_restaurant_detail">
+        <action
+            android:id="@+id/action_navigation_rest_detail_to_navigation_sign_in"
+            app:destination="@id/navigation_sign_in" />
+        <action
+            android:id="@+id/action_navigation_rest_detail_to_navigation_rest_tables"
+            app:destination="@id/navigation_rest_tables" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_rest_book"
+        android:name="com.example.eatbook.ui.tables.booking.BookTableFragment"
+        tools:layout="@layout/fragment_book_rest">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_rest_tables"
+        android:name="com.example.eatbook.ui.tables.TableFragment"
+        tools:layout="@layout/fragment_list_table">
+        <action
+            android:id="@+id/action_navigation_rest_tables_to_navigation_rest_book"
+            app:destination="@id/navigation_rest_book" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_sale"
+        android:name="com.example.eatbook.ui.sales.list.SaleFragment"
+        tools:layout="@layout/fragment_list_sale">
+        <action
+            android:id="@+id/action_navigation_sale_to_navigation_sale_detail"
+            app:destination="@id/navigation_sale_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_sale_detail"
+        android:name="com.example.eatbook.ui.sales.detail.SaleDetailFragment"
+        tools:layout="@layout/fragment_sale_detail">
+        <action
+            android:id="@+id/action_navigation_sale_detail_to_navigation_rest_detail"
+            app:destination="@id/navigation_rest_detail" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_verify"
@@ -34,7 +75,7 @@
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.eatbook.ui.profile.ProfileFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/ic_profile_title"
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_navigation_profile_to_navigation_sign_in"
@@ -42,9 +83,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_favourites"
         android:name="com.example.eatbook.ui.sales.list.SaleFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/ic_favourite_title"
         tools:layout="@layout/fragment_notifications" />
 
     <fragment

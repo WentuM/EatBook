@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.sales.list
+package com.example.eatbook.ui.restaurants.reviews
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,15 +9,17 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
+import com.example.eatbook.ui.sales.list.SaleAdapter
+import com.example.eatbook.ui.sales.list.SaleViewModel
 import kotlinx.android.synthetic.main.fragment_list_sale.*
 import javax.inject.Inject
 
-class SaleFragment : Fragment(), SaleAdapter.SaleItemHandler {
+class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
 
     @Inject
-    lateinit var saleViewModel: SaleViewModel
+    lateinit var reviewViewModel: ReviewViewModel
     private lateinit var application: EatBookApp
-    private val saleAdapter = SaleAdapter(this)
+    private val reviewAdapter = ReviewAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,18 +35,17 @@ class SaleFragment : Fragment(), SaleAdapter.SaleItemHandler {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sale_list.adapter = saleAdapter
+        sale_list.adapter = reviewAdapter
 
-        saleViewModel.sales().observe(viewLifecycleOwner, Observer {
-            saleAdapter.submitList(it)
+        reviewViewModel.reviews().observe(viewLifecycleOwner, Observer {
+            reviewAdapter.submitList(it)
         })
 
         saleViewModel.getAllSales()
     }
 
-    override fun onClick(idSale: String) {
+    override fun onItemClick(idReview: String) {
         var bundle = Bundle()
-        bundle.putString("idSale", idSale)
-        findNavController().navigate(R.id.action_navigation_sale_to_navigation_sale_detail, bundle)
+        bundle.putString("idSale", idReview)
     }
 }
