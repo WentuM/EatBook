@@ -16,5 +16,9 @@ data class ReviewEntity(
     @ColumnInfo(name = "idUser")
     val idUser: String,
     @ColumnInfo(name = "date")
-    val dateSend: Date
+    val dateSend: String,
+    @ColumnInfo(name = "rating")
+    var raiting: Double,
+    @ColumnInfo(name = "idRest")
+    val idRest: String
 )

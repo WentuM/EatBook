@@ -1,18 +1,9 @@
 package com.example.data.di.module
 
 import android.content.Context
-import com.example.data.database.dao.RestaurantDao
-import com.example.data.database.dao.SaleDao
-import com.example.data.database.dao.TableDao
-import com.example.data.database.dao.UserDao
-import com.example.data.repository.RestaurantRepositoryImpl
-import com.example.data.repository.SaleRepositoryImpl
-import com.example.data.repository.TableRepositoryImpl
-import com.example.data.repository.UserRepositoryImpl
-import com.example.domain.interfaces.RestaurantRepository
-import com.example.domain.interfaces.SaleRepository
-import com.example.domain.interfaces.TableRepository
-import com.example.domain.interfaces.UserRepository
+import com.example.data.database.dao.*
+import com.example.data.repository.*
+import com.example.domain.interfaces.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -41,4 +32,9 @@ class RepositoryModule {
     @Singleton
     fun provideTableRepository(tableDao: TableDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): TableRepository =
         TableRepositoryImpl(tableDao, context, firebaseAuth, firestore)
+
+    @Provides
+    @Singleton
+    fun provideReviewRepository(reviewDao: ReviewDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): ReviewRepository =
+        ReviewRepositoryImpl(reviewDao, context, firebaseAuth, firestore)
 }

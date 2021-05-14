@@ -8,7 +8,5 @@ class SignInViewModel(
 ): ViewModel() {
 
 
-    fun getCurrentUser(): Boolean = userInteractor.getCurrentUser()
-
-//    fun getVerificationCode(numberPhone: String, activity: Activity): String = userInteractor.getVerificationCode(numberPhone, activity)
+    fun getCurrentUser(): Boolean = userInteractor.loggedUser()
 }

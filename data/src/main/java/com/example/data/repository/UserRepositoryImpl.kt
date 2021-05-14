@@ -35,9 +35,9 @@ class UserRepositoryImpl(
         private const val USER_TABLE_COLUMN_IMAGE = "image"
     }
 
-    override suspend fun getUserById(): User {
+    override suspend fun getCurrentUser(): User {
         var userId = firebaseAuth.currentUser?.uid
-        var user: User = User("", "")
+        var user: User = User("", "", "")
 //        firebaseAuth.uid?.let {
         return suspendCoroutine { continuation ->
             //suspendCancellableCoroutine
@@ -178,7 +178,7 @@ class UserRepositoryImpl(
         return result
     }
 
-    override fun getCurrentUser(): Boolean {
+    override fun loggedUser(): Boolean {
         if (firebaseAuth.currentUser != null) {
             return true
         }

@@ -30,5 +30,5 @@ class RestaurantDetailViewModel(
         }
     }
 
-    fun getCurrentUser(): Boolean = userInteractor.getCurrentUser()
+    fun getCurrentUser(): Boolean = userInteractor.loggedUser()
 }

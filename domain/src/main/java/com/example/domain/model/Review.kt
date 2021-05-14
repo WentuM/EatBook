@@ -5,6 +5,8 @@ import java.sql.Date
 data class Review(
     val id: String,
     val text: String,
-    val idUser: String,
-    val dateSend: Date
+    val userName: String,
+    val dateSend: String,
+    val rating: Double,
+    val idRest: String
 )

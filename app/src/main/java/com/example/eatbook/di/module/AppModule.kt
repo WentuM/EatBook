@@ -2,14 +2,8 @@ package com.example.eatbook.di.module
 
 import android.app.Application
 import android.content.Context
-import com.example.domain.interactor.RestaurantInteractor
-import com.example.domain.interactor.SaleInteractor
-import com.example.domain.interactor.TableInteractor
-import com.example.domain.interactor.UserInteractor
-import com.example.domain.interfaces.RestaurantRepository
-import com.example.domain.interfaces.SaleRepository
-import com.example.domain.interfaces.TableRepository
-import com.example.domain.interfaces.UserRepository
+import com.example.domain.interactor.*
+import com.example.domain.interfaces.*
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +35,12 @@ class AppModule() {
     @Singleton
     fun provideTableInteractor(tableRepository: TableRepository, context: CoroutineContext): TableInteractor {
         return TableInteractor(tableRepository, context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideReviewInteractor(reviewRepository: ReviewRepository, userRepository: UserRepository,context: CoroutineContext): ReviewInteractor {
+        return ReviewInteractor(reviewRepository, userRepository, context)
     }
 
     @Provides

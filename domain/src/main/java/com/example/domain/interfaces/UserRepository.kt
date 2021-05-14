@@ -6,7 +6,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 
 interface UserRepository {
 
-    suspend fun getUserById(): User
+    suspend fun getCurrentUser(): User
 
     suspend fun authUser(storedVerificationId: String, otp: String): String
 
@@ -14,7 +14,7 @@ interface UserRepository {
 
     suspend fun signOut(): String
 
-    fun getCurrentUser(): Boolean
+    fun loggedUser(): Boolean
 
 //    fun signIn(numberPhone: String, activity: Activity): String
 }

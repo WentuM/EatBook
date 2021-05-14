@@ -32,12 +32,12 @@ class ProfileViewModel(
         }
     }
 
-    fun getCurrentUser(): Boolean = userInteractor.getCurrentUser()
+    fun getCurrentUser(): Boolean = userInteractor.loggedUser()
 
     fun onGetUser() {
         viewModelScope.launch {
             try {
-                mGetUser.value = userInteractor.getUserById()
+                mGetUser.value = userInteractor.getCurrentUser()
             } catch (e: Exception) {
                 Log.d("qwe166", e.toString())
 //                resultString.value = e.toString()

@@ -7,6 +7,8 @@
     <string name="edit_btn_profile">Edit Button</string>
     <string name="title_sign_in">Войти</string>
     <string name="book_table">Забронировать</string>
+    <string name="btn_review_write">Написать отзыв</string>
+    <string name="txv_reviews">Отзывы</string>
     <string name="txv_description">Описание</string>
     <string name="btn_redirect_rest">Перейти к ресторану</string>
     <string name="cancel_table">Отмена</string>

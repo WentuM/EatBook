@@ -3,10 +3,9 @@ package com.example.eatbook.ui.restaurants.reviews.di
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.domain.interactor.UserInteractor
+import com.example.domain.interactor.ReviewInteractor
 import com.example.eatbook.di.component.ViewModelKey
 import com.example.eatbook.di.module.ViewModelModule
-import com.example.eatbook.ui.profile.ProfileViewModel
 import com.example.eatbook.ui.restaurants.reviews.ReviewViewModel
 import dagger.Module
 import dagger.Provides

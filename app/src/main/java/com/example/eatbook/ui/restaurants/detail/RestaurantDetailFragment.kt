@@ -73,6 +73,11 @@ class RestaurantDetailFragment : Fragment() {
                 findNavController().navigate(R.id.action_navigation_rest_detail_to_navigation_rest_tables, bundle)
             }
         }
+        btn_rest_reviews.setOnClickListener {
+            var bundle = Bundle()
+            bundle.putString("idRestaurant", idRestaurant)
+            findNavController().navigate(R.id.action_navigation_rest_detail_to_navigation_review, bundle)
+        }
     }
 
 }
