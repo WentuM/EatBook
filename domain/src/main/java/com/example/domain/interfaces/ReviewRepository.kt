@@ -6,8 +6,6 @@ interface ReviewRepository {
 
     suspend fun getListReview(idRestaurant: String): List<Review>
 
-    suspend fun getReviewById(id: String): Review
-
     suspend fun createReviewByUser(review: Review): String
 
 }

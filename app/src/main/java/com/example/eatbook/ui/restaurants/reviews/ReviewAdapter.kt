@@ -9,7 +9,7 @@ import com.example.eatbook.R
 
 class ReviewAdapter(
     private val itemHandler: ReviewItemHandler
-) : ListAdapter<Review, ReviewHolder>(reviewCallback) {
+) : ListAdapter<ReviewList, ReviewHolder>(reviewCallback) {
 
     interface ReviewItemHandler {
         fun onItemClick(idReview: String)
@@ -25,13 +25,13 @@ class ReviewAdapter(
     }
 }
 
-private val reviewCallback = object : DiffUtil.ItemCallback<Review>() {
+private val reviewCallback = object : DiffUtil.ItemCallback<ReviewList>() {
 
-    override fun areItemsTheSame(oldItem: Review, newItem: Review): Boolean {
+    override fun areItemsTheSame(oldItem: ReviewList, newItem: ReviewList): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Review, newItem: Review): Boolean {
+    override fun areContentsTheSame(oldItem: ReviewList, newItem: ReviewList): Boolean {
         return oldItem == newItem
     }
 }

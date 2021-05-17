@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
 import com.example.eatbook.ui.tables.booking.BookTableFragment
@@ -54,7 +55,7 @@ class ProfileFragment : Fragment() {
     private fun initFields() {
         with(profileViewModel) {
             getUser().observe(viewLifecycleOwner, Observer {
-                profile_image.setImageResource(R.drawable.prifile)
+                Glide.with(this@ProfileFragment).load(it.image).into(profile_image)
                 txv_profile_city.text = "Казань"
                 txv_profile_number.text = it.numberPhone
                 txv_profile_name.text = it.username

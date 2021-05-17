@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey
 data class UserEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: String,
+    var id: String = "",
     @ColumnInfo(name = "phone")
-    var phone: String,
+    var phone: String = "",
     @ColumnInfo(name = "username")
-    var username: String,
+    var username: String = "",
     @ColumnInfo(name = "image")
-    var image: String
+    var image: String = ""
 )

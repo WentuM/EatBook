@@ -14,14 +14,10 @@ class ReviewInteractor(
     private val userRepository: UserRepository,
     private val context: CoroutineContext
 ) {
-    suspend fun getReviewById(id: String): Review =
-        withContext(context) {
-            reviewRepository.getReviewById(id)
-        }
 
-    suspend fun getAllReview(idRestaurant: String): ArrayList<Review> =
+    suspend fun getAllReview(idRestaurant: String): List<Review> =
         withContext(context) {
-            reviewRepository.getListReview(idRestaurant) as ArrayList<Review>
+            reviewRepository.getListReview(idRestaurant)
         }
 
     suspend fun createReview(review: Review): String =

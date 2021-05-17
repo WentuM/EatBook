@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.dialog_review_create.view.*
 import kotlinx.android.synthetic.main.fragment_list_review.*
 import kotlinx.android.synthetic.main.fragment_list_sale.*
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -31,8 +32,6 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
     private lateinit var application: EatBookApp
     private val reviewAdapter = ReviewAdapter(this)
     private var idRestaurant: String = ""
-    private var user: User = User("", "", "")
-    private var countReview = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +48,7 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
         EatBookApp.appComponent.reviewListComponentFactory()
             .create(this).inject(this)
         val root = inflater.inflate(R.layout.fragment_list_review, container, false)
+        reviewViewModel.getAllReviews(idRestaurant)
         return root
     }
 
@@ -59,14 +59,9 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
 
         reviewViewModel.reviews().observe(viewLifecycleOwner, Observer {
             reviewAdapter.submitList(it)
-            countReview = it.size
-        })
-        reviewViewModel.user().observe(viewLifecycleOwner, Observer {
-            user = it
+            txv_reviews_count.text = it.size.toString()
         })
 
-        reviewViewModel.getAllReviews(idRestaurant)
-        reviewViewModel.getUser()
 
         initField()
         initClick()
@@ -78,7 +73,7 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
     }
 
     private fun initField() {
-        txv_reviews_count.text = countReview.toString()
+
     }
 
     private fun initClick() {
@@ -92,31 +87,36 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
     }
 
     private fun showReviewDialog() {
-        var text = ""
-        reviewViewModel.review().observe(viewLifecycleOwner, Observer {
-            text = it
-        })
         val reviewdialog = AlertDialog.Builder(activity)
         var reviewView = layoutInflater.inflate(R.layout.dialog_review_create, null)
         reviewdialog.setView(reviewView)
 
         reviewdialog.setTitle("Ваш отзыв")
         reviewdialog.setCancelable(false)
-            .setPositiveButton("Оставить отзыв", object: DialogInterface.OnClickListener {
+            .setPositiveButton("Оставить отзыв", object : DialogInterface.OnClickListener {
                 override fun onClick(p0: DialogInterface?, p1: Int) {
+                    reviewViewModel.getUser()
+
+                    val sdf = SimpleDateFormat("dd/M/yyyy HH:mm")
+                    val currentDate: String = sdf.format(Date())
                     var textReview: String = reviewView.review_text.text.toString()
-                    Log.d("qweRaiting", reviewView.review_text.text.toString())
                     var rating: Double = reviewView.ratingbar_review_create.rating.toDouble()
-                    Log.d("qweRaiting", reviewView.ratingbar_review_create.rating.toString())
                     var id = UUID.randomUUID().toString()
-                    var review: Review = Review(id, text, user.id, "date", rating, idRestaurant)
-                    reviewViewModel.createReview(review)
-                    Toast.makeText(activity, text, Toast.LENGTH_LONG).show()
+
+                    reviewViewModel.user().observe(viewLifecycleOwner, Observer {
+                        var review: Review =
+                            Review(id, textReview, currentDate, rating, idRestaurant)
+                        reviewViewModel.createReview(review)
+                    })
+
+                    reviewViewModel.review().observe(viewLifecycleOwner, Observer {
+                        Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+                    })
                     p0?.dismiss()
                 }
 
             })
-            .setNegativeButton("Отмена", object: DialogInterface.OnClickListener {
+            .setNegativeButton("Отмена", object : DialogInterface.OnClickListener {
                 override fun onClick(p0: DialogInterface?, p1: Int) {
                     p0?.cancel()
                 }

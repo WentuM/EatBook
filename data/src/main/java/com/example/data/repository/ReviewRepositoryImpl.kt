@@ -1,24 +1,26 @@
 package com.example.data.repository
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import com.example.data.database.dao.ReviewDao
+import com.example.data.database.dao.UserDao
 import com.example.data.database.entity.ReviewEntity
+import com.example.data.database.entity.UserEntity
+import com.example.data.firebase.response.ReviewResponse
+import com.example.data.firebase.response.UserResponse
 import com.example.data.mappers.ReviewConverterImpl
+import com.example.data.mappers.UserConverterImpl
 import com.example.domain.interfaces.ReviewRepository
 import com.example.domain.model.Review
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 
 class ReviewRepositoryImpl(
+    private val userDao: UserDao,
     private val reviewDao: ReviewDao,
     private val context: Context,
     private val firebaseAuth: FirebaseAuth,
@@ -29,77 +31,76 @@ class ReviewRepositoryImpl(
         private const val REVIEW_TABLE = "reviews"
         private const val REVIEW_TABLE_COLUMN_ID = "id"
         private const val REVIEW_TABLE_COLUMN_TEXT = "text"
-        private const val REVIEW_TABLE_COLUMN_ID_USER = "id_user"
-        private const val REVIEW_TABLE_COLUMN_ID_REST = "id_rest"
-        private const val REVIEW_TABLE_COLUMN_RAITING = "raiting"
-        private const val REVIEW_TABLE_COLUMN_DATE = "date"
+        private const val REVIEW_TABLE_COLUMN_ID_USER = "idUser"
+        private const val REVIEW_TABLE_COLUMN_ID_REST = "idRest"
+        private const val REVIEW_TABLE_COLUMN_RAITING = "rating"
+        private const val REVIEW_TABLE_COLUMN_DATE = "dateSend"
+
+        private const val USER_TABLE = "users"
+        private const val USER_TABLE_COLUMN_PHONE = "phone"
+        private const val USER_TABLE_COLUMN_USERNAME = "username"
+        private const val USER_TABLE_COLUMN_IMAGE = "image"
     }
+
+
+    //здесь получить полный список,
+    // а в другом методе получить этот готовый список, и по нему достать всех юзеров для отзывов
 
     override suspend fun getListReview(idRestaurant: String): List<Review> {
         var reviewConverterImpl = ReviewConverterImpl()
         var listResult: ArrayList<Review> = ArrayList()
-        return suspendCoroutine { continuation ->
-            firestore.collection(REVIEW_TABLE).whereEqualTo("id_rest", idRestaurant)
-                .get()
-                .addOnSuccessListener {
-                    for (document in it.documents) {
-                        var reviewMap: HashMap<String, String> =
-                            document.data as HashMap<String, String>
-                        var reviewEntity = ReviewEntity(
-                            reviewMap[REVIEW_TABLE_COLUMN_ID].toString(),
-                            reviewMap[REVIEW_TABLE_COLUMN_TEXT].toString(),
-                            reviewMap[REVIEW_TABLE_COLUMN_ID_USER].toString(),
-                            reviewMap[REVIEW_TABLE_COLUMN_DATE].toString(),
-//                            SimpleDateFormat(reviewMap[REVIEW_TABLE_COLUMN_ID_REST].toString()).parse("14-02-2018") as Date,
-                            reviewMap[REVIEW_TABLE_COLUMN_RAITING]!!.toDouble(),
-                            reviewMap[REVIEW_TABLE_COLUMN_ID_REST].toString()
-                        )
-                        var reviewModel =
-                            reviewConverterImpl.dbtoModel(reviewEntity)
+        return try {
+            var reviewList: MutableList<ReviewResponse> = firestore.collection(REVIEW_TABLE).whereEqualTo(REVIEW_TABLE_COLUMN_ID_REST, idRestaurant)
+                .get().await().toObjects(ReviewResponse::class.java)
+                    for (review in reviewList) {
+
+//                        var myReview = document.toObject(Review::class.java)
+//                        var reviewMap: HashMap<String, String> =
+//                            document.data as HashMap<String, String>
+//                        var userId = reviewMap[REVIEW_TABLE_COLUMN_ID].toString()
+                        var userEntity: UserEntity = getUserByReview(review.idUser)
+                        var reviewEntity = reviewConverterImpl.fbtoDb(reviewResponse = review)
+                        var reviewModel = reviewConverterImpl.dbtoModel(reviewEntity, userEntity)
+//                        try {
+//                            userResponse =
+//                                firestore.collection(USER_TABLE).document(review.idUser).get().await().toObject(UserResponse::class.java)!!
+//                            reviewConverterImpl.fbtoModel(reviewResponse = review, userResponse = userResponse)
+//                        } catch (e: Exception) {
+//                            userEntity = userDao.getUserById(review.idUser)
+//                            userResponse = userConverterImpl.dbtoFb(userEntity)
+//                            v
+//                        }
+//                        var reviewEntity = ReviewEntity(
+//                            reviewMap[REVIEW_TABLE_COLUMN_ID].toString(),
+//                            reviewMap[REVIEW_TABLE_COLUMN_TEXT].toString(),
+//                            userId,
+//                            reviewMap[REVIEW_TABLE_COLUMN_DATE].toString(),
+////                            SimpleDateFormat(reviewMap[REVIEW_TABLE_COLUMN_ID_REST].toString()).parse("14-02-2018") as Date,
+//                            reviewMap[REVIEW_TABLE_COLUMN_RAITING]!!.toDouble(),
+//                            reviewMap[REVIEW_TABLE_COLUMN_ID_REST].toString()
+//                        )
                         listResult.add(reviewModel)
                     }
-                    continuation.resume(listResult)
-                }.addOnFailureListener {
-                    //room db
-                    continuation.resumeWithException(it)
-                }
-        }
-    }
-
-    override suspend fun getReviewById(id: String): Review {
-        return suspendCoroutine { continuation ->
-            firestore.collection(REVIEW_TABLE).document(id).get()
-                .addOnSuccessListener {
-                    var reviewMap: HashMap<String, String?> = it.data as HashMap<String, String?>
-                    var reviewEntity = ReviewEntity(
-                        reviewMap[REVIEW_TABLE_COLUMN_ID].toString(),
-                        reviewMap[REVIEW_TABLE_COLUMN_TEXT].toString(),
-                        reviewMap[REVIEW_TABLE_COLUMN_ID_USER].toString(),
-                        reviewMap[REVIEW_TABLE_COLUMN_DATE].toString(),
-//                            SimpleDateFormat(reviewMap[REVIEW_TABLE_COLUMN_ID_REST].toString()).parse("14-02-2018") as Date,
-                        reviewMap[REVIEW_TABLE_COLUMN_RAITING]!!.toDouble(),
-                        reviewMap[REVIEW_TABLE_COLUMN_ID_REST].toString()
-                    )
-                    var reviewConverterImpl = ReviewConverterImpl()
-                    var reviewModel =
-                        reviewConverterImpl.dbtoModel(reviewEntity)
-                    continuation.resume(reviewModel)
-                }
+            listResult
+        } catch (e: Exception) {
+            //b
+            return emptyList()
         }
     }
 
     override suspend fun createReviewByUser(review: Review): String {
+        var userId = firebaseAuth.currentUser?.uid
         var reviewConverterImpl = ReviewConverterImpl()
-        var reviewEntity =
+        var reviewEntity: ReviewEntity =
             reviewConverterImpl.modeltoDb(review)
         return suspendCoroutine { continuation ->
             val reviewMap = mutableMapOf<String, Any>()
             reviewMap[REVIEW_TABLE_COLUMN_ID] = reviewEntity.id
             reviewMap[REVIEW_TABLE_COLUMN_TEXT] = reviewEntity.text
-            reviewMap[REVIEW_TABLE_COLUMN_ID_USER] = reviewEntity.idUser
+            reviewMap[REVIEW_TABLE_COLUMN_ID_USER] = userId.toString()
             reviewMap[REVIEW_TABLE_COLUMN_DATE] = reviewEntity.dateSend
 //                            SimpleDateFormat(reviewMap[REVIEW_TABLE_COLUMN_ID_REST].toString()).parse("14-02-2018") as Date,
-            reviewMap[REVIEW_TABLE_COLUMN_RAITING] = reviewEntity.raiting.toString()
+            reviewMap[REVIEW_TABLE_COLUMN_RAITING] = reviewEntity.rating
             reviewMap[REVIEW_TABLE_COLUMN_ID_REST] = reviewEntity.idRest
             firestore.collection(REVIEW_TABLE).document(reviewEntity.id).set(reviewMap)
                 .addOnSuccessListener {
@@ -107,6 +108,21 @@ class ReviewRepositoryImpl(
                 }.addOnFailureListener {
                     continuation.resume("Отзыв не был оставлен")
                 }
+        }
+    }
+
+    private suspend fun getUserByReview(userId: String): UserEntity {
+        var userConverterImpl = UserConverterImpl()
+        return try {
+            var userEntity = UserEntity()
+            var userResponse: UserResponse? = firestore.collection(USER_TABLE).document(userId).get().await().toObject(UserResponse::class.java)
+
+            if (userResponse != null) {
+                userEntity = userConverterImpl.fbtoDb(userResponse)
+            }
+            userEntity
+        } catch (e: Exception) {
+            userDao.getUserById(userId)
         }
     }
 }

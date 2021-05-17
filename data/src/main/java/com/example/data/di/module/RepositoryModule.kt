@@ -35,6 +35,6 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideReviewRepository(reviewDao: ReviewDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): ReviewRepository =
-        ReviewRepositoryImpl(reviewDao, context, firebaseAuth, firestore)
+    fun provideReviewRepository(userDao: UserDao, reviewDao: ReviewDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): ReviewRepository =
+        ReviewRepositoryImpl(userDao, reviewDao, context, firebaseAuth, firestore)
 }

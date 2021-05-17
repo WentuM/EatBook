@@ -10,14 +10,13 @@ import kotlinx.android.synthetic.main.dialog_review_create.view.*
 
 class ReviewHolder(containerView: View) : RecyclerView.ViewHolder(containerView) {
 
-    fun bind(review: Review, itemHandler: ReviewAdapter.ReviewItemHandler) {
+    fun bind(review: ReviewList, itemHandler: ReviewAdapter.ReviewItemHandler) {
         with(itemView) {
             review_username.text = review.userName
             review_raiting.rating = review.rating.toFloat()
             review_date.text = review.dateSend
             txv_review_text.text = review.text
-
-//            Glide.with(itemView).load(restaurant.imageRest).into(rest_image)
+            Glide.with(itemView).load(review.userImage).into(review_image)
         }
     }
 }

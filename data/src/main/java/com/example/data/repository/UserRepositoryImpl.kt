@@ -33,11 +33,12 @@ class UserRepositoryImpl(
         private const val USER_TABLE_COLUMN_PHONE = "phone"
         private const val USER_TABLE_COLUMN_USERNAME = "username"
         private const val USER_TABLE_COLUMN_IMAGE = "image"
+        private const val DEFAULT_USER_IMAGE = "https://firebasestorage.googleapis.com/v0/b/eatbook-5d561.appspot.com/o/users%2Fdefault-profile-picture1.jpg?alt=media&token=1e75488c-2fc5-46a9-9a18-39fd8f74847d"
     }
 
     override suspend fun getCurrentUser(): User {
         var userId = firebaseAuth.currentUser?.uid
-        var user: User = User("", "", "")
+        var user: User = User("", "", "", "")
 //        firebaseAuth.uid?.let {
         return suspendCoroutine { continuation ->
             //suspendCancellableCoroutine
@@ -47,10 +48,13 @@ class UserRepositoryImpl(
                     var userMap: HashMap<String, String> = it.data as HashMap<String, String>
                     var username = userMap[USER_TABLE_COLUMN_USERNAME].toString()
                     var userPhone = userMap[USER_TABLE_COLUMN_PHONE].toString()
+                    var image = userMap[USER_TABLE_COLUMN_IMAGE].toString()
                     Log.d("qwe1", username)
                     Log.d("qwe2", userPhone)
+                    user.id = userId
                     user.username = username
                     user.numberPhone = userPhone
+                    user.image = image
                     continuation.resume(user)
                 }.addOnFailureListener {
                     continuation.resumeWithException(it)
@@ -159,6 +163,7 @@ class UserRepositoryImpl(
         userMap[USER_TABLE_COLUMN_ID] = uid
         userMap[USER_TABLE_COLUMN_PHONE] = firebaseAuth.currentUser?.phoneNumber.toString()
         userMap[USER_TABLE_COLUMN_USERNAME] = ""
+        userMap[USER_TABLE_COLUMN_IMAGE] = DEFAULT_USER_IMAGE
 //        return suspendCoroutine { continuation ->
         firestore.collection(USER_TABLE).document(uid).set(userMap)
             .addOnSuccessListener {
