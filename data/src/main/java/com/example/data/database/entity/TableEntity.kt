@@ -12,5 +12,9 @@ data class TableEntity(
     @ColumnInfo(name = "title")
     val title: String,
     @ColumnInfo(name = "count_places")
-    val countPlaces: String
+    val countPlaces: Int,
+    @ColumnInfo(name = "image")
+    val image: String,
+    @ColumnInfo(name = "id_rest")
+    val idRest: String
 )

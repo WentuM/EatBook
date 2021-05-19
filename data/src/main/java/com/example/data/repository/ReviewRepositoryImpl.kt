@@ -53,32 +53,10 @@ class ReviewRepositoryImpl(
             var reviewList: MutableList<ReviewResponse> = firestore.collection(REVIEW_TABLE).whereEqualTo(REVIEW_TABLE_COLUMN_ID_REST, idRestaurant)
                 .get().await().toObjects(ReviewResponse::class.java)
                     for (review in reviewList) {
-
-//                        var myReview = document.toObject(Review::class.java)
-//                        var reviewMap: HashMap<String, String> =
-//                            document.data as HashMap<String, String>
-//                        var userId = reviewMap[REVIEW_TABLE_COLUMN_ID].toString()
                         var userEntity: UserEntity = getUserByReview(review.idUser)
                         var reviewEntity = reviewConverterImpl.fbtoDb(reviewResponse = review)
                         var reviewModel = reviewConverterImpl.dbtoModel(reviewEntity, userEntity)
-//                        try {
-//                            userResponse =
-//                                firestore.collection(USER_TABLE).document(review.idUser).get().await().toObject(UserResponse::class.java)!!
-//                            reviewConverterImpl.fbtoModel(reviewResponse = review, userResponse = userResponse)
-//                        } catch (e: Exception) {
-//                            userEntity = userDao.getUserById(review.idUser)
-//                            userResponse = userConverterImpl.dbtoFb(userEntity)
-//                            v
-//                        }
-//                        var reviewEntity = ReviewEntity(
-//                            reviewMap[REVIEW_TABLE_COLUMN_ID].toString(),
-//                            reviewMap[REVIEW_TABLE_COLUMN_TEXT].toString(),
-//                            userId,
-//                            reviewMap[REVIEW_TABLE_COLUMN_DATE].toString(),
-////                            SimpleDateFormat(reviewMap[REVIEW_TABLE_COLUMN_ID_REST].toString()).parse("14-02-2018") as Date,
-//                            reviewMap[REVIEW_TABLE_COLUMN_RAITING]!!.toDouble(),
-//                            reviewMap[REVIEW_TABLE_COLUMN_ID_REST].toString()
-//                        )
+
                         listResult.add(reviewModel)
                     }
             listResult
@@ -99,7 +77,6 @@ class ReviewRepositoryImpl(
             reviewMap[REVIEW_TABLE_COLUMN_TEXT] = reviewEntity.text
             reviewMap[REVIEW_TABLE_COLUMN_ID_USER] = userId.toString()
             reviewMap[REVIEW_TABLE_COLUMN_DATE] = reviewEntity.dateSend
-//                            SimpleDateFormat(reviewMap[REVIEW_TABLE_COLUMN_ID_REST].toString()).parse("14-02-2018") as Date,
             reviewMap[REVIEW_TABLE_COLUMN_RAITING] = reviewEntity.rating
             reviewMap[REVIEW_TABLE_COLUMN_ID_REST] = reviewEntity.idRest
             firestore.collection(REVIEW_TABLE).document(reviewEntity.id).set(reviewMap)

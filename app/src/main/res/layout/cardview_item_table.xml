@@ -17,7 +17,7 @@
 
         <ImageView
             android:id="@+id/table_image"
-            android:layout_width="200dp"
+            android:layout_width="180dp"
             android:layout_height="140dp"
             android:background="#2d2d2d"
             android:scaleType="centerCrop"
@@ -31,9 +31,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="36dp"
             android:gravity="center"
-            tools:text="Столик номер  5"
+            tools:text="Столик номер 5"
             android:textColor="@color/blackText"
-            android:textSize="15sp"
+            android:textSize="17sp"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintStart_toEndOf="@+id/table_image"
             cardview:layout_constraintTop_toTopOf="parent" />
@@ -46,9 +46,9 @@
             android:layout_marginTop="24dp"
             android:gravity="center"
             android:maxLength="30"
-            tools:text="Количество человек:"
+            android:text="@string/count_people"
             android:textColor="@color/blackText"
-            android:textSize="15sp"
+            android:textSize="14sp"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintStart_toEndOf="@+id/table_image"
             cardview:layout_constraintTop_toBottomOf="@id/table_title" />

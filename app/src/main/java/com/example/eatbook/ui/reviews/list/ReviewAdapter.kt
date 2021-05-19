@@ -1,11 +1,11 @@
-package com.example.eatbook.ui.restaurants.reviews
+package com.example.eatbook.ui.reviews.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.domain.model.Review
 import com.example.eatbook.R
+import com.example.eatbook.ui.reviews.list.model.ReviewList
 
 class ReviewAdapter(
     private val itemHandler: ReviewItemHandler

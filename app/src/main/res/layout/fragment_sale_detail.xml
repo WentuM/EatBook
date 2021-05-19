@@ -36,6 +36,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgv_sale" />
 
+        <TextView
+            android:id="@+id/txv_rest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/eater"
+            android:text="@string/txv_rest"
+            android:textColor="@color/blackText"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sale_title" />
+
 
         <TextView
             android:id="@+id/txv_rest_title"
@@ -46,8 +59,8 @@
             android:fontFamily="@font/eater"
             tools:text="Пикник у дома"
             android:textColor="@color/blackText"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/txv_rest"
             app:layout_constraintTop_toBottomOf="@+id/sale_title" />
 
         <TextView

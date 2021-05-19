@@ -19,7 +19,6 @@ class RestaurantHolder(containerView: View) : RecyclerView.ViewHolder(containerV
             setOnClickListener {
                 itemHandler.onItemClick(restaurant.id)
             }
-
             btn_rest_favourite.setOnClickListener {
 //                itemHandler.onClick(restaurant.id)
             }

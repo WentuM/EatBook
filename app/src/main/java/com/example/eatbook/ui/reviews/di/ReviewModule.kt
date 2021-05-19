@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.restaurants.reviews.di
+package com.example.eatbook.ui.reviews.di
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.domain.interactor.ReviewInteractor
 import com.example.eatbook.di.component.ViewModelKey
 import com.example.eatbook.di.module.ViewModelModule
-import com.example.eatbook.ui.restaurants.reviews.ReviewViewModel
+import com.example.eatbook.ui.reviews.list.ReviewViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap

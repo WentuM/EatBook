@@ -1,6 +1,7 @@
 package com.example.eatbook.ui.tables.di
 
 import androidx.fragment.app.Fragment
+import com.example.eatbook.ui.tables.list.TableFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -13,5 +14,5 @@ interface TableComponent {
         fun create(@BindsInstance fragment: Fragment): TableComponent
     }
 
-    fun inject(tableFragment: Fragment)
+    fun inject(tableFragment: TableFragment)
 }

@@ -27,4 +27,6 @@
     <string name="panel_reg_title">Авторизация профиля</string>
     <string name="prompt_number">Ваш телефон без (+7)</string>
     <string name="btn_sign_up">Авторизироваться</string>
+    <string name="count_people">Количество человек:</string>
+    <string name="txv_rest">Ресторан:</string>
 </resources>

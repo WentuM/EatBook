@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.tables
+package com.example.eatbook.ui.tables.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

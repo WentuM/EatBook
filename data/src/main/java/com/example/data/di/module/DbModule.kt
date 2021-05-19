@@ -36,4 +36,7 @@ class DbModule {
     @Provides
     @Singleton
     fun provideReviewDao(db: EatBookRoomDatabase): ReviewDao = db.reviewDao()
+
+    @Provides
+    fun provideBookTableDao(db: EatBookRoomDatabase): BookTableDao = db.bookTableDao()
 }

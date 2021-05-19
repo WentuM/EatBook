@@ -8,7 +8,7 @@ import com.example.data.database.dao.*
 import com.example.data.database.entity.*
 
 @Database(entities = arrayOf(UserEntity::class, RestaurantEntity::class,
-    SaleEntity::class, TableEntity::class, ReviewEntity::class), version = 7, exportSchema = false)
+    SaleEntity::class, TableEntity::class, ReviewEntity::class, BookTableEntity::class), version = 8, exportSchema = false)
 
 abstract class EatBookRoomDatabase : RoomDatabase() {
 
@@ -17,6 +17,7 @@ abstract class EatBookRoomDatabase : RoomDatabase() {
     abstract fun saleDao(): SaleDao
     abstract fun tableDao(): TableDao
     abstract fun reviewDao(): ReviewDao
+    abstract fun bookTableDao(): BookTableDao
 
     companion object {
         @Volatile

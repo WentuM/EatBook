@@ -1,12 +1,10 @@
-package com.example.eatbook.ui.restaurants.reviews
+package com.example.eatbook.ui.reviews.list
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.domain.model.Review
-import kotlinx.android.synthetic.main.cardview_item_review.*
+import com.example.eatbook.ui.reviews.list.model.ReviewList
 import kotlinx.android.synthetic.main.cardview_item_review.view.*
-import kotlinx.android.synthetic.main.dialog_review_create.view.*
 
 class ReviewHolder(containerView: View) : RecyclerView.ViewHolder(containerView) {
 

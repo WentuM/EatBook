@@ -1,7 +1,6 @@
 package com.example.eatbook.ui.restaurants.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.domain.model.Restaurant
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
-import com.example.eatbook.ui.profile.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_restaurant_detail.*
 import javax.inject.Inject
@@ -54,9 +51,10 @@ class RestaurantDetailFragment : Fragment() {
             getRestaurant().observe(viewLifecycleOwner, Observer {
                 txv_rest_title.text = it.title
                 txv_rest_descr.text = it.description
-                txv_rest_raiting.text = it.raiting.toString()
+                txv_rest_raiting.text = it.rating.toString()
                 txv_rest_price.text = it.price.toString() + " ₽"
-                ratingbar_rest.rating = it.raiting.toFloat()
+                txv_rest_address.text = it.address
+                ratingbar_rest.rating = it.rating.toFloat()
                 Glide.with(this@RestaurantDetailFragment).load(it.imageRest).into(imgv_rest)
             })
         }

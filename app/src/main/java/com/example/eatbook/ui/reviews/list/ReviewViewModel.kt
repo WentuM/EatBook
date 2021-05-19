@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.restaurants.reviews
+package com.example.eatbook.ui.reviews.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.interactor.ReviewInteractor
 import com.example.domain.model.Review
 import com.example.domain.model.User
+import com.example.eatbook.ui.reviews.list.model.ReviewList
 import kotlinx.coroutines.launch
 
 class ReviewViewModel(

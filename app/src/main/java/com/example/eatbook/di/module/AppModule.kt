@@ -44,6 +44,11 @@ class AppModule() {
     }
 
     @Provides
+    fun provideBookTableInteractor(bookTableRepository: BookTableRepository, context: CoroutineContext): BookTableInteractor {
+        return BookTableInteractor(bookTableRepository, context)
+    }
+
+    @Provides
     @Singleton
     fun provideContext(application: Application): Context = application.applicationContext
 

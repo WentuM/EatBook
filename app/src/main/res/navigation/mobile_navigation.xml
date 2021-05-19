@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_sign_in">
+    app:startDestination="@+id/navigation_restaurants">
 
 
 
@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/navigation_review"
-        android:name="com.example.eatbook.ui.restaurants.reviews.ReviewFragment"
+        android:name="com.example.eatbook.ui.reviews.list.ReviewFragment"
         tools:layout="@layout/fragment_list_review">
 
         <action
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/navigation_rest_tables"
-        android:name="com.example.eatbook.ui.tables.TableFragment"
+        android:name="com.example.eatbook.ui.tables.list.TableFragment"
         tools:layout="@layout/fragment_list_table">
         <action
             android:id="@+id/action_navigation_rest_tables_to_navigation_rest_book"

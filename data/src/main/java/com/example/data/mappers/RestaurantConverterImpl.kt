@@ -21,7 +21,7 @@ class RestaurantConverterImpl : RestaurantConverter {
             restaurant.id,
             restaurant.title,
             restaurant.description,
-            restaurant.raiting,
+            restaurant.rating,
             restaurant.imageRest,
             restaurant.price,
             restaurant.address

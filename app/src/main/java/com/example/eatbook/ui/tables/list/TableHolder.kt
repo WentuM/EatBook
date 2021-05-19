@@ -1,19 +1,20 @@
-package com.example.eatbook.ui.tables
+package com.example.eatbook.ui.tables.list
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.domain.model.Table
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.cardview_item_table.*
 
 class TableHolder(override val containerView: View):
     RecyclerView.ViewHolder(containerView), LayoutContainer {
 
     fun bind(table: Table, itemHandler: TableAdapter.TableItemHandler) {
         with(itemView) {
-//            rest_title.text = restaurant.title
-//            rest_description.text = restaurant.description
-//            rest_price.text = restaurant.price.toString()
-//            Glide.with(containerView).load(restaurant.imageRest).into(rest_image)
+            table_title.text = table.title
+            table_count.text = table.countPlaces.toString()
+            Glide.with(containerView).load(table.image).into(table_image)
 
             setOnClickListener {
                 itemHandler.onClick(table.id)

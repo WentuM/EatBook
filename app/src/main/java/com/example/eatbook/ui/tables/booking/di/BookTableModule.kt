@@ -3,6 +3,7 @@ package com.example.eatbook.ui.tables.booking.di
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.domain.interactor.BookTableInteractor
 import com.example.domain.interactor.TableInteractor
 import com.example.eatbook.di.component.ViewModelKey
 import com.example.eatbook.di.module.ViewModelModule
@@ -17,7 +18,7 @@ class BookTableModule {
     @Provides
     @IntoMap
     @ViewModelKey(BookTableViewModel::class)
-    fun provideViewModel(interactor: TableInteractor): ViewModel {
+    fun provideViewModel(interactor: BookTableInteractor): ViewModel {
         return BookTableViewModel(
             interactor
         )

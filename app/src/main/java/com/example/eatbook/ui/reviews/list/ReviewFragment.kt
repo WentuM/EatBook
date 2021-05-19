@@ -1,9 +1,8 @@
-package com.example.eatbook.ui.restaurants.reviews
+package com.example.eatbook.ui.reviews.list
 
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.domain.model.Review
-import com.example.domain.model.User
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
-import com.example.eatbook.ui.sales.list.SaleAdapter
-import com.example.eatbook.ui.sales.list.SaleViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.dialog_review_create.view.*
 import kotlinx.android.synthetic.main.fragment_list_review.*
-import kotlinx.android.synthetic.main.fragment_list_sale.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject

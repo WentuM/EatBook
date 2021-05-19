@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.tables
+package com.example.eatbook.ui.tables.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,15 +10,21 @@ import androidx.navigation.fragment.findNavController
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
 import kotlinx.android.synthetic.main.fragment_list_table.*
-import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class TableFragment : Fragment(), TableAdapter.TableItemHandler {
 
     @Inject
     lateinit var tableViewModel: TableViewModel
-    private lateinit var application: EatBookApp
     private val tableAdapter = TableAdapter(this)
+    private var idRestaurant: String = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.getString("idRestaurant")?.let {
+            idRestaurant = it
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,20 +34,18 @@ class TableFragment : Fragment(), TableAdapter.TableItemHandler {
         EatBookApp.appComponent.tableListComponentFactory()
             .create(this).inject(this)
         val root = inflater.inflate(R.layout.fragment_list_table, container, false)
+        tableViewModel.getAllSales(idRestaurant)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        search_view.visibility = View.VISIBLE
 
         table_list.adapter = tableAdapter
 
         tableViewModel.tables().observe(viewLifecycleOwner, Observer {
             tableAdapter.submitList(it)
         })
-
-        tableViewModel.getAllSales()
     }
 
     override fun onClick(idTable: String) {

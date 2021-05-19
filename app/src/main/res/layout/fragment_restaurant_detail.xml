@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/imgv_rest"
             android:layout_width="0dp"
-            android:layout_height="256dp"
+            android:layout_height="240dp"
             android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +37,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgv_rest" />
 
+        <ImageView
+            android:id="@+id/imgv_rest_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_baseline_place_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txv_rest_address"
+            app:layout_constraintBottom_toBottomOf="@id/txv_rest_address"/>
+
+        <TextView
+            android:id="@+id/txv_rest_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/eater"
+            android:textColor="#333333"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/imgv_rest_place"
+            app:layout_constraintTop_toBottomOf="@+id/txv_rest_title"
+            tools:text="Крёмлёвская 35" />
+
         <RatingBar
             android:id="@+id/ratingbar_rest"
             android:clickable="false"
@@ -46,8 +68,8 @@
             android:layout_width="240dp"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/txv_rest_title"
-            app:layout_constraintTop_toBottomOf="@+id/txv_rest_title" />
+            app:layout_constraintStart_toStartOf="@+id/txv_rest_address"
+            app:layout_constraintTop_toBottomOf="@+id/txv_rest_address" />
 
         <TextView
             android:id="@+id/txv_rest_raiting"

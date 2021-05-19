@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.domain.interactor.TableInteractor
 import com.example.eatbook.di.component.ViewModelKey
 import com.example.eatbook.di.module.ViewModelModule
-import com.example.eatbook.ui.tables.TableViewModel
+import com.example.eatbook.ui.tables.list.TableViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap

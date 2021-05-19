@@ -1,4 +1,4 @@
-package com.example.eatbook.ui.restaurants.reviews
+package com.example.eatbook.ui.reviews.list.model
 
 data class ReviewList(
     val id: String = "",
