@@ -15,37 +15,66 @@ class AppModule() {
 
     @Provides
     @Singleton
-    fun provideUserInteractor(userRepository: UserRepository, context: CoroutineContext): UserInteractor {
+    fun provideUserInteractor(
+        userRepository: UserRepository,
+        context: CoroutineContext
+    ): UserInteractor {
         return UserInteractor(userRepository, context)
     }
 
     @Provides
     @Singleton
-    fun provideRestaurantInteractor(restaurantRepository: RestaurantRepository, context: CoroutineContext): RestaurantInteractor {
-        return RestaurantInteractor(restaurantRepository, context)
+    fun provideRestaurantInteractor(
+        restaurantRepository: RestaurantRepository,
+        favouritesRepository: FavouritesRepository,
+        context: CoroutineContext
+    ): RestaurantInteractor {
+        return RestaurantInteractor(restaurantRepository, favouritesRepository, context)
     }
 
     @Provides
     @Singleton
-    fun provideSaleInteractor(saleRepository: SaleRepository, context: CoroutineContext): SaleInteractor {
+    fun provideSaleInteractor(
+        saleRepository: SaleRepository,
+        context: CoroutineContext
+    ): SaleInteractor {
         return SaleInteractor(saleRepository, context)
     }
 
     @Provides
     @Singleton
-    fun provideTableInteractor(tableRepository: TableRepository, context: CoroutineContext): TableInteractor {
+    fun provideTableInteractor(
+        tableRepository: TableRepository,
+        context: CoroutineContext
+    ): TableInteractor {
         return TableInteractor(tableRepository, context)
     }
 
     @Provides
     @Singleton
-    fun provideReviewInteractor(reviewRepository: ReviewRepository, userRepository: UserRepository,context: CoroutineContext): ReviewInteractor {
+    fun provideReviewInteractor(
+        reviewRepository: ReviewRepository,
+        userRepository: UserRepository,
+        context: CoroutineContext
+    ): ReviewInteractor {
         return ReviewInteractor(reviewRepository, userRepository, context)
     }
 
     @Provides
-    fun provideBookTableInteractor(bookTableRepository: BookTableRepository, context: CoroutineContext): BookTableInteractor {
-        return BookTableInteractor(bookTableRepository, context)
+    fun provideBookTableInteractor(
+        bookTableRepository: BookTableRepository,
+        tableRepository: TableRepository,
+        context: CoroutineContext
+    ): BookTableInteractor {
+        return BookTableInteractor(bookTableRepository, tableRepository, context)
+    }
+
+    @Provides
+    fun provideFavouriteRestInteractor(
+        favouritesRepository: FavouritesRepository,
+        context: CoroutineContext
+    ): FavouritesInteractor {
+        return FavouritesInteractor(favouritesRepository, context)
     }
 
     @Provides

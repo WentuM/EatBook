@@ -15,30 +15,72 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userDao: UserDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): UserRepository =
+    fun provideUserRepository(
+        userDao: UserDao,
+        context: Context,
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): UserRepository =
         UserRepositoryImpl(userDao, context, firebaseAuth, firestore)
 
     @Provides
     @Singleton
-    fun provideRestaurantRepository(restaurantDao: RestaurantDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): RestaurantRepository =
-        RestaurantRepositoryImpl(restaurantDao, context, firebaseAuth, firestore)
+    fun provideRestaurantRepository(
+        restaurantDao: RestaurantDao,
+        favouriteRestDao: FavouriteRestDao,
+        context: Context,
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): RestaurantRepository =
+        RestaurantRepositoryImpl(restaurantDao, favouriteRestDao, context, firebaseAuth, firestore)
 
     @Provides
     @Singleton
-    fun provideSaleRepository(saleDao: SaleDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): SaleRepository =
+    fun provideSaleRepository(
+        saleDao: SaleDao,
+        context: Context,
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): SaleRepository =
         SaleRepositoryImpl(saleDao, context, firebaseAuth, firestore)
 
     @Provides
     @Singleton
-    fun provideTableRepository(tableDao: TableDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): TableRepository =
+    fun provideTableRepository(
+        tableDao: TableDao,
+        context: Context,
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): TableRepository =
         TableRepositoryImpl(tableDao, context, firebaseAuth, firestore)
 
     @Provides
     @Singleton
-    fun provideReviewRepository(userDao: UserDao, reviewDao: ReviewDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): ReviewRepository =
+    fun provideReviewRepository(
+        userDao: UserDao,
+        reviewDao: ReviewDao,
+        context: Context,
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): ReviewRepository =
         ReviewRepositoryImpl(userDao, reviewDao, context, firebaseAuth, firestore)
 
     @Provides
-    fun provideBookTableRepository(bookTableDao: BookTableDao, context: Context, firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): BookTableRepository =
+    fun provideBookTableRepository(
+        bookTableDao: BookTableDao,
+        context: Context,
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): BookTableRepository =
         BookTableRepositoryImpl(bookTableDao, context, firebaseAuth, firestore)
+
+    @Provides
+    fun provideFavouriteRestRepository(
+        favouriteRestDao: FavouriteRestDao,
+        restaurantDao: RestaurantDao,
+        context: Context,
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): FavouritesRepository =
+        FavouritesRepositoryImpl(favouriteRestDao, restaurantDao, context, firebaseAuth, firestore)
 }

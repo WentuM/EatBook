@@ -1,31 +1,28 @@
-package com.example.eatbook.ui.restaurants.list
+package com.example.eatbook.ui.favourites
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.interactor.RestaurantInteractor
+import com.example.domain.interactor.FavouritesInteractor
 import com.example.domain.model.Restaurant
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class RestaurantViewModel(
-    private val restaurantInteractor: RestaurantInteractor
+class FavouritesViewModel(
+    private val favouritesInteractor: FavouritesInteractor
 ) : ViewModel() {
 
     private val _restaurants = MutableLiveData<List<Restaurant>>()
-    private val _getImage: MutableLiveData<String> = MutableLiveData()
     private val _likeRest: MutableLiveData<String> = MutableLiveData()
 
-
     fun restaurants(): LiveData<List<Restaurant>> = _restaurants
-    fun getImage(): LiveData<String>  = _getImage
     fun likeRest(): LiveData<String> = _likeRest
 
     fun getAllRestaurants() {
         viewModelScope.launch {
             try {
-                _restaurants.value = restaurantInteractor.getAllRestaurant()
+                _restaurants.value = favouritesInteractor.getAllFavouritesRestaurant()
             } catch (e: Exception) {
 
             }
@@ -35,23 +32,10 @@ class RestaurantViewModel(
     fun setLikeForRestaurant(idRest: String) {
         viewModelScope.launch {
             try {
-                _likeRest.value = restaurantInteractor.setLikeForRestaurant(idRest)
+                _likeRest.value = favouritesInteractor.createLikeRestaurant(idRest)
             } catch (e: Exception) {
 
             }
         }
     }
-
-
-
-    fun getImageB() {
-        viewModelScope.launch {
-            try {
-                _getImage.value = restaurantInteractor.getImage()
-            } catch (e: Exception) {
-
-            }
-        }
-    }
-
 }

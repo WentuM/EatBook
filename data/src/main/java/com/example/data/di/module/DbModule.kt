@@ -39,4 +39,7 @@ class DbModule {
 
     @Provides
     fun provideBookTableDao(db: EatBookRoomDatabase): BookTableDao = db.bookTableDao()
+
+    @Provides
+    fun provideFavouriteRestDao(db: EatBookRoomDatabase): FavouriteRestDao = db.favouriteRestDao()
 }

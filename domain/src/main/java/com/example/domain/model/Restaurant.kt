@@ -7,5 +7,6 @@ data class Restaurant(
     var rating: Double,
     val imageRest: String,
     val price: Int,
-    var address: String
+    var address: String,
+    var likeRest: Int
 )

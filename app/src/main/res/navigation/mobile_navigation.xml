@@ -97,9 +97,13 @@
 
     <fragment
         android:id="@+id/navigation_favourites"
-        android:name="com.example.eatbook.ui.sales.list.SaleFragment"
+        android:name="com.example.eatbook.ui.favourites.FavouritesFragment"
         android:label="@string/ic_favourite_title"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_list_rest" >
+        <action
+            android:id="@+id/action_navigation_favourites_to_navigation_rest_detail"
+            app:destination="@id/navigation_rest_detail" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_sign_in"

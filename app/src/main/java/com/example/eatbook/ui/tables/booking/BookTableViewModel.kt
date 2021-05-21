@@ -9,9 +9,11 @@ import com.example.domain.interactor.TableInteractor
 import com.example.domain.model.BookTable
 import com.example.domain.model.Restaurant
 import com.example.domain.model.Review
+import com.example.domain.model.Table
 import com.example.eatbook.ui.reviews.list.model.ReviewList
 import com.example.eatbook.ui.tables.booking.list.model.BookTableItemModel
 import com.example.eatbook.ui.tables.booking.list.model.Hour
+import com.example.eatbook.ui.tables.list.model.TableItemModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -21,8 +23,22 @@ class BookTableViewModel(
 
     private val _bookTable = MutableLiveData<List<Hour>>()
     fun bookTable(): LiveData<List<Hour>> = _bookTable
+
     private val _createBookTable = MutableLiveData<String>()
     fun createBookTable(): LiveData<String> = _createBookTable
+
+    private val _getTable = MutableLiveData<TableItemModel>()
+    fun getTable(): LiveData<TableItemModel> = _getTable
+
+    fun getTableById(idTable: String) {
+        viewModelScope.launch {
+            try {
+                _getTable.value = mapTableToTableItemModel(bookTableInteractor.getTableForBookTable(idTable))
+            } catch (e: Exception) {
+
+            }
+        }
+    }
 
     fun createNewBookTable(bookTableItemModel: BookTableItemModel) {
         viewModelScope.launch {
@@ -57,6 +73,14 @@ class BookTableViewModel(
 //            BookTableItemModel(idTable, day, time)
 //        }
 //    }
+
+    private fun mapTableToTableItemModel(table: Table): TableItemModel {
+        return with(table) {
+            TableItemModel(
+                id, title, countPlaces, image, idRest
+            )
+        }
+    }
 
     private fun mapBookTableToHour(bookTable: BookTable): Hour {
         return with(bookTable) {

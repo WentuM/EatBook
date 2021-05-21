@@ -5,10 +5,11 @@ import com.example.data.di.module.DbModule
 import com.example.data.di.module.FireBaseModule
 import com.example.data.di.module.RepositoryModule
 import com.example.eatbook.di.module.AppModule
+import com.example.eatbook.ui.favourites.di.FavouritesComponent
 import com.example.eatbook.ui.profile.di.ProfileComponent
 import com.example.eatbook.ui.restaurants.detail.di.RestaurantDetailComponent
 import com.example.eatbook.ui.restaurants.list.di.RestaurantComponent
-import com.example.eatbook.ui.restaurants.reviews.di.ReviewComponent
+import com.example.eatbook.ui.reviews.di.ReviewComponent
 import com.example.eatbook.ui.sales.detail.di.SaleDetailComponent
 import com.example.eatbook.ui.sales.list.di.SaleComponent
 import com.example.eatbook.ui.sign.`in`.di.SignInComponent
@@ -50,5 +51,7 @@ interface AppComponent {
     fun saleDetailComponentFactory(): SaleDetailComponent.Factory
 
     fun reviewListComponentFactory(): ReviewComponent.Factory
+
+    fun favouritesComponentFactory(): FavouritesComponent.Factory
 
 }

@@ -27,8 +27,8 @@
                 android:id="@+id/btn_rest_favourite"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_margin="12dp"
-                android:src="@drawable/ic_favorite_24"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
                 cardview:layout_constraintEnd_toEndOf="parent"
                 cardview:layout_constraintTop_toTopOf="parent" />
 
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:maxLength="30"
                 tools:text="Book Title"

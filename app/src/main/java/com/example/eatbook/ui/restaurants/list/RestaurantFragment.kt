@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -73,15 +74,17 @@ class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
     }
 
     override fun onItemClick(idRestaurant: String) {
-        var bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString("idRestaurant", idRestaurant)
         findNavController().navigate(R.id.action_navigation_home_to_navigation_rest_detail, bundle)
     }
 
-//    override fun onFavourite(idRestaurant: String) {
-//        Log.d("qwe121234321", "qwef")
-//        TODO("Not yet implemented")
-//    }
+    override fun onFavourite(idRestaurant: String) {
+        restaurantViewModel.setLikeForRestaurant(idRestaurant)
+        restaurantViewModel.likeRest().observe(viewLifecycleOwner, Observer {
+            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+        })
+    }
 
     private fun filterSearch(textSearch: String) {
         var listSearch = arrayListOf<Restaurant>()

@@ -8,17 +8,19 @@ import androidx.room.PrimaryKey
 data class RestaurantEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: String,
+    var id: String = "",
     @ColumnInfo(name = "title")
-    var title: String,
+    var title: String = "",
     @ColumnInfo(name = "description")
-    var description: String,
+    var description: String = "",
     @ColumnInfo(name = "rating")
-    var rating: Double,
+    var rating: Double = 0.0,
     @ColumnInfo(name = "image")
-    var image: String,
+    var imageRest: String = "",
     @ColumnInfo(name = "price")
-    var price: Int,
+    var price: Int = 0,
     @ColumnInfo(name = "address")
-    var address: String
+    var address: String = "",
+    @ColumnInfo(name = "listRest")
+    var likeRest: Int = -1
 )

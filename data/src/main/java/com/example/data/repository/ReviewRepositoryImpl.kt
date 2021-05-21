@@ -67,9 +67,9 @@ class ReviewRepositoryImpl(
     }
 
     override suspend fun createReviewByUser(review: Review): String {
-        var userId = firebaseAuth.currentUser?.uid
-        var reviewConverterImpl = ReviewConverterImpl()
-        var reviewEntity: ReviewEntity =
+        val userId = firebaseAuth.currentUser?.uid
+        val reviewConverterImpl = ReviewConverterImpl()
+        val reviewEntity: ReviewEntity =
             reviewConverterImpl.modeltoDb(review)
         return suspendCoroutine { continuation ->
             val reviewMap = mutableMapOf<String, Any>()

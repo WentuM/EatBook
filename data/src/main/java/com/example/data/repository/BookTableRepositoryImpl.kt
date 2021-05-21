@@ -2,18 +2,11 @@ package com.example.data.repository
 
 import android.content.Context
 import com.example.data.database.dao.BookTableDao
-import com.example.data.database.dao.RestaurantDao
 import com.example.data.database.entity.BookTableEntity
-import com.example.data.database.entity.UserEntity
 import com.example.data.firebase.response.BookTableResponse
-import com.example.data.firebase.response.ReviewResponse
-import com.example.data.mappers.BookTableConverter
 import com.example.data.mappers.BookTableConverterImpl
-import com.example.data.mappers.ReviewConverterImpl
 import com.example.domain.interfaces.BookTableRepository
-import com.example.domain.interfaces.RestaurantRepository
 import com.example.domain.model.BookTable
-import com.example.domain.model.Review
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -39,20 +32,13 @@ class BookTableRepositoryImpl(
         val bookTableConverterImpl = BookTableConverterImpl()
         var listResult: List<BookTable> = ArrayList()
         return try {
-            var reviewList: MutableList<BookTableResponse> = firestore.collection(BOOK_TABLE)
+            val reviewList: MutableList<BookTableResponse> = firestore.collection(BOOK_TABLE)
                 .whereEqualTo(BOOK_TABLE_COLUMN_ID_TABLE, idTable)
                 .whereEqualTo(BOOK_TABLE_COLUMN_DAY, day)
                 .get().await().toObjects(BookTableResponse::class.java)
-            var listEntity: List<BookTableEntity> =
+            val listEntity: List<BookTableEntity> =
                 reviewList.map { bookTableConverterImpl.fbToDb(it) }
             listResult = listEntity.map { bookTableConverterImpl.dbToModel(it) }
-//            for (review in reviewList) {
-//                var userEntity: UserEntity = getUserByReview(review.idUser)
-//                var reviewEntity = reviewConverterImpl.fbtoDb(reviewResponse = review)
-//                var reviewModel = reviewConverterImpl.dbtoModel(reviewEntity, userEntity)
-//
-//                listResult.add(reviewModel)
-//            }
             listResult
         } catch (e: Exception) {
             //b
@@ -62,8 +48,8 @@ class BookTableRepositoryImpl(
 
     override suspend fun createBookTable(bookTable: BookTable): String {
         return try {
-            var userId = firebaseAuth.currentUser?.uid
-            var id = bookTable.idTable + userId
+            val userId = firebaseAuth.currentUser?.uid
+            val id = bookTable.idTable + userId
             val bookTableMap = mutableMapOf<String, Any>()
             bookTableMap[BOOK_TABLE_COLUMN_ID] = id
             bookTableMap[BOOK_TABLE_COLUMN_ID_TABLE] = bookTable.idTable
@@ -71,7 +57,7 @@ class BookTableRepositoryImpl(
             bookTableMap[BOOK_TABLE_COLUMN_DAY] = bookTable.day
             bookTableMap[BOOK_TABLE_COLUMN_TIME] = bookTable.time
             bookTableMap[BOOK_TABLE_COLUMN_COUNT_HOUR] = bookTable.countHour
-            val data = firestore
+            firestore
                 .collection(BOOK_TABLE)
                 .document(id)
                 .set(bookTableMap)

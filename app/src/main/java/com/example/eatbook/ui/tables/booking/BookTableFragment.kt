@@ -3,14 +3,11 @@ package com.example.eatbook.ui.tables.booking
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,11 +20,10 @@ import kotlinx.android.synthetic.main.fragment_book_rest.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
-    TimePickerDialog.OnTimeSetListener, HourAdapter.HourItemHandler {
+    HourAdapter.HourItemHandler {
 
     @Inject
     lateinit var bookTableViewModel: BookTableViewModel
@@ -58,6 +54,7 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             .create(this)
             .inject(this)
         initListHour()
+        bookTableViewModel.getTableById(idTable)
         val root = inflater.inflate(R.layout.fragment_book_rest, container, false)
         return root
     }
@@ -85,15 +82,12 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         imgv_book_time.setOnClickListener {
             bookTableViewModel.getBookTableByDay(txv_book_date.text.toString(), idTable)
             bookTableViewModel.bookTable().observe(viewLifecycleOwner, Observer {
-                Log.d("qweLLIST", it.toString())
                 var listHour: ArrayList<Hour> = arrayListOf<Hour>()
                 for (hour: Hour in currentListHour) {
                     if (it.contains(hour)) {
                         hour.exist = false
-                        Log.d("qweHour2", hour.toString())
                     }
                 }
-                Log.d("qweUCUCU", currentListHour.toString())
                 hourAdapter.submitList(currentListHour)
                 hour_list.visibility = View.VISIBLE
             })
@@ -130,8 +124,6 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             var hour = Hour("$i:00", true, 0)
             currentListHour.add(hour)
         }
-//        hourAdapter.submitList(currentListHour)
-//        Log.d("qweList", hourAdapter.currentList.toString())
     }
 
     private fun showDatePickerDialog() {
@@ -141,25 +133,12 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         DatePickerDialog(requireContext(), this, year, month, day).show()
     }
 
-    private fun showTimePickerDialog() {
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-        TimePickerDialog(requireContext(), this, hour, minute, true).show()
-    }
-
     @SuppressLint("SimpleDateFormat")
     override fun onDateSet(p0: DatePicker?, yearDialog: Int, monthDialog: Int, dayDialog: Int) {
         calendar.set(Calendar.YEAR, yearDialog)
         calendar.set(Calendar.MONTH, monthDialog)
         calendar.set(Calendar.DAY_OF_MONTH, dayDialog)
         txv_book_date.text = SimpleDateFormat("dd, MMM yyyy").format(calendar.time)
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    override fun onTimeSet(p0: TimePicker?, hourDialog: Int, minuteDialog: Int) {
-        calendar.set(Calendar.HOUR_OF_DAY, hourDialog)
-        calendar.set(Calendar.MINUTE, minuteDialog)
-        txv_book_time.text = SimpleDateFormat("HH:mm").format(calendar.time)
     }
 
     private fun setHourPlus() {
@@ -189,7 +168,6 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     }
 
     override fun onClick(titleHour: String) {
-        Log.d("qweLLL", "wqeqwe")
         txv_book_time.text = titleHour
     }
 

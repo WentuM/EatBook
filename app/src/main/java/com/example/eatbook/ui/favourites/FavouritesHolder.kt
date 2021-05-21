@@ -1,5 +1,4 @@
-package com.example.eatbook.ui.restaurants.list
-
+package com.example.eatbook.ui.favourites
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -8,9 +7,9 @@ import com.example.domain.model.Restaurant
 import com.example.eatbook.R
 import kotlinx.android.synthetic.main.cardview_item_restaurant.view.*
 
-class RestaurantHolder(containerView: View) : RecyclerView.ViewHolder(containerView) {
+class FavouritesHolder(containerView: View) : RecyclerView.ViewHolder(containerView) {
 
-    fun bind(restaurant: Restaurant, itemHandler: RestaurantAdapter.RestItemHandler) {
+    fun bind(restaurant: Restaurant, itemHandler: FavouritesAdapter.FavouritesItemHandler) {
         with(itemView) {
             rest_title.text = restaurant.title
             rest_description.text = restaurant.description
@@ -25,7 +24,7 @@ class RestaurantHolder(containerView: View) : RecyclerView.ViewHolder(containerV
                 btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
             }
             btn_rest_favourite.setOnClickListener {
-                itemHandler.onFavourite(restaurant.id)
+                itemHandler.onFavourite(restaurant.id, restaurant.likeRest)
             }
         }
 

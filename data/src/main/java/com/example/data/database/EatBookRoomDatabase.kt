@@ -7,8 +7,17 @@ import androidx.room.RoomDatabase
 import com.example.data.database.dao.*
 import com.example.data.database.entity.*
 
-@Database(entities = arrayOf(UserEntity::class, RestaurantEntity::class,
-    SaleEntity::class, TableEntity::class, ReviewEntity::class, BookTableEntity::class), version = 8, exportSchema = false)
+@Database(
+    entities = arrayOf(
+        UserEntity::class,
+        RestaurantEntity::class,
+        SaleEntity::class,
+        TableEntity::class,
+        ReviewEntity::class,
+        BookTableEntity::class,
+        FavouriteRestEntity::class
+    ), version = 9, exportSchema = false
+)
 
 abstract class EatBookRoomDatabase : RoomDatabase() {
 
@@ -18,6 +27,7 @@ abstract class EatBookRoomDatabase : RoomDatabase() {
     abstract fun tableDao(): TableDao
     abstract fun reviewDao(): ReviewDao
     abstract fun bookTableDao(): BookTableDao
+    abstract fun favouriteRestDao(): FavouriteRestDao
 
     companion object {
         @Volatile

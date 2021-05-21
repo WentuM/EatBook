@@ -15,7 +15,7 @@ class TableConverterImpl : TableConverter {
     override fun dbtoModel(tableEntity: TableEntity): Table =
         with(tableEntity) {
             Table(
-                id, title, countPlaces, image
+                id, title, countPlaces, image, idRest
             )
         }
 }

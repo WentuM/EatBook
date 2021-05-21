@@ -1,6 +1,6 @@
 package com.example.data.firebase.response
 
-data class Restaurant(
+data class RestaurantResponse(
     val id: String = "",
     val title: String = "",
     val description: String = "",
