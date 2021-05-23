@@ -13,7 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.domain.model.Restaurant
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
+import kotlinx.android.synthetic.main.cardview_item_restaurant.*
+import kotlinx.android.synthetic.main.cardview_item_restaurant.view.*
 import kotlinx.android.synthetic.main.fragment_list_rest.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -82,12 +85,18 @@ class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
     override fun onFavourite(idRestaurant: String) {
         restaurantViewModel.setLikeForRestaurant(idRestaurant)
         restaurantViewModel.likeRest().observe(viewLifecycleOwner, Observer {
+            val resultLike = it
+            if (resultLike == "Ресторан добавлен в избранное") {
+                btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
+            } else if (resultLike == "Ресторан удалён из избранного") {
+                btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
+            }
             Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
         })
     }
 
     private fun filterSearch(textSearch: String) {
-        var listSearch = arrayListOf<Restaurant>()
+        val listSearch = arrayListOf<Restaurant>()
         for (restaurant: Restaurant in currentListRest) {
             if (restaurant.title.toLowerCase().startsWith(textSearch)) {
                 listSearch.add(restaurant)

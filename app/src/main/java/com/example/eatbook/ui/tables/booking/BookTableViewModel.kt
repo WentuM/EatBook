@@ -5,21 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.interactor.BookTableInteractor
-import com.example.domain.interactor.TableInteractor
 import com.example.domain.model.BookTable
-import com.example.domain.model.Restaurant
-import com.example.domain.model.Review
 import com.example.domain.model.Table
-import com.example.eatbook.ui.reviews.list.model.ReviewList
 import com.example.eatbook.ui.tables.booking.list.model.BookTableItemModel
 import com.example.eatbook.ui.tables.booking.list.model.Hour
-import com.example.eatbook.ui.tables.list.model.TableItemModel
+import com.example.eatbook.ui.tables.booking.list.model.TableItemModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class BookTableViewModel(
     private val bookTableInteractor: BookTableInteractor
-): ViewModel() {
+) : ViewModel() {
 
     private val _bookTable = MutableLiveData<List<Hour>>()
     fun bookTable(): LiveData<List<Hour>> = _bookTable
@@ -33,7 +29,8 @@ class BookTableViewModel(
     fun getTableById(idTable: String) {
         viewModelScope.launch {
             try {
-                _getTable.value = mapTableToTableItemModel(bookTableInteractor.getTableForBookTable(idTable))
+                _getTable.value =
+                    mapTableToTableItemModel(bookTableInteractor.getTableForBookTable(idTable))
             } catch (e: Exception) {
 
             }
@@ -44,7 +41,8 @@ class BookTableViewModel(
         viewModelScope.launch {
             try {
                 _createBookTable.value = bookTableInteractor.createBookTable(
-                    mapBookTableItemModelToBookTable(bookTableItemModel))
+                    mapBookTableItemModelToBookTable(bookTableItemModel)
+                )
             } catch (e: Exception) {
 
             }
@@ -64,20 +62,24 @@ class BookTableViewModel(
 
     private fun mapBookTableItemModelToBookTable(bookTableItemModel: BookTableItemModel): BookTable {
         return with(bookTableItemModel) {
-            BookTable(idTable, day, time, countHour)
+            BookTable(
+                id,
+                idTable,
+                day,
+                time,
+                countHour,
+                imageTable,
+                nameTable,
+                idRestaurant,
+                nameRestaurant
+            )
         }
     }
-
-//    private fun mapBookTableToBookTableItemModel(bookTable: BookTable): BookTableItemModel {
-//        return with(bookTable) {
-//            BookTableItemModel(idTable, day, time)
-//        }
-//    }
 
     private fun mapTableToTableItemModel(table: Table): TableItemModel {
         return with(table) {
             TableItemModel(
-                id, title, countPlaces, image, idRest
+                id, title, countPlaces, image, idRest, nameRestaurant
             )
         }
     }

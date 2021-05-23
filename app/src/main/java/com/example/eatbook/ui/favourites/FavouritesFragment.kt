@@ -58,13 +58,14 @@ class FavouritesFragment: Fragment(), FavouritesAdapter.FavouritesItemHandler {
     }
 
     override fun onFavourite(idRestaurant: String, likeRest: Int) {
-        if (likeRest == 1) {
-            btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
-        } else {
-            btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
-        }
         favouritesViewModel.setLikeForRestaurant(idRestaurant)
         favouritesViewModel.likeRest().observe(viewLifecycleOwner, Observer {
+            val resultLike = it
+            if (resultLike == "Ресторан добавлен в избранное") {
+                btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
+            } else if (resultLike == "Ресторан удалён из избранного") {
+                btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
+            }
             Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
         })
     }

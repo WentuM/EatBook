@@ -8,6 +8,8 @@ interface BookTableConverter {
 
     fun fbToDb(bookTableResponse: BookTableResponse): BookTableEntity
 
-    fun dbToModel(bookTableEntity: BookTableEntity): BookTable
+//    fun dbToModel(bookTableEntity: BookTableEntity): BookTable
+
+    fun fbToModel(bookTableResponse: BookTableResponse): BookTable
 
 }

@@ -1,256 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/toolbar" />
-
-        <TextView
-            android:id="@+id/book_rest_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:textColor="@color/blackText"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include"
-            tools:text="Название ресторана" />
-
-        <TextView
-            android:id="@+id/book_rest_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/blackText"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/book_rest_title"
-            tools:text="Адрес ресторана" />
-
-        <TextView
-            android:id="@+id/number_book"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/blackText"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/book_rest_address"
-            tools:text="Столик номер 5" />
-
-
-        <TextView
-            android:id="@+id/txv1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/book_rest_choose_date"
-            android:textColor="@color/panelRegistrationHint"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/number_book" />
-
-        <ImageView
-            android:id="@+id/imgv_book_date"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginTop="4dp"
-            android:src="@drawable/ic_baseline_date_range_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txv1" />
-
-        <TextView
-            android:id="@+id/txv_book_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/book_date_time"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgv_book_date"
-            tools:text="10 May of 2021" />
-
-        <TextView
-            android:id="@+id/txv2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/book_rest_choose_time"
-            android:textColor="@color/panelRegistrationHint"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txv_book_date" />
-
-        <ImageView
-            android:id="@+id/imgv_book_time"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginTop="4dp"
-            android:src="@drawable/ic_baseline_access_time_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txv2" />
-
-        <TextView
-            android:id="@+id/txv_book_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/book_date_time"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgv_book_time"
-            tools:text="22:00" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/hour_list"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:choiceMode="singleChoice"
-            android:orientation="vertical"
-            android:useDefaultMargins="true"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txv_book_time"
-            app:spanCount="4"
-            tools:itemCount="20"
-            tools:listitem="@layout/cardview_item_hour" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/txv3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/book_rest_count_hours"
-            android:textColor="@color/panelRegistrationHint"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hour_list" />
+            <TextView
+                android:id="@+id/book_rest_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blackText"
+                android:layout_marginTop="12dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Название ресторана" />
 
-        <ImageView
-            android:id="@+id/imgv_book_hours"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginTop="4dp"
-            android:src="@drawable/ic_baseline_timer_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txv3" />
+            <TextView
+                android:id="@+id/txv_table_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/blackText"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/book_rest_title"
+                tools:text="Адрес ресторана" />
 
-        <ImageView
-            android:id="@+id/imgv_book_hours_plus"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_baseline_control_point_24"
-            app:layout_constraintBottom_toBottomOf="@+id/imgv_book_hours"
-            app:layout_constraintStart_toEndOf="@+id/imgv_book_hours"
-            app:layout_constraintTop_toBottomOf="@+id/txv3" />
-
-        <ImageView
-            android:id="@+id/imgv_book_hours_minus"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_baseline_remove_circle_outline_24"
-            app:layout_constraintBottom_toBottomOf="@+id/imgv_book_hours"
-            app:layout_constraintEnd_toStartOf="@+id/imgv_book_hours"
-            app:layout_constraintTop_toBottomOf="@+id/txv3" />
-
-        <TextView
-            android:id="@+id/txv_book_number_hour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/book_date_time"
-            android:textSize="22sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgv_book_hours"
-            tools:text="5" />
-
-        <Button
-            android:id="@+id/btn_book_table"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_button_rounded"
-            android:fontFamily="@font/eater"
-            android:text="@string/book_table"
-            android:textColor="@color/whiteText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txv_book_number_hour" />
+            <TextView
+                android:id="@+id/txv_table_count_people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/blackText"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txv_table_title"
+                tools:text="Столик номер 5" />
 
 
-        <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-        <!--        android:id="@+id/panel_date_picker"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintTop_toTopOf="parent">-->
+            <TextView
+                android:id="@+id/txv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/book_rest_choose_date"
+                android:textColor="@color/panelRegistrationHint"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txv_table_count_people" />
 
-        <!--        <DatePicker-->
-        <!--            android:id="@+id/date_picker"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:calendarViewShown="true"-->
-        <!--            android:spinnersShown="false"-->
-        <!--            android:visibility="invisible"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+            <ImageView
+                android:id="@+id/imgv_book_date"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/ic_baseline_date_range_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txv1" />
 
-        <!--        <TimePicker-->
-        <!--            android:id="@+id/time_picker"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:visibility="invisible"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
-        <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <TextView
+                android:id="@+id/txv_book_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/book_date_time"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgv_book_date"
+                tools:text="10 May of 2021" />
 
-        <!--    <Button-->
-        <!--        android:id="@+id/date_time_set"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:text="Выбрать"-->
-        <!--        android:textColor="@color/whiteText"-->
-        <!--        android:textSize="10sp"-->
-        <!--        android:layout_marginEnd="30dp"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--        app:layout_constraintTop_toBottomOf="@id/panel_date_picker" />-->
+            <TextView
+                android:id="@+id/txv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/book_rest_choose_time"
+                android:textColor="@color/panelRegistrationHint"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txv_book_date" />
 
-        <!--    <Button-->
-        <!--        android:id="@+id/date_time_cancel"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:text="Отменить"-->
-        <!--        android:textColor="@color/whiteText"-->
-        <!--        android:textSize="10sp"-->
-        <!--        android:layout_marginEnd="30dp"-->
-        <!--        app:layout_constraintEnd_toStartOf="@+id/date_time_set"-->
-        <!--        app:layout_constraintTop_toBottomOf="@id/panel_date_picker" />-->
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <ImageView
+                android:id="@+id/imgv_book_time"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/ic_baseline_access_time_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txv2" />
+
+            <TextView
+                android:id="@+id/txv_book_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/book_date_time"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgv_book_time"
+                tools:text="22:00" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hour_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:choiceMode="singleChoice"
+                android:orientation="vertical"
+                android:useDefaultMargins="true"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txv_book_time"
+                app:spanCount="4"
+                tools:itemCount="20"
+                tools:listitem="@layout/cardview_item_hour" />
+
+            <TextView
+                android:id="@+id/txv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/book_rest_count_hours"
+                android:textColor="@color/panelRegistrationHint"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hour_list" />
+
+            <ImageView
+                android:id="@+id/imgv_book_hours"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/ic_baseline_timer_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txv3" />
+
+            <ImageView
+                android:id="@+id/imgv_book_hours_plus"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_baseline_control_point_24"
+                app:layout_constraintBottom_toBottomOf="@+id/imgv_book_hours"
+                app:layout_constraintStart_toEndOf="@+id/imgv_book_hours"
+                app:layout_constraintTop_toBottomOf="@+id/txv3" />
+
+            <ImageView
+                android:id="@+id/imgv_book_hours_minus"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_baseline_remove_circle_outline_24"
+                app:layout_constraintBottom_toBottomOf="@+id/imgv_book_hours"
+                app:layout_constraintEnd_toStartOf="@+id/imgv_book_hours"
+                app:layout_constraintTop_toBottomOf="@+id/txv3" />
+
+            <TextView
+                android:id="@+id/txv_book_number_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/book_date_time"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgv_book_hours"
+                tools:text="5" />
+
+            <Button
+                android:id="@+id/btn_book_table"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="72dp"
+                android:background="@drawable/bg_button_rounded"
+                android:fontFamily="@font/eater"
+                android:text="@string/book_table"
+                android:textColor="@color/whiteText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txv_book_number_hour" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

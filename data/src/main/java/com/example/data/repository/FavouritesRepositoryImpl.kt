@@ -54,7 +54,6 @@ class FavouritesRepositoryImpl(
             resultList = favouriteRestDao.getListFavourite()
                 .map { restaurantConverterImpl.dbtoModel(it) }
         }
-        Log.d("qwettt", resultList.toString())
         return resultList
     }
 
@@ -63,23 +62,25 @@ class FavouritesRepositoryImpl(
         val userId = firebaseAuth.currentUser?.uid
         val idFavouriteRest = userId + idRestaurant
         var restaurantEntity: RestaurantEntity? = RestaurantEntity()
+        var restaurantResponse: RestaurantResponse? = RestaurantResponse()
         val restaurantConverterImpl = RestaurantConverterImpl()
         val favouriteRestaurantEntity = FavouriteRestEntity(idRestaurant)
         //проверка, что пользователь авторизирован
         if (userId != null) {
             //проверяю, присутствует ли уже этот ресторан в моей таблице избранных
             try {
-                restaurantEntity = firestore.collection(USER_TABLE).document(userId)
+                restaurantResponse = firestore.collection(USER_TABLE).document(userId)
                     .collection(FAVOURITE_RESTAURANTS).document(idFavouriteRest)
-                    .get().await().toObject(RestaurantEntity::class.java)
+                    .get().await().toObject(RestaurantResponse::class.java)
             } catch (e: Exception) {
                 Log.d("qweGetFavException", "$e")
+                result = e.toString()
             }
             //если такого ресторана нет в таблице
-            if (restaurantEntity == null) {
+            if (restaurantResponse == null) {
 
                 //достаю необходимый мне ресторан из общей таблицы
-                var restaurantResponse =
+                restaurantResponse =
                     firestore.collection(RESTAURANTS_TABLE).document(idRestaurant).get().await()
                         .toObject(RestaurantResponse::class.java)
                 if (restaurantResponse != null) {
@@ -99,18 +100,32 @@ class FavouritesRepositoryImpl(
                     }
                 } catch (e: Exception) {
                     Log.d("qweExceptionLike", "$e")
+                    result = e.toString()
                 }
                 //если такой ресторан есть, значит (дизлайк), нужно удалить его из таблицы
             } else {
-                try {
+                result = try {
                     firestore.collection(USER_TABLE).document(userId)
                         .collection(FAVOURITE_RESTAURANTS).document(idFavouriteRest)
                         .delete().await()
                     favouriteRestDao.delete(favouriteRestaurantEntity)
-                    result = "Ресторан удалён из избранного"
+                    Log.d("qweTT", "t")
+                    "Ресторан удалён из избранного"
                 } catch (e: Exception) {
                     Log.d("qweExceptionUnLike", "$e")
+                    e.toString()
                 }
+            }
+            //ситуация, когда пользователь не авторизирован
+        } else {
+            val existRestaurantId: FavouriteRestEntity = favouriteRestDao.getFavouriteEntity(idRestaurant)
+            result = if (existRestaurantId != null) {
+                favouriteRestDao.delete(favouriteRestaurantEntity)
+                Log.d("qweTTT", "t")
+                "Ресторан удалён из избранного"
+            } else {
+                favouriteRestDao.insert(favouriteRestaurantEntity)
+                "Ресторан добавлен в избранное"
             }
         }
         return result

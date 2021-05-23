@@ -8,7 +8,7 @@ data class Hour(
 
     //переопределил метод для сравнения забронированных дат
     override fun equals(other: Any?): Boolean {
-        var hour = other as Hour
+        other as Hour
         if (this.title == other.title && this.exist == other.exist) {
             return true
         }

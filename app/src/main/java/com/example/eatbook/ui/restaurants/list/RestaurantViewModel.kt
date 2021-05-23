@@ -14,12 +14,10 @@ class RestaurantViewModel(
 ) : ViewModel() {
 
     private val _restaurants = MutableLiveData<List<Restaurant>>()
-    private val _getImage: MutableLiveData<String> = MutableLiveData()
     private val _likeRest: MutableLiveData<String> = MutableLiveData()
 
 
     fun restaurants(): LiveData<List<Restaurant>> = _restaurants
-    fun getImage(): LiveData<String>  = _getImage
     fun likeRest(): LiveData<String> = _likeRest
 
     fun getAllRestaurants() {
@@ -36,18 +34,6 @@ class RestaurantViewModel(
         viewModelScope.launch {
             try {
                 _likeRest.value = restaurantInteractor.setLikeForRestaurant(idRest)
-            } catch (e: Exception) {
-
-            }
-        }
-    }
-
-
-
-    fun getImageB() {
-        viewModelScope.launch {
-            try {
-                _getImage.value = restaurantInteractor.getImage()
             } catch (e: Exception) {
 
             }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.example.data.database.dao.FavouriteRestDao
 import com.example.data.database.dao.RestaurantDao
+import com.example.data.database.entity.FavouriteRestEntity
 import com.example.data.database.entity.RestaurantEntity
 import com.example.data.firebase.response.RestaurantResponse
 import com.example.data.mappers.RestaurantConverterImpl
@@ -78,25 +79,12 @@ class RestaurantRepositoryImpl(
         } catch (e: Exception) {
             restaurantEntity = restaurantDao.getRestaurantById(id)
         }
-        idFavourite = favouriteRestDao.getBooleanId(restaurantEntity.id)
-        if (idFavourite != restaurantEntity.id) {
+        val existRestaurantId: FavouriteRestEntity = favouriteRestDao.getFavouriteEntity(restaurantEntity.id)
+//        idFavourite = favouriteRestDao.getBooleanId(restaurantEntity.id)
+        if (existRestaurantId == null) {
             restaurantEntity.likeRest = 0
         }
         var restaurantResult = restaurantConverterImpl.dbtoModel(restaurantEntity)
         return restaurantResult
-    }
-
-    override suspend fun getRestaurantImage(): String {
-        var storage = FirebaseStorage.getInstance()
-        val storageRef: StorageReference = storage.reference
-        return suspendCoroutine { continuation ->
-            storageRef.child("images/Warface_sample.jpg").downloadUrl.addOnSuccessListener {
-                Log.d("qwe0", it.toString())
-                continuation.resume(it.toString())
-            }.addOnFailureListener {
-                Log.d("qweeee", it.toString())
-                continuation.resumeWithException(it)
-            }
-        }
     }
 }

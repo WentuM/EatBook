@@ -1,6 +1,6 @@
-package com.example.eatbook.ui.tables.booking.list.model
+package com.example.eatbook.ui.profile.list.booktable.model
 
-data class BookTableItemModel(
+data class MyBookTableItemModel(
     val id: String,
     val idTable: String,
     val day: String,
@@ -10,4 +10,5 @@ data class BookTableItemModel(
     val nameTable: String,
     val idRestaurant: String,
     val nameRestaurant: String
+
 )

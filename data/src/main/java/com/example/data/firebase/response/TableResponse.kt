@@ -5,5 +5,6 @@ data class TableResponse(
     val title: String = "",
     val countPlaces: Int = 0,
     val image: String = "",
-    val idRest: String = ""
+    val idRest: String = "",
+    val nameRest: String = ""
 )

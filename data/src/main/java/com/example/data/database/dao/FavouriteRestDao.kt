@@ -13,14 +13,14 @@ interface FavouriteRestDao {
     @Delete
     suspend fun delete(favouriteRestEntity: FavouriteRestEntity)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(favouriteRestEntity: FavouriteRestEntity)
 
     @Query("SELECT * FROM restaurant LEFT JOIN favourite_rest ON restaurant.id = favourite_rest.id_rest WHERE favourite_rest.id_rest IS NULL ")
     suspend fun getListFavourite(): List<RestaurantEntity>
 
-    @Query("SELECT id_rest FROM favourite_rest WHERE id_rest = :idRest")
-    suspend fun getBooleanId(idRest: String): String
+    @Query("SELECT * FROM favourite_rest WHERE id_rest = :idRest")
+    suspend fun getFavouriteEntity(idRest: String): FavouriteRestEntity
 
     @Query("SELECT * FROM favourite_rest")
     suspend fun getAllFavouriteId(): List<FavouriteRestEntity>

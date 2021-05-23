@@ -21,11 +21,6 @@ class RestaurantInteractor(
             restaurantRepository.getListRestaurant() as ArrayList<Restaurant>
         }
 
-    suspend fun getImage(): String =
-        withContext(context) {
-            restaurantRepository.getRestaurantImage()
-        }
-
     suspend fun setLikeForRestaurant(idRest: String) =
         withContext(context) {
             favouritesRepository.setLikeForRestaurant(idRest)

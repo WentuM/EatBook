@@ -64,11 +64,12 @@ class ProfileFragment : Fragment() {
 
     private fun initClickListener() {
         btn_profile_book.setOnClickListener {
-            Snackbar.make(
-                requireActivity().findViewById(android.R.id.content),
-                "qweqw",
-                Snackbar.LENGTH_LONG
-            ).show()
+//            Snackbar.make(
+//                requireActivity().findViewById(android.R.id.content),
+//                "qweqw",
+//                Snackbar.LENGTH_LONG
+//            ).show()
+            findNavController().navigate(R.id.action_navigation_profile_to_navigation_my_table_book)
         }
         btn_profile_sign_out.setOnClickListener {
             profileViewModel.onSignOut()

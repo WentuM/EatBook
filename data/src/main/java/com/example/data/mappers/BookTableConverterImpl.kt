@@ -12,15 +12,33 @@ class BookTableConverterImpl : BookTableConverter {
             BookTableEntity(
                 id,
                 idUser,
-                idTable, day, time, countHour
+                idTable,
+                day,
+                time,
+                countHour
             )
         }
 
-    override fun dbToModel(bookTableEntity: BookTableEntity): BookTable =
-        with(bookTableEntity) {
+
+//    override fun dbToModel(bookTableEntity: BookTableEntity): BookTable =
+//        with(bookTableEntity) {
+//            BookTable(
+//                idTable, day, time, countHour
+//            )
+//        }
+
+    override fun fbToModel(bookTableResponse: BookTableResponse): BookTable =
+        with(bookTableResponse) {
             BookTable(
-                idTable, day, time, countHour
+                id,
+                idTable,
+                day,
+                time,
+                countHour,
+                imageTable,
+                nameTable,
+                idRestaurant,
+                nameRestaurant
             )
         }
-
 }

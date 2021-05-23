@@ -2,17 +2,13 @@ package com.example.data.repository
 
 import android.content.Context
 import com.example.data.database.dao.TableDao
-import com.example.data.database.entity.UserEntity
-import com.example.data.firebase.response.ReviewResponse
 import com.example.data.firebase.response.TableResponse
 import com.example.data.mappers.TableConverterImpl
 import com.example.domain.interfaces.TableRepository
-import com.example.domain.model.Review
 import com.example.domain.model.Table
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
 
 class TableRepositoryImpl(
     private val tableDao: TableDao,
@@ -31,12 +27,14 @@ class TableRepositoryImpl(
         var tableConverterImpl = TableConverterImpl()
         var listResult: ArrayList<Table> = ArrayList()
         return try {
-            var tableList: MutableList<TableResponse> = firestore.collection(TABLE_TABLE).whereEqualTo(
-                TABLE_COLUMN_ID_REST, idRestaurant)
-                .get().await().toObjects(TableResponse::class.java)
+            var tableList: MutableList<TableResponse> =
+                firestore.collection(TABLE_TABLE).whereEqualTo(
+                    TABLE_COLUMN_ID_REST, idRestaurant
+                )
+                    .get().await().toObjects(TableResponse::class.java)
             for (table in tableList) {
-                var tableEntity = tableConverterImpl.fbtoDb(table)
-                var tableModel = tableConverterImpl.dbtoModel(tableEntity)
+                val tableEntity = tableConverterImpl.fbtoDb(table)
+                val tableModel = tableConverterImpl.dbtoModel(tableEntity)
 
                 listResult.add(tableModel)
             }
@@ -47,6 +45,20 @@ class TableRepositoryImpl(
     }
 
     override suspend fun getTableById(id: String): Table {
-        TODO("Not yet implemented")
+        val tableConverterImpl = TableConverterImpl()
+        var result: Table = Table()
+        return try {
+            val tableResponse =
+                firestore.collection(TABLE_TABLE).document(id).get().await()
+                    .toObject(TableResponse::class.java)
+            if (tableResponse != null) {
+                val tableEntity = tableConverterImpl.fbtoDb(tableResponse)
+                result = tableConverterImpl.dbtoModel(tableEntity)
+            }
+            result
+        } catch (e: Exception) {
+            Table()
+            //db
+        }
     }
 }

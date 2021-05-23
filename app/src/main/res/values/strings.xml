@@ -29,4 +29,7 @@
     <string name="btn_sign_up">Авторизироваться</string>
     <string name="count_people">Количество человек:</string>
     <string name="txv_rest">Ресторан:</string>
+    <string name="btn_list_restaurants">Список ресторанов</string>
+    <string name="txv_my_book_restaurants">Мои бронирования</string>
+    <string name="txv_my_dont_book">Вы не забронировали ещё ни одного столика</string>
 </resources>

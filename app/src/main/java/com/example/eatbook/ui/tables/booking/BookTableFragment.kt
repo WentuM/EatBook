@@ -16,6 +16,7 @@ import com.example.eatbook.R
 import com.example.eatbook.ui.tables.booking.list.HourAdapter
 import com.example.eatbook.ui.tables.booking.list.model.BookTableItemModel
 import com.example.eatbook.ui.tables.booking.list.model.Hour
+import com.example.eatbook.ui.tables.booking.list.model.TableItemModel
 import kotlinx.android.synthetic.main.fragment_book_rest.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,6 +31,7 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     private val hourAdapter = HourAdapter(this)
     private var currentListHour = arrayListOf<Hour>()
     private var idTable: String = ""
+    private lateinit var tableItemModel: TableItemModel
     private var countHours: Int = 1
 
 
@@ -66,8 +68,14 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         initClicks()
     }
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     private fun initFields() {
+        bookTableViewModel.getTable().observe(viewLifecycleOwner, Observer {
+            tableItemModel = it
+            book_rest_title.text = it.nameRestaurant
+            txv_table_title.text = it.title
+            txv_table_count_people.text = "Количество человек: " + it.countPlaces
+        })
         calendar = Calendar.getInstance()
         txv_book_number_hour.text = countHours.toString()
         txv_book_date.text = SimpleDateFormat("dd, MMM yyyy").format(calendar.time)
@@ -82,7 +90,6 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         imgv_book_time.setOnClickListener {
             bookTableViewModel.getBookTableByDay(txv_book_date.text.toString(), idTable)
             bookTableViewModel.bookTable().observe(viewLifecycleOwner, Observer {
-                var listHour: ArrayList<Hour> = arrayListOf<Hour>()
                 for (hour: Hour in currentListHour) {
                     if (it.contains(hour)) {
                         hour.exist = false
@@ -91,8 +98,6 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 hourAdapter.submitList(currentListHour)
                 hour_list.visibility = View.VISIBLE
             })
-//            showTimePickerDialog()
-//            showReviewDialog()
 
         }
 
@@ -110,9 +115,20 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     }
 
     private fun createBookTable() {
-        var dayBook = txv_book_date.text.toString()
-        var timeBook = txv_book_time.text.toString()
-        var bookTableItemModel: BookTableItemModel = BookTableItemModel(idTable, dayBook, timeBook, countHours)
+        val dayBook = txv_book_date.text.toString()
+        val timeBook = txv_book_time.text.toString()
+        val bookTableItemModel: BookTableItemModel =
+            BookTableItemModel(
+                "",
+                idTable,
+                dayBook,
+                timeBook,
+                countHours,
+                tableItemModel.image,
+                tableItemModel.title,
+                tableItemModel.idRestaurant,
+                tableItemModel.nameRestaurant
+            )
         bookTableViewModel.createNewBookTable(bookTableItemModel)
         bookTableViewModel.createBookTable().observe(viewLifecycleOwner, Observer {
             Toast.makeText(activity, it, Toast.LENGTH_LONG).show()

@@ -27,4 +27,9 @@ class BookTableInteractor(
         withContext(context) {
             tableRepository.getTableById(idTable)
         }
+    
+    suspend fun getAllMyTable(): List<BookTable> =
+        withContext(context) {
+            bookTableRepository.getListMyTable()
+        }
 }

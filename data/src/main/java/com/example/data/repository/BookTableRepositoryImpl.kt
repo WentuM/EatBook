@@ -26,19 +26,21 @@ class BookTableRepositoryImpl(
         private const val BOOK_TABLE_COLUMN_ID = "id"
         private const val BOOK_TABLE_COLUMN_TIME = "time"
         private const val BOOK_TABLE_COLUMN_COUNT_HOUR = "countHour"
+        private const val BOOK_TABLE_COLUMN_ID_RESTAURANT = "idRestaurant"
+        private const val BOOK_TABLE_COLUMN_NAME_RESTAURANT = "nameRestaurant"
+        private const val BOOK_TABLE_COLUMN_NAME_TABLE = "nameTable"
+        private const val BOOK_TABLE_COLUMN_IMAGE_TABLE = "imageTable"
     }
 
     override suspend fun getListByDay(day: String, idTable: String): List<BookTable> {
         val bookTableConverterImpl = BookTableConverterImpl()
         var listResult: List<BookTable> = ArrayList()
         return try {
-            val reviewList: MutableList<BookTableResponse> = firestore.collection(BOOK_TABLE)
+            val bookTableList: MutableList<BookTableResponse> = firestore.collection(BOOK_TABLE)
                 .whereEqualTo(BOOK_TABLE_COLUMN_ID_TABLE, idTable)
                 .whereEqualTo(BOOK_TABLE_COLUMN_DAY, day)
                 .get().await().toObjects(BookTableResponse::class.java)
-            val listEntity: List<BookTableEntity> =
-                reviewList.map { bookTableConverterImpl.fbToDb(it) }
-            listResult = listEntity.map { bookTableConverterImpl.dbToModel(it) }
+            listResult = bookTableList.map { bookTableConverterImpl.fbToModel(it) }
             listResult
         } catch (e: Exception) {
             //b
@@ -57,6 +59,11 @@ class BookTableRepositoryImpl(
             bookTableMap[BOOK_TABLE_COLUMN_DAY] = bookTable.day
             bookTableMap[BOOK_TABLE_COLUMN_TIME] = bookTable.time
             bookTableMap[BOOK_TABLE_COLUMN_COUNT_HOUR] = bookTable.countHour
+            bookTableMap[BOOK_TABLE_COLUMN_ID_RESTAURANT] = bookTable.idRestaurant
+            bookTableMap[BOOK_TABLE_COLUMN_NAME_RESTAURANT] = bookTable.nameRestaurant
+            bookTableMap[BOOK_TABLE_COLUMN_NAME_TABLE] = bookTable.nameTable
+            bookTableMap[BOOK_TABLE_COLUMN_IMAGE_TABLE] = bookTable.imageTable
+
             firestore
                 .collection(BOOK_TABLE)
                 .document(id)
@@ -65,6 +72,20 @@ class BookTableRepositoryImpl(
             "Вы успешно забронировали столик"
         } catch (e: Exception) {
             "$e"
+        }
+    }
+
+    override suspend fun getListMyTable(): List<BookTable> {
+        val bookTableConverterImpl = BookTableConverterImpl()
+        return try {
+            val userId = firebaseAuth.currentUser?.uid
+            val listResponse = firestore.collection(BOOK_TABLE)
+                .whereEqualTo(BOOK_TABLE_COLUMN_ID_USER, userId).get().await()
+                .toObjects(BookTableResponse::class.java)
+            listResponse.map { bookTableConverterImpl.fbToModel(it) }
+        } catch (e: Exception) {
+            emptyList()
+            //доступ из бд
         }
     }
 }

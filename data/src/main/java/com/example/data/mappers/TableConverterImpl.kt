@@ -8,14 +8,14 @@ class TableConverterImpl : TableConverter {
     override fun fbtoDb(tableResponse: TableResponse): TableEntity =
         with(tableResponse) {
             TableEntity(
-                id, title, countPlaces, image, idRest
+                id, title, countPlaces, image, idRest, nameRest
             )
         }
 
     override fun dbtoModel(tableEntity: TableEntity): Table =
         with(tableEntity) {
             Table(
-                id, title, countPlaces, image, idRest
+                id, title, countPlaces, image, idRest, nameRest
             )
         }
 }
