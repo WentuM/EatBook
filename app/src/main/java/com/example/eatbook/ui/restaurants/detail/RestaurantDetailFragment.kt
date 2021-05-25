@@ -1,5 +1,6 @@
 package com.example.eatbook.ui.restaurants.detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +47,7 @@ class RestaurantDetailFragment : Fragment() {
         initClick()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initFields() {
         with(restaurantDetailViewModel) {
             getRestaurant().observe(viewLifecycleOwner, Observer {

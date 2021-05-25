@@ -1,20 +1,16 @@
 package com.example.data.repository
 
-import android.app.Activity
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import com.example.data.database.dao.UserDao
 import com.example.data.database.entity.UserEntity
+import com.example.data.firebase.response.UserResponse
+import com.example.data.mappers.UserConverterImpl
 import com.example.domain.interfaces.UserRepository
 import com.example.domain.model.User
-import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.util.concurrent.TimeUnit
-import kotlin.coroutines.coroutineContext
+import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -33,34 +29,28 @@ class UserRepositoryImpl(
         private const val USER_TABLE_COLUMN_PHONE = "phone"
         private const val USER_TABLE_COLUMN_USERNAME = "username"
         private const val USER_TABLE_COLUMN_IMAGE = "image"
-        private const val DEFAULT_USER_IMAGE = "https://firebasestorage.googleapis.com/v0/b/eatbook-5d561.appspot.com/o/users%2Fdefault-profile-picture1.jpg?alt=media&token=1e75488c-2fc5-46a9-9a18-39fd8f74847d"
+        private const val DEFAULT_USER_IMAGE =
+            "https://firebasestorage.googleapis.com/v0/b/eatbook-5d561.appspot.com/o/users%2Fdefault-profile-picture1.jpg?alt=media&token=1e75488c-2fc5-46a9-9a18-39fd8f74847d"
     }
 
     override suspend fun getCurrentUser(): User {
-        var userId = firebaseAuth.currentUser?.uid
-        var user: User = User("", "", "", "")
-//        firebaseAuth.uid?.let {
-        return suspendCoroutine { continuation ->
-            //suspendCancellableCoroutine
-            userId?.let { it1 ->
-                Log.d("qwe3", it1)
-                firestore.collection(USER_TABLE).document(it1).get().addOnSuccessListener {
-                    var userMap: HashMap<String, String> = it.data as HashMap<String, String>
-                    var username = userMap[USER_TABLE_COLUMN_USERNAME].toString()
-                    var userPhone = userMap[USER_TABLE_COLUMN_PHONE].toString()
-                    var image = userMap[USER_TABLE_COLUMN_IMAGE].toString()
-                    Log.d("qwe1", username)
-                    Log.d("qwe2", userPhone)
-                    user.id = userId
-                    user.username = username
-                    user.numberPhone = userPhone
-                    user.image = image
-                    continuation.resume(user)
-                }.addOnFailureListener {
-                    continuation.resumeWithException(it)
-                    Log.d("qwe165", it.toString())
-                }
+        val userConverterImpl = UserConverterImpl()
+        val userId = firebaseAuth.currentUser?.uid.toString()
+        var user: User = User()
+        var userResponse: UserResponse? = UserResponse()
+        var userEntity: UserEntity = UserEntity()
+        return try {
+            userResponse =
+                firestore.collection(USER_TABLE).document(userId).get().await()
+                    .toObject(UserResponse::class.java)
+            if (userResponse != null) {
+                userEntity = userConverterImpl.fbtoDb(userResponse)
             }
+            user = userConverterImpl.dbtoModel(userEntity)
+            user
+        } catch (e: Exception) {
+            //db
+            user
         }
     }
 
@@ -70,115 +60,68 @@ class UserRepositoryImpl(
             storedVerificationId, otp
         )
 
-        var userExist = false
-//        var userExist: Boolean = suspendCoroutine { continuation ->
-            //suspendCancellableCoroutine
-//            uid.let { it1 ->
-//                firestore.collection("users").document(it1).get().addOnSuccessListener {
-////                    var userMap: HashMap<String, String> = it.data as HashMap<String, String>
-//                    if (it.data?.get(USER_TABLE_COLUMN_PHONE) == null) {
-//                        continuation.resume(false)
-//                    } else {
-//                        continuation.resume(true)
-//                    }
-//                    if (it.exists()) {
-//                        Log.d("qwe1", "true")
-//                        continuation.resume(true)
-//                    } else {
-//                        Log.d("qwe1", "false")
-//                        continuation.resume(false)
-//                    }
-//                }.addOnFailureListener {
-//                    continuation.resumeWithException(it)
-//                }
-//            }
-//        }
-        return suspendCoroutine { continuation ->
-            firebaseAuth.signInWithCredential(credential)
-                .addOnSuccessListener {
-                    Log.d("qwe13", firebaseAuth.currentUser?.uid.toString())
-                    result = if (!userExist) {
-                        //как здесь запустить метод в корутин скоупе, чтобы проверить существует ли пользователь
-                        //метод suspend createUser()
-                        createUser()
-                    } else {
-                        "Успешный вход в аккаунт"
-                    }
-                    Log.d("qwe12213", result)
-                    continuation.resume(result)
-                }.addOnFailureListener {
-                    if (it is FirebaseAuthInvalidCredentialsException) {
-                        result = "Неправильный код"
-                    }
-                    continuation.resume(result)
-                }
+        try {
+            firebaseAuth.signInWithCredential(credential).await()
+            result = if (existUser()) {
+                "Успешный вход в аккаунт"
+            } else {
+                createUser()
+            }
+        } catch (e: Exception) {
+            if (e is FirebaseAuthInvalidCredentialsException) {
+                result = "Неправильный код"
+            }
         }
+
+        return result
     }
 
-    override suspend fun updateUser(userName: String, userImage: String): String {
+    override suspend fun updateUser(name: String): String {
         val uid = firebaseAuth.currentUser?.uid.toString()
-//        REF_DATABASE_ROOT.child(NODE_USERS).child(uid).child(CHILD_USERNAME).setValue(name)
-//            .addOnCompleteListener {
-//                if (it.isSuccessful) {
-//                    result = "Имя успешно изменено"
-//                }
-//            }
-        val userMap = mutableMapOf<String, Any>()
-        userMap[USER_TABLE_COLUMN_USERNAME] = userName
-        userMap[USER_TABLE_COLUMN_IMAGE] = userImage
-        return suspendCoroutine { continuation ->
-            firestore.collection(USER_TABLE).add(userMap)
-                .addOnSuccessListener {
-                    var result = "Данные успешно изменены"
-                    continuation.resume(result)
-                }.addOnFailureListener {
-                    Log.d("qwe0", it.message.toString())
-                    continuation.resumeWithException(it)
-                }
+
+        return try {
+            val userMap = mutableMapOf<String, Any>()
+            userMap[USER_TABLE_COLUMN_USERNAME] = name
+            firestore.collection(USER_TABLE).document(uid).update(userMap).await()
+            "Данные успешно изменены"
+        } catch (e: Exception) {
+            "Данные изменить не удалось"
         }
     }
 
-//    private suspend fun existUser(): Boolean {
-//        val uid = firebaseAuth.currentUser?.uid.toString()
-//        return suspendCoroutine { continuation ->
-//            //suspendCancellableCoroutine
-//            uid.let { it1 ->
-//                firestore.collection("users").document(it1).get().addOnSuccessListener {
-//                    if (it.exists()) {
-//                        continuation.resume(true)
-//                    } else {
-//                        continuation.resume(false)
-//                    }
-//                }.addOnFailureListener {
-//                    continuation.resumeWithException(it)
-//                }
-//            }
-//        }
-//    }
+    private suspend fun existUser(): Boolean {
+        val uid = firebaseAuth.currentUser?.uid.toString()
+        var result = true
+        //suspendCancellableCoroutine
+        try {
+            val user = firestore.collection("users").document(uid).get().await()
+                .toObject(UserResponse::class.java)
+            if (user == null) {
+                result = false
+            }
+        } catch (e: Exception) {
+            result = false
+        }
+        return result
+    }
 
-    private fun createUser(): String {
-        var result = ""
+    private suspend fun createUser(): String {
         val uid = firebaseAuth.currentUser?.uid.toString()
         val userMap = mutableMapOf<String, Any>()
         userMap[USER_TABLE_COLUMN_ID] = uid
         userMap[USER_TABLE_COLUMN_PHONE] = firebaseAuth.currentUser?.phoneNumber.toString()
         userMap[USER_TABLE_COLUMN_USERNAME] = ""
         userMap[USER_TABLE_COLUMN_IMAGE] = DEFAULT_USER_IMAGE
-//        return suspendCoroutine { continuation ->
-        firestore.collection(USER_TABLE).document(uid).set(userMap)
-            .addOnSuccessListener {
-                result = "Успешный вход в аккаунт"
-//                    continuation.resume(result)
-            }.addOnFailureListener {
-                result = it.toString()
-//                    continuation.resumeWithException(it)
-            }
-//        }
-        return result
+        return try {
+            firestore.collection(USER_TABLE).document(uid).set(userMap).await()
+            "Успешный вход в аккаунт"
+        } catch (e: Exception) {
+            "Проверьте подключение к интернету"
+        }
     }
 
     override suspend fun signOut(): String {
-        var result = "Выход выполнен успешно"
+        val result = "Выход выполнен успешно"
         firebaseAuth.signOut()
         return result
     }

@@ -21,8 +21,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/eater"
         app:layout_constraintTop_toBottomOf="@id/ratingbar_review_create"
         tools:text="Padang steamed rice served with various choices of pre-cooked dishes originated from West Sumatra, Indonesia."
-        android:hint="Оставьте отзыв об этом заведении."/>
+        android:hint="@string/edtx_review_create"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

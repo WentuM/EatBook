@@ -35,7 +35,7 @@
         android:layout_marginStart="8dp"
         android:fontFamily="@font/eater"
         android:text="@string/app_name"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/whiteText"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgv_profile_cancel"

@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:text="@string/txv_my_book_restaurants"
         android:textColor="@color/blackText"
-        android:layout_marginTop="16dp"
+        android:fontFamily="@font/eater"
+        android:layout_marginTop="32dp"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +27,7 @@
         android:id="@+id/progress_list"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:indeterminateDrawable="@drawable/spinner_png"
         android:indeterminateOnly="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,8 +40,8 @@
         android:layout_width="0dp"
         android:layout_height="472dp"
         android:orientation="horizontal"
+        android:layout_marginTop="12dp"
         android:padding="12dp"
-        android:visibility="invisible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,22 +61,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-<!--    <Button-->
-<!--        android:id="@+id/btn_redirect_restaurants"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginEnd="32dp"-->
-<!--        android:background="@drawable/bg_button_rounded"-->
-<!--        android:fontFamily="@font/eater"-->
-<!--        android:text="@string/btn_list_restaurants"-->
-<!--        android:textColor="@color/whiteText"-->
-<!--        android:textSize="18sp"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/my_book_table_list"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

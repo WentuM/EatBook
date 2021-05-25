@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.data.database.dao.SaleDao
 import com.example.data.database.entity.RestaurantEntity
 import com.example.data.database.entity.SaleEntity
+import com.example.data.firebase.response.SaleResponse
 import com.example.data.mappers.RestaurantConverterImpl
 import com.example.data.mappers.SaleConverterImpl
 import com.example.domain.interfaces.SaleRepository
@@ -11,6 +12,7 @@ import com.example.domain.model.Restaurant
 import com.example.domain.model.Sale
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -24,61 +26,37 @@ class SaleRepositoryImpl(
 
     companion object {
         private const val SALES_TABLE = "sales"
-        private const val SALE_TABLE_COLUMN_ID = "id"
-        private const val SALE_TABLE_COLUMN_TITLE = "title"
-        private const val SALE_TABLE_COLUMN_DESC = "description"
-        private const val SALE_TABLE_COLUMN_ID_REST = "id_rest"
-        private const val SALE_TABLE_COLUMN_TITLE_REST = "title_restaurant"
-        private const val SALE_TABLE_COLUMN_IMAGE = "image"
     }
 
     override suspend fun getListSales(): List<Sale> {
-        var saleConverterImpl = SaleConverterImpl()
-        var listResult: ArrayList<Sale> = ArrayList()
-        return suspendCoroutine { continuation ->
-            firestore.collection(SALES_TABLE).get()
-                .addOnSuccessListener {
-                    for (document in it.documents) {
-                        var saleMap: HashMap<String, String> =
-                            document.data as HashMap<String, String>
-                        var saleEntity = SaleEntity(
-                            saleMap[SALE_TABLE_COLUMN_ID].toString(),
-                            saleMap[SALE_TABLE_COLUMN_TITLE].toString(),
-                            saleMap[SALE_TABLE_COLUMN_DESC].toString(),
-                            saleMap[SALE_TABLE_COLUMN_IMAGE].toString(),
-                            saleMap[SALE_TABLE_COLUMN_ID_REST].toString(),
-                            saleMap[SALE_TABLE_COLUMN_TITLE_REST].toString()
-                        )
-                        var saleModel =
-                            saleConverterImpl.dbtoModel(saleEntity = saleEntity)
-                        listResult.add(saleModel)
-                    }
-                    continuation.resume(listResult)
-                }.addOnFailureListener {
-                    //room db
-                    continuation.resumeWithException(it)
-                }
+        val saleConverterImpl = SaleConverterImpl()
+        var listResult: List<Sale> = emptyList()
+
+        return try {
+            val listResponse: List<SaleResponse> =
+                firestore.collection(SALES_TABLE).get().await()
+                    .toObjects(SaleResponse::class.java)
+            listResult = listResponse.map { saleConverterImpl.fbtoModel(it) }
+            listResult
+        } catch (e: Exception) {
+            emptyList()
         }
     }
 
     override suspend fun getSalesById(id: String): Sale {
-        return suspendCoroutine { continuation ->
-            firestore.collection(SALES_TABLE).document(id).get()
-                .addOnSuccessListener {
-                    var saleMap: HashMap<String, String?> = it.data as HashMap<String, String?>
-                    var saleEntity = SaleEntity(
-                        saleMap[SALE_TABLE_COLUMN_ID].toString(),
-                        saleMap[SALE_TABLE_COLUMN_TITLE].toString(),
-                        saleMap[SALE_TABLE_COLUMN_DESC].toString(),
-                        saleMap[SALE_TABLE_COLUMN_IMAGE].toString(),
-                        saleMap[SALE_TABLE_COLUMN_ID_REST].toString(),
-                        saleMap[SALE_TABLE_COLUMN_TITLE_REST].toString()
-                    )
-                    var saleConverterImpl = SaleConverterImpl()
-                    var saleModel =
-                        saleConverterImpl.dbtoModel(saleEntity)
-                    continuation.resume(saleModel)
-                }
+        val saleConverterImpl = SaleConverterImpl()
+        var saleResponse: SaleResponse? = SaleResponse()
+        var resultSale: Sale = Sale()
+        return try {
+            saleResponse = firestore.collection(SALES_TABLE).document(id).get().await()
+                .toObject(SaleResponse::class.java)
+            if (saleResponse != null) {
+                resultSale = saleConverterImpl.fbtoModel(saleResponse)
+            }
+            resultSale
+        } catch (e: Exception) {
+            //
+            resultSale
         }
     }
 }

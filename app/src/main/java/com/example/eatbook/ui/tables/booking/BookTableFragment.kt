@@ -3,6 +3,7 @@ package com.example.eatbook.ui.tables.booking
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +12,15 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
 import com.example.eatbook.ui.tables.booking.list.HourAdapter
 import com.example.eatbook.ui.tables.booking.list.model.BookTableItemModel
 import com.example.eatbook.ui.tables.booking.list.model.Hour
 import com.example.eatbook.ui.tables.booking.list.model.TableItemModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.dialog_book_table_create.view.*
 import kotlinx.android.synthetic.main.fragment_book_rest.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,16 +32,16 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
     @Inject
     lateinit var bookTableViewModel: BookTableViewModel
-    private val hourAdapter = HourAdapter(this)
+    private val hourAdapter: HourAdapter = HourAdapter(this)
     private var currentListHour = arrayListOf<Hour>()
     private var idTable: String = ""
     private lateinit var tableItemModel: TableItemModel
     private var countHours: Int = 1
+    private var showTimeList: Boolean = true
 
 
     companion object {
         private lateinit var calendar: Calendar
-        private lateinit var reviewDialog: AlertDialog
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,7 +83,6 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         calendar = Calendar.getInstance()
         txv_book_number_hour.text = countHours.toString()
         txv_book_date.text = SimpleDateFormat("dd, MMM yyyy").format(calendar.time)
-        txv_book_time.text = SimpleDateFormat("HH:mm").format(calendar.time)
     }
 
     private fun initClicks() {
@@ -88,17 +91,24 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
 
         imgv_book_time.setOnClickListener {
-            bookTableViewModel.getBookTableByDay(txv_book_date.text.toString(), idTable)
-            bookTableViewModel.bookTable().observe(viewLifecycleOwner, Observer {
-                for (hour: Hour in currentListHour) {
-                    if (it.contains(hour)) {
-                        hour.exist = false
+            if (showTimeList) {
+                bookTableViewModel.getBookTableByDay(txv_book_date.text.toString(), idTable)
+                bookTableViewModel.bookTable().observe(viewLifecycleOwner, Observer {
+                    for (i in 0..currentListHour.size) {
+                        if (it.contains(currentListHour[i])) {
+                            for (j in i..(i + currentListHour[i].countHour)) {
+                                currentListHour[j].exist = false
+                            }
+                        }
                     }
-                }
-                hourAdapter.submitList(currentListHour)
-                hour_list.visibility = View.VISIBLE
-            })
-
+                    hourAdapter.submitList(currentListHour)
+                    hour_list.visibility = View.VISIBLE
+                    showTimeList = false
+                })
+            } else {
+                hour_list.visibility = View.GONE
+                showTimeList = true
+            }
         }
 
         imgv_book_hours_minus.setOnClickListener {
@@ -117,27 +127,34 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     private fun createBookTable() {
         val dayBook = txv_book_date.text.toString()
         val timeBook = txv_book_time.text.toString()
-        val bookTableItemModel: BookTableItemModel =
-            BookTableItemModel(
-                "",
-                idTable,
-                dayBook,
-                timeBook,
-                countHours,
-                tableItemModel.image,
-                tableItemModel.title,
-                tableItemModel.idRestaurant,
-                tableItemModel.nameRestaurant
-            )
-        bookTableViewModel.createNewBookTable(bookTableItemModel)
-        bookTableViewModel.createBookTable().observe(viewLifecycleOwner, Observer {
-            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-        })
+        //если проходит всю проверку, то даю возможность забронировать
+        if (checkFieldsBook(timeBook)) {
+            val bookTableItemModel: BookTableItemModel =
+                BookTableItemModel(
+                    "",
+                    idTable,
+                    dayBook,
+                    timeBook,
+                    countHours,
+                    tableItemModel.image,
+                    tableItemModel.title,
+                    tableItemModel.idRestaurant,
+                    tableItemModel.nameRestaurant
+                )
+            bookTableViewModel.createNewBookTable(bookTableItemModel)
+            bookTableViewModel.createBookTable().observe(viewLifecycleOwner, Observer {
+                if (it == "Вы успешно забронировали столик") {
+                    showReviewDialog(it, bookTableItemModel)
+                } else {
+                    Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+                }
+            })
+        }
     }
 
     private fun initListHour() {
         for (i in 6..23) {
-            var hour = Hour("$i:00", true, 0)
+            val hour = Hour("$i:00", true, 0)
             currentListHour.add(hour)
         }
     }
@@ -183,39 +200,74 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
     }
 
+    private fun checkFieldsBook(timeBook: String): Boolean {
+        //если человек не выбрал время бронирования
+        if (timeBook.isEmpty()) {
+            Snackbar.make(
+                requireActivity().findViewById(android.R.id.content),
+                "Выберите время бронирования",
+                Snackbar.LENGTH_LONG
+            ).show()
+            return false
+        }
+        //проверка, если человек выбрал свободное время, и его количество часов
+        //бронирования не пересекается с бронированием другого человека
+        val splitTimeBook = timeBook.split(":")
+        val j = splitTimeBook[0].toInt() - 5
+        for (i in j..(j + countHours)) {
+            if (!currentListHour[i].exist) {
+                Snackbar.make(
+                    requireActivity().findViewById(android.R.id.content),
+                    "Время на ${currentListHour[i].countHour} занято",
+                    Snackbar.LENGTH_LONG
+                ).show()
+                return false
+            }
+        }
+        return true
+    }
+
     override fun onClick(titleHour: String) {
         txv_book_time.text = titleHour
     }
 
-    private fun showReviewDialog() {
-        val reviewDialogBuilder = AlertDialog.Builder(activity)
+    @SuppressLint("SetTextI18n")
+    private fun showReviewDialog(str: String, bookTableItemModel: BookTableItemModel) {
+        val reviewDialog = AlertDialog.Builder(activity)
+        val reviewView = layoutInflater.inflate(R.layout.dialog_book_table_create, null)
+        with(reviewView) {
+            txv_book_table_result_title.text =
+                "Вы успешно забронировали ${bookTableItemModel.nameRestaurant} в ресторане '${bookTableItemModel.nameRestaurant}'."
+            txv_book_table_result_date.text = "Ваша дата бронирования: ${bookTableItemModel.day}."
+            txv_book_table_result_time.text =
+                "Ваше время бронирования: ${bookTableItemModel.time} на ${bookTableItemModel.countHour} часа."
+        }
 
-        var reviewView = layoutInflater.inflate(R.layout.fragment_list_hour, null)
-//        reviewView.hour_list.adapter = hourAdapter
-        reviewDialogBuilder.setView(reviewView)
+        reviewDialog.setView(reviewView)
 
-//        var recycler: View =
+        reviewDialog.setTitle(str)
+        reviewDialog.setCancelable(false)
+            .setPositiveButton(
+                "Перейти в 'Мои бронироваия'",
+                object : DialogInterface.OnClickListener {
+                    @SuppressLint("SimpleDateFormat")
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        findNavController().navigate(R.id.action_navigation_rest_book_to_navigation_my_table_book)
+                        p0?.dismiss()
+                    }
 
-//        val gridView = GridView(activity)
-//
-//        val mList: MutableList<Int?> = ArrayList()
-//        for (i in 1..35) {
-//            mList.add(i)
-//        }
-//
-//        val adapter: ArrayAdapter<Hour> =
-//            ArrayAdapter(requireContext(), R.layout.cardview_item_hour, currentListHour)
-//        gridView.adapter = adapter
-//        gridView.numColumns = 4
-//        gridView.onItemClickListener =
-//            OnItemClickListener { parent, view, position, id ->
-//                // do something here
-//            }
+                })
+            .setNegativeButton(
+                "Остаться на экране бронирования",
+                object : DialogInterface.OnClickListener {
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        hour_list.visibility = View.GONE
+                        showTimeList = true
+                        p0?.cancel()
+                    }
 
-//        reviewDialogBuilder.setView(gridView)
-        reviewDialogBuilder.setTitle("Ваш отзыв")
-        reviewDialogBuilder.setCancelable(true)
-        reviewDialog = reviewDialogBuilder.create()
-        reviewDialogBuilder.show()
+                })
+        reviewDialog.create()
+        reviewDialog.show()
     }
 }

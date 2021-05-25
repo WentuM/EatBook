@@ -1,151 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollW"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.restaurants.detail.RestaurantDetailFragment">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/toolbar" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imgv_rest"
-            android:layout_width="0dp"
-            android:layout_height="240dp"
-            android:adjustViewBounds="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
+            <ImageView
+                android:id="@+id/imgv_rest"
+                android:layout_width="0dp"
+                android:layout_height="240dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include" />
 
-        <TextView
-            android:id="@+id/txv_rest_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/eater"
-            tools:text="Nasi Padang"
-            android:textColor="#333333"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgv_rest" />
+            <TextView
+                android:id="@+id/txv_rest_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/eater"
+                android:textColor="#333333"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgv_rest"
+                tools:text="Nasi Padang" />
 
-        <ImageView
-            android:id="@+id/imgv_rest_place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:src="@drawable/ic_baseline_place_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/txv_rest_address"
-            app:layout_constraintBottom_toBottomOf="@id/txv_rest_address"/>
+            <ImageView
+                android:id="@+id/imgv_rest_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_baseline_place_24"
+                app:layout_constraintBottom_toBottomOf="@id/txv_rest_address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/txv_rest_address" />
 
-        <TextView
-            android:id="@+id/txv_rest_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/eater"
-            android:textColor="#333333"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/imgv_rest_place"
-            app:layout_constraintTop_toBottomOf="@+id/txv_rest_title"
-            tools:text="Крёмлёвская 35" />
+            <TextView
+                android:id="@+id/txv_rest_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/eater"
+                android:textColor="#333333"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/imgv_rest_place"
+                app:layout_constraintTop_toBottomOf="@+id/txv_rest_title"
+                tools:text="Крёмлёвская 35" />
 
-        <RatingBar
-            android:id="@+id/ratingbar_rest"
-            android:clickable="false"
-            android:focusableInTouchMode="false"
-            android:focusable="false"
-            android:isIndicator="true"
-            android:layout_width="240dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/txv_rest_address"
-            app:layout_constraintTop_toBottomOf="@+id/txv_rest_address" />
+            <RatingBar
+                android:id="@+id/ratingbar_rest"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:isIndicator="true"
+                app:layout_constraintStart_toStartOf="@+id/txv_rest_address"
+                app:layout_constraintTop_toBottomOf="@+id/txv_rest_address" />
 
-        <TextView
-            android:id="@+id/txv_rest_raiting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            tools:text="2.3"
-            app:layout_constraintBottom_toBottomOf="@+id/ratingbar_rest"
-            app:layout_constraintStart_toEndOf="@+id/ratingbar_rest"
-            app:layout_constraintTop_toTopOf="@+id/ratingbar_rest" />
+            <TextView
+                android:id="@+id/txv_rest_raiting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ratingbar_rest"
+                app:layout_constraintStart_toEndOf="@+id/ratingbar_rest"
+                app:layout_constraintTop_toTopOf="@+id/ratingbar_rest"
+                tools:text="2.3" />
 
-        <Button
-            android:id="@+id/btn_rest_reviews"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/bg_button_rounded"
-            android:text="@string/btn_reviews"
-            android:textColor="@color/whiteText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingbar_rest" />
+            <Button
+                android:id="@+id/btn_rest_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/bg_button_rounded"
+                android:text="@string/btn_reviews"
+                android:textColor="@color/whiteText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingbar_rest" />
 
 
-        <ImageView
-            android:id="@+id/imgv_rest_favourite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/txv_rest_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txv_rest_title"
-            app:srcCompat="@drawable/ic_favorite_24" />
+            <TextView
+                android:id="@+id/txv_rest_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/eater"
+                android:textColor="#3F9785"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingbar_rest"
+                tools:text="199" />
 
-        <TextView
-            android:id="@+id/txv_rest_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/eater"
-            tools:text="199"
-            android:textColor="#3F9785"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingbar_rest" />
+            <TextView
+                android:id="@+id/txv_rest_descr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/eater"
+                android:lineSpacingExtra="2dp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txv_rest_price"
+                app:layout_constraintTop_toBottomOf="@+id/btn_rest_book"
+                tools:text="Nasi Padang is a Padang steamed rice served with various choices of pre-cooked dishes originated from West Sumatra, Indonesia. It is known across Indonesia as Nasi Padang, after the city of Padang the capital of West Sumatra province." />
 
-        <TextView
-            android:id="@+id/txv_rest_descr"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/eater"
-            android:lineSpacingExtra="2dp"
-            tools:text="Nasi Padang is a Padang steamed rice served with various choices of pre-cooked dishes originated from West Sumatra, Indonesia. It is known across Indonesia as Nasi Padang, after the city of Padang the capital of West Sumatra province."
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/txv_rest_price"
-            app:layout_constraintTop_toBottomOf="@+id/btn_rest_book" />
-
-        <Button
-            android:id="@+id/btn_rest_book"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/bg_button_rounded"
-            android:fontFamily="@font/eater"
-            android:text="@string/book_table"
-            android:textColor="@color/whiteText"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/txv_rest_price"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <Button
+                android:id="@+id/btn_rest_book"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_button_rounded"
+                android:fontFamily="@font/eater"
+                android:text="@string/book_table"
+                android:textColor="@color/whiteText"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txv_rest_price" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

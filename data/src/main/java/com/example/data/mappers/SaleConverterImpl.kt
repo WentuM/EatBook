@@ -1,29 +1,40 @@
 package com.example.data.mappers
 
 import com.example.data.database.entity.SaleEntity
+import com.example.data.firebase.response.SaleResponse
 import com.example.domain.model.Restaurant
 import com.example.domain.model.Sale
 
 class SaleConverterImpl : SaleConverter {
-    override fun dbtoModel(saleEntity: SaleEntity): Sale {
-        return Sale(
-            saleEntity.id,
-            saleEntity.title,
-            saleEntity.description,
-            saleEntity.imageSale,
-            saleEntity.idRestaurant,
-            saleEntity.titleRestaurant
-        )
-    }
+    override fun fbtoModel(saleResponse: SaleResponse): Sale =
+        with(saleResponse) {
+            Sale(
+                id, title, description, imageSale, idRestaurant, titleRestaurant
+            )
+        }
 
-    override fun modeltoDb(sale: Sale): SaleEntity {
-        return SaleEntity(
-            sale.id,
-            sale.title,
-            sale.description,
-            sale.imageSale,
-            sale.idRestaurant,
-            sale.titleRestaurant
-        )
-    }
+
+    override fun dbtoModel(saleEntity: SaleEntity): Sale =
+        with(saleEntity) {
+            Sale(
+                id,
+                title,
+                description,
+                imageSale,
+                idRestaurant,
+                titleRestaurant
+            )
+        }
+
+    override fun modeltoDb(sale: Sale): SaleEntity =
+        with(sale) {
+            SaleEntity(
+                id,
+                title,
+                description,
+                imageSale,
+                idRestaurant,
+                titleRestaurant
+            )
+        }
 }

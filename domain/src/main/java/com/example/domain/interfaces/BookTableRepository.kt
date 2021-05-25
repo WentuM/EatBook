@@ -9,4 +9,6 @@ interface BookTableRepository {
     suspend fun createBookTable(bookTable: BookTable): String
 
     suspend fun getListMyTable(): List<BookTable>
+
+    suspend fun deleteMyTableById(idMyTable: String): String
 }

@@ -44,7 +44,11 @@
     <fragment
         android:id="@+id/navigation_rest_book"
         android:name="com.example.eatbook.ui.tables.booking.BookTableFragment"
-        tools:layout="@layout/fragment_book_rest"></fragment>
+        tools:layout="@layout/fragment_book_rest">
+        <action
+            android:id="@+id/action_navigation_rest_book_to_navigation_my_table_book"
+            app:destination="@id/navigation_my_table_book" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_rest_tables"
@@ -122,5 +126,9 @@
     <fragment
         android:id="@+id/navigation_my_table_book"
         android:name="com.example.eatbook.ui.profile.list.booktable.MyBookTableFragment"
-        tools:layout="@layout/fragment_list_my_book_table" />
+        tools:layout="@layout/fragment_list_my_book_table">
+        <action
+            android:id="@+id/action_navigation_my_table_book_to_navigation_rest_detail"
+            app:destination="@id/navigation_rest_detail" />
+    </fragment>
 </navigation>

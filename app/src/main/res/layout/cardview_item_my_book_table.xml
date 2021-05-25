@@ -24,39 +24,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="39dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="18dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_delete_24" />
-
 
         <TextView
             android:id="@+id/txv_my_table_title"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/eater"
-            tools:text="Столик номер 5"
-            android:gravity="center_vertical"
+            android:gravity="center_horizontal"
             android:textColor="@color/blackText"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgv_table_image" />
+            app:layout_constraintTop_toBottomOf="@+id/imgv_table_image"
+            tools:text="Столик номер 5" />
 
         <TextView
             android:id="@+id/txv_my_rest_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/eater"
             android:gravity="center"
-            android:maxLength="15"
-            android:textColor="#2d2d2d"
+            android:textColor="@color/blackText"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txv_my_table_title"
@@ -68,10 +58,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/rubik_medium"
-            android:gravity="center"
-            android:maxLength="30"
-            android:textColor="#2d2d2d"
+            android:fontFamily="@font/eater"
+            android:gravity="center_horizontal"
+            android:textColor="@color/blackText"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txv_my_rest_title"
@@ -83,9 +72,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:maxLength="30"
-            android:textColor="#2d2d2d"
+            android:fontFamily="@font/eater"
+            android:gravity="center_horizontal"
+            android:textColor="@color/blackText"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txv_my_count_people"
@@ -97,19 +86,32 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:maxLength="30"
-            android:textColor="#2d2d2d"
+            android:fontFamily="@font/eater"
+            android:gravity="center_horizontal"
+            android:textColor="@color/blackText"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txv_my_date_book"
             tools:text="Book Title" />
 
-        <Button
-            android:layout_width="128dp"
+        <ImageView
+            android:id="@+id/imgv_my_table_delete"
+            android:layout_width="39dp"
             android:layout_height="32dp"
-            android:layout_marginTop="12dp"
-            android:background="#4A5DD2"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_redirect_rest"
+            app:layout_constraintEnd_toStartOf="@+id/btn_redirect_rest"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_redirect_rest"
+            app:srcCompat="@drawable/ic_baseline_delete_24" />
+
+        <Button
+            android:id="@+id/btn_redirect_rest"
+            android:layout_width="140dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/main_color_for_all"
             android:fontFamily="@font/eater"
             android:gravity="center"
             android:text="@string/btn_redirect_rest"
@@ -117,7 +119,6 @@
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txv_my_time_book"
             tools:ignore="SmallSp" />
 

@@ -21,11 +21,11 @@ class MyBookTableViewModel(
 ) : ViewModel() {
 
     private val _myTables = MutableLiveData<List<MyBookTableItemModel>>()
-    private val _deleteMyTables: MutableLiveData<String> = MutableLiveData()
+    private val _deleteMyTable: MutableLiveData<String> = MutableLiveData()
 
 
     fun myTables(): LiveData<List<MyBookTableItemModel>> = _myTables
-    fun deleteMyTables(): LiveData<String> = _deleteMyTables
+    fun deleteMyTable(): LiveData<String> = _deleteMyTable
 
     fun getAllMyTables(view: View) {
         viewModelScope.launch {
@@ -36,17 +36,20 @@ class MyBookTableViewModel(
             } catch (e: Exception) {
 
             } finally {
-//                view.progress_list.visibility = View.GONE
+                view.progress_list.visibility = View.GONE
             }
         }
     }
 
-    fun setLikeForRestaurant(id: String) {
+    fun deleteMyTableById(view: View, id: String) {
         viewModelScope.launch {
             try {
-//                _deleteMyTables.value = bookTableInteractor.setLikeForRestaurant(id)
+                view.progress_list.visibility = View.VISIBLE
+                _deleteMyTable.value = bookTableInteractor.deleteMyTableById(id)
             } catch (e: Exception) {
-
+                _deleteMyTable.value = "Что-то пошло не так"
+            } finally {
+                view.progress_list.visibility = View.GONE
             }
         }
     }

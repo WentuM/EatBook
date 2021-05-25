@@ -22,36 +22,37 @@
             android:layout_marginTop="12dp"
             android:scaleType="centerCrop"
             cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toTopOf="parent"/>
+            cardview:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/review_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/eater"
             android:gravity="center"
-            tools:text="Danil Povarnicin"
-            android:textColor="#2d2d2d"
+            android:textColor="@color/blackText"
             android:textSize="13sp"
             cardview:layout_constraintStart_toEndOf="@+id/review_image"
-            cardview:layout_constraintTop_toTopOf="parent" />
+            cardview:layout_constraintTop_toTopOf="parent"
+            tools:text="Danil Povarnicin" />
 
 
         <RatingBar
-            android:id="@+id/review_raiting"
+            android:id="@+id/review_rating"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
-            android:numStars="5"
             android:clickable="false"
-            android:focusableInTouchMode="false"
             android:focusable="false"
+            android:focusableInTouchMode="false"
             android:isIndicator="true"
+            android:numStars="5"
             cardview:layout_constraintStart_toEndOf="@+id/review_image"
-            cardview:layout_constraintTop_toBottomOf="@id/review_username"/>
+            cardview:layout_constraintTop_toBottomOf="@id/review_username" />
 
         <TextView
             android:id="@+id/review_date"
@@ -59,24 +60,24 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:gravity="center"
-            android:textColor="#2d2d2d"
+            android:textColor="@color/blackText"
             android:textSize="13sp"
-            cardview:layout_constraintBottom_toBottomOf="@id/review_raiting"
-            cardview:layout_constraintStart_toEndOf="@+id/review_raiting"
-            cardview:layout_constraintTop_toTopOf="@+id/review_raiting"
+            cardview:layout_constraintBottom_toBottomOf="@id/review_rating"
+            cardview:layout_constraintStart_toEndOf="@+id/review_rating"
+            cardview:layout_constraintTop_toTopOf="@+id/review_rating"
             tools:text="14.05.2021" />
 
         <TextView
             android:id="@+id/txv_review_text"
             android:layout_width="354dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/eater"
             android:lineSpacingExtra="2dp"
             android:textSize="16sp"
             cardview:layout_constraintStart_toEndOf="@+id/review_image"
-            cardview:layout_constraintTop_toBottomOf="@id/review_raiting"
+            cardview:layout_constraintTop_toBottomOf="@id/review_rating"
             tools:text="Nasi Padang is a Padang steamed rice served with various choices of pre-cooked dishes originated from West Sumatra, Indonesia. It is known across Indonesia as Nasi Padang, after the city of Padang the capital of West Sumatra province." />
 
 

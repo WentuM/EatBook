@@ -1,6 +1,8 @@
 package com.example.eatbook.ui.profile.list.booktable
 
-import android.opengl.Visibility
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
-import kotlinx.android.synthetic.main.cardview_item_restaurant.*
 import kotlinx.android.synthetic.main.fragment_list_my_book_table.*
-import kotlinx.android.synthetic.main.fragment_list_rest.*
-import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class MyBookTableFragment : Fragment(), MyBookTableAdapter.MyBookTableItemHandler {
@@ -52,16 +49,41 @@ class MyBookTableFragment : Fragment(), MyBookTableAdapter.MyBookTableItemHandle
         myBookTableViewModel.getAllMyTables(view)
     }
 
-    override fun onItemClick(idBookTable: String) {
+    override fun onRedirectToRest(idRestaurant: String) {
         val bundle = Bundle()
-        bundle.putString("idRestaurant", idBookTable)
-        findNavController().navigate(R.id.action_navigation_home_to_navigation_rest_detail, bundle)
+        bundle.putString("idRestaurant", idRestaurant)
+        findNavController().navigate(
+            R.id.action_navigation_my_table_book_to_navigation_rest_detail,
+            bundle
+        )
     }
 
-    override fun onFavourite(idBookTable: String) {
-//        restaurantViewModel.setLikeForRestaurant(idBookTable)
-//        restaurantViewModel.likeRest().observe(viewLifecycleOwner, Observer {
-//            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-//        })
+    override fun onDeleteMyTable(idBookTable: String) {
+        view?.let { showReviewDialog(it, idBookTable) }
+    }
+
+    private fun showReviewDialog(view: View, idBookTable: String) {
+        val reviewDialog = AlertDialog.Builder(activity)
+
+        reviewDialog.setTitle("Вы действительно хотите удалить бронирование?")
+        reviewDialog.setCancelable(false)
+            .setPositiveButton("Удалить", object : DialogInterface.OnClickListener {
+                @SuppressLint("SimpleDateFormat")
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    myBookTableViewModel.deleteMyTableById(view, idBookTable)
+                    myBookTableViewModel.deleteMyTable().observe(viewLifecycleOwner, Observer {
+                        Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+                    })
+                    p0?.dismiss()
+                }
+
+            })
+            .setNegativeButton("Отмена", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    p0?.cancel()
+                }
+            })
+        reviewDialog.create()
+        reviewDialog.show()
     }
 }

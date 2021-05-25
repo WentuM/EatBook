@@ -13,8 +13,8 @@ class MyBookTableAdapter(
 ) : ListAdapter<MyBookTableItemModel, MyBookTableHolder>(myBookTableCallback) {
 
     interface MyBookTableItemHandler {
-        fun onItemClick(idBookTable: String)
-        fun onFavourite(idBookTable: String)
+        fun onRedirectToRest(idRestaurant: String)
+        fun onDeleteMyTable(idBookTable: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyBookTableHolder =

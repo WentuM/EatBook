@@ -9,84 +9,88 @@
     android:foreground="?android:attr/selectableItemBackground"
     cardview:cardCornerRadius="4dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/rest_image"
-                android:layout_width="160dp"
-                android:layout_height="120dp"
-                android:background="#2d2d2d"
-                android:scaleType="centerCrop"
-                cardview:layout_constraintStart_toStartOf="parent"
-                cardview:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/rest_image"
+            android:layout_width="200dp"
+            android:layout_height="120dp"
+            android:background="#2d2d2d"
+            android:scaleType="centerCrop"
+            cardview:layout_constraintStart_toStartOf="parent"
+            cardview:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/btn_rest_favourite"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
-                cardview:layout_constraintEnd_toEndOf="parent"
-                cardview:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/btn_rest_favourite"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            cardview:layout_constraintEnd_toEndOf="parent"
+            cardview:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/rest_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:gravity="center"
-                android:maxLength="15"
-                tools:text="Book Title"
-                android:textColor="#2d2d2d"
-                android:textSize="13sp"
-                cardview:layout_constraintStart_toEndOf="@+id/rest_image"
-                cardview:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/rest_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/eater"
+            android:gravity="center"
+            android:maxLength="15"
+            android:textColor="#2d2d2d"
+            android:textSize="13sp"
+            cardview:layout_constraintStart_toEndOf="@+id/rest_image"
+            cardview:layout_constraintTop_toTopOf="parent"
+            tools:text="Book Title" />
 
-            <TextView
-                android:id="@+id/rest_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:gravity="center"
-                android:maxLength="30"
-                tools:text="Book Title"
-                android:textColor="#2d2d2d"
-                android:textSize="13sp"
-                cardview:layout_constraintStart_toEndOf="@+id/rest_image"
-                cardview:layout_constraintTop_toBottomOf="@id/rest_title" />
+        <TextView
+            android:id="@+id/rest_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/eater"
+            android:gravity="center"
+            android:maxLength="30"
+            android:textColor="@color/blackText"
+            android:textSize="13sp"
+            cardview:layout_constraintStart_toEndOf="@+id/rest_image"
+            cardview:layout_constraintTop_toBottomOf="@id/rest_title"
+            tools:text="Book Title" />
 
-            <TextView
-                android:id="@+id/rest_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:gravity="center"
-                android:maxLength="5"
-                tools:text="Book Title"
-                android:textColor="#2d2d2d"
-                android:textSize="13sp"
-                cardview:layout_constraintBottom_toBottomOf="parent"
-                cardview:layout_constraintStart_toEndOf="@+id/rest_image" />
+        <TextView
+            android:id="@+id/txv_item_rest_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/eater"
+            android:gravity="center"
+            android:text="@string/txv_item_rest_price"
+            android:textColor="@color/blackText"
+            android:textSize="12sp"
+            cardview:layout_constraintBottom_toBottomOf="parent"
+            cardview:layout_constraintStart_toEndOf="@+id/rest_image"
+            cardview:layout_constraintTop_toBottomOf="@+id/rest_description" />
 
-            <Button
-                android:layout_width="94dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_button_rounded"
-                android:gravity="center"
-                android:text="@string/book_table"
-                android:textColor="@color/whiteText"
-                android:textSize="8sp"
-                cardview:layout_constraintBottom_toBottomOf="@id/rest_price"
-                cardview:layout_constraintEnd_toEndOf="parent"
-                cardview:layout_constraintTop_toTopOf="@+id/rest_price" />
+        <TextView
+            android:id="@+id/rest_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/eater"
+            android:gravity="center"
+            android:textColor="@color/blackText"
+            android:textSize="13sp"
+            cardview:layout_constraintBottom_toBottomOf="@+id/txv_item_rest_price"
+            cardview:layout_constraintStart_toEndOf="@+id/txv_item_rest_price"
+            cardview:layout_constraintTop_toTopOf="@+id/txv_item_rest_price"
+            tools:text="1500 P" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+</androidx.cardview.widget.CardView>

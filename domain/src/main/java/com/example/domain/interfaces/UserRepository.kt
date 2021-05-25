@@ -10,7 +10,7 @@ interface UserRepository {
 
     suspend fun authUser(storedVerificationId: String, otp: String): String
 
-    suspend fun updateUser(name: String, image: String): String
+    suspend fun updateUser(name: String): String
 
     suspend fun signOut(): String
 

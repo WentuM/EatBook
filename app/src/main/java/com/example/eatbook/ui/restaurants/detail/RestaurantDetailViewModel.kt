@@ -10,8 +10,7 @@ import com.example.domain.model.Restaurant
 import kotlinx.coroutines.launch
 
 class RestaurantDetailViewModel(
-    private val restaurantInteractor: RestaurantInteractor,
-    private val userInteractor: UserInteractor
+    private val restaurantInteractor: RestaurantInteractor
 ): ViewModel() {
 
     private val _getRestaurant: MutableLiveData<Restaurant> = MutableLiveData()
@@ -30,5 +29,5 @@ class RestaurantDetailViewModel(
         }
     }
 
-    fun getCurrentUser(): Boolean = userInteractor.loggedUser()
+    fun getCurrentUser(): Boolean = restaurantInteractor.loggedUser()
 }

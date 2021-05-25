@@ -35,30 +35,25 @@ class ReviewRepositoryImpl(
         private const val REVIEW_TABLE_COLUMN_ID_REST = "idRest"
         private const val REVIEW_TABLE_COLUMN_RAITING = "rating"
         private const val REVIEW_TABLE_COLUMN_DATE = "dateSend"
-
-        private const val USER_TABLE = "users"
-        private const val USER_TABLE_COLUMN_PHONE = "phone"
-        private const val USER_TABLE_COLUMN_USERNAME = "username"
-        private const val USER_TABLE_COLUMN_IMAGE = "image"
+        private const val REVIEW_TABLE_COLUMN_NAME_USER = "nameUser"
+        private const val REVIEW_TABLE_COLUMN_IMAGE_USER = "imageUser"
     }
 
-
-    //здесь получить полный список,
-    // а в другом методе получить этот готовый список, и по нему достать всех юзеров для отзывов
-
     override suspend fun getListReview(idRestaurant: String): List<Review> {
-        var reviewConverterImpl = ReviewConverterImpl()
-        var listResult: ArrayList<Review> = ArrayList()
+        val reviewConverterImpl = ReviewConverterImpl()
+        var listResult: List<Review> = emptyList<Review>()
         return try {
-            var reviewList: MutableList<ReviewResponse> = firestore.collection(REVIEW_TABLE).whereEqualTo(REVIEW_TABLE_COLUMN_ID_REST, idRestaurant)
+            val reviewList: MutableList<ReviewResponse> = firestore.collection(REVIEW_TABLE)
+                .whereEqualTo(REVIEW_TABLE_COLUMN_ID_REST, idRestaurant)
                 .get().await().toObjects(ReviewResponse::class.java)
-                    for (review in reviewList) {
-                        var userEntity: UserEntity = getUserByReview(review.idUser)
-                        var reviewEntity = reviewConverterImpl.fbtoDb(reviewResponse = review)
-                        var reviewModel = reviewConverterImpl.dbtoModel(reviewEntity, userEntity)
-
-                        listResult.add(reviewModel)
-                    }
+            listResult = reviewList.map { reviewConverterImpl.fbtoModel(it) }
+//            for (review in reviewList) {
+//                val userEntity: UserEntity = getUserByReview(review.idUser)
+//                val reviewEntity = reviewConverterImpl.fbtoDb(reviewResponse = review)
+//                val reviewModel = reviewConverterImpl.fbtoModel(revi, userEntity)
+//
+//                listResult.add(reviewModel)
+//            }
             listResult
         } catch (e: Exception) {
             //b
@@ -67,39 +62,29 @@ class ReviewRepositoryImpl(
     }
 
     override suspend fun createReviewByUser(review: Review): String {
-        val userId = firebaseAuth.currentUser?.uid
-        val reviewConverterImpl = ReviewConverterImpl()
-        val reviewEntity: ReviewEntity =
-            reviewConverterImpl.modeltoDb(review)
-        return suspendCoroutine { continuation ->
-            val reviewMap = mutableMapOf<String, Any>()
-            reviewMap[REVIEW_TABLE_COLUMN_ID] = reviewEntity.id
-            reviewMap[REVIEW_TABLE_COLUMN_TEXT] = reviewEntity.text
-            reviewMap[REVIEW_TABLE_COLUMN_ID_USER] = userId.toString()
-            reviewMap[REVIEW_TABLE_COLUMN_DATE] = reviewEntity.dateSend
-            reviewMap[REVIEW_TABLE_COLUMN_RAITING] = reviewEntity.rating
-            reviewMap[REVIEW_TABLE_COLUMN_ID_REST] = reviewEntity.idRest
-            firestore.collection(REVIEW_TABLE).document(reviewEntity.id).set(reviewMap)
-                .addOnSuccessListener {
-                    continuation.resume("Вы успешно создали отзыв")
-                }.addOnFailureListener {
-                    continuation.resume("Отзыв не был оставлен")
-                }
-        }
-    }
-
-    private suspend fun getUserByReview(userId: String): UserEntity {
-        var userConverterImpl = UserConverterImpl()
         return try {
-            var userEntity = UserEntity()
-            var userResponse: UserResponse? = firestore.collection(USER_TABLE).document(userId).get().await().toObject(UserResponse::class.java)
+            val userId = firebaseAuth.currentUser?.uid
+            val reviewMap = mutableMapOf<String, Any>()
 
-            if (userResponse != null) {
-                userEntity = userConverterImpl.fbtoDb(userResponse)
-            }
-            userEntity
+            reviewMap[REVIEW_TABLE_COLUMN_ID] = review.id
+            reviewMap[REVIEW_TABLE_COLUMN_TEXT] = review.text
+            reviewMap[REVIEW_TABLE_COLUMN_ID_USER] = userId.toString()
+            reviewMap[REVIEW_TABLE_COLUMN_DATE] = review.dateSend
+            reviewMap[REVIEW_TABLE_COLUMN_RAITING] = review.rating
+            reviewMap[REVIEW_TABLE_COLUMN_ID_REST] = review.idRest
+            reviewMap[REVIEW_TABLE_COLUMN_NAME_USER] = review.nameUser
+            reviewMap[REVIEW_TABLE_COLUMN_IMAGE_USER] = review.imageUser
+
+
+            firestore
+                .collection(REVIEW_TABLE)
+                .document(review.id)
+                .set(reviewMap)
+                .await()
+
+            "Вы успешно создали отзыв"
         } catch (e: Exception) {
-            userDao.getUserById(userId)
+            "Отзыв не был оставлен"
         }
     }
 }

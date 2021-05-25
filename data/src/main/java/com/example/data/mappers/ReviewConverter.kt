@@ -10,6 +10,8 @@ interface ReviewConverter {
 
     fun fbtoDb(reviewResponse: ReviewResponse): ReviewEntity
 
+    fun fbtoModel(reviewResponse: ReviewResponse): Review
+
     fun modeltoFb(review: Review): ReviewResponse
 
     fun dbtoModel(reviewEntity: ReviewEntity, userEntity: UserEntity): Review

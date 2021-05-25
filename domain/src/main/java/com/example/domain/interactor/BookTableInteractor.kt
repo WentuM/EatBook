@@ -32,4 +32,9 @@ class BookTableInteractor(
         withContext(context) {
             bookTableRepository.getListMyTable()
         }
+
+    suspend fun deleteMyTableById(idMyTable: String): String =
+        withContext(context) {
+            bookTableRepository.deleteMyTableById(idMyTable)
+        }
 }

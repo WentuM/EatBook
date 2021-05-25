@@ -51,8 +51,9 @@ class BookTableRepositoryImpl(
     override suspend fun createBookTable(bookTable: BookTable): String {
         return try {
             val userId = firebaseAuth.currentUser?.uid
-            val id = bookTable.idTable + userId
+            val id = bookTable.idTable + userId + bookTable.day
             val bookTableMap = mutableMapOf<String, Any>()
+
             bookTableMap[BOOK_TABLE_COLUMN_ID] = id
             bookTableMap[BOOK_TABLE_COLUMN_ID_TABLE] = bookTable.idTable
             bookTableMap[BOOK_TABLE_COLUMN_ID_USER] = userId.toString()
@@ -71,7 +72,7 @@ class BookTableRepositoryImpl(
                 .await()
             "Вы успешно забронировали столик"
         } catch (e: Exception) {
-            "$e"
+            "Вы не смогли забронировать столик"
         }
     }
 
@@ -86,6 +87,15 @@ class BookTableRepositoryImpl(
         } catch (e: Exception) {
             emptyList()
             //доступ из бд
+        }
+    }
+
+    override suspend fun deleteMyTableById(idMyTable: String): String {
+        return try {
+            firestore.collection(BOOK_TABLE).document(idMyTable).delete().await()
+            "Бронирование успешно удалено"
+        } catch (e: Exception) {
+            "Не удалось удалить бронирование ресторана"
         }
     }
 }

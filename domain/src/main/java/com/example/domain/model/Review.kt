@@ -6,6 +6,6 @@ data class Review(
     val dateSend: String,
     val rating: Double,
     val idRest: String,
-    var userImage: String = "",
-    var userName: String = ""
+    var nameUser: String = "",
+    var imageUser: String = ""
 )

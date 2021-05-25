@@ -1,5 +1,6 @@
 package com.example.eatbook.ui.reviews.list
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -62,7 +63,7 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
     }
 
     override fun onItemClick(idReview: String) {
-        var bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString("idReview", idReview)
     }
 
@@ -81,24 +82,25 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
     }
 
     private fun showReviewDialog() {
-        val reviewdialog = AlertDialog.Builder(activity)
-        var reviewView = layoutInflater.inflate(R.layout.dialog_review_create, null)
-        reviewdialog.setView(reviewView)
+        val reviewDialog = AlertDialog.Builder(activity)
+        val reviewView = layoutInflater.inflate(R.layout.dialog_review_create, null)
+        reviewDialog.setView(reviewView)
 
-        reviewdialog.setTitle("Ваш отзыв")
-        reviewdialog.setCancelable(false)
+        reviewDialog.setTitle("Ваш отзыв")
+        reviewDialog.setCancelable(false)
             .setPositiveButton("Оставить отзыв", object : DialogInterface.OnClickListener {
+                @SuppressLint("SimpleDateFormat")
                 override fun onClick(p0: DialogInterface?, p1: Int) {
                     reviewViewModel.getUser()
 
                     val sdf = SimpleDateFormat("dd/M/yyyy HH:mm")
                     val currentDate: String = sdf.format(Date())
-                    var textReview: String = reviewView.review_text.text.toString()
-                    var rating: Double = reviewView.ratingbar_review_create.rating.toDouble()
-                    var id = UUID.randomUUID().toString()
+                    val textReview: String = reviewView.review_text.text.toString()
+                    val rating: Double = reviewView.ratingbar_review_create.rating.toDouble()
+                    val id = UUID.randomUUID().toString()
 
                     reviewViewModel.user().observe(viewLifecycleOwner, Observer {
-                        var review: Review =
+                        val review: Review =
                             Review(id, textReview, currentDate, rating, idRestaurant)
                         reviewViewModel.createReview(review)
                     })
@@ -116,7 +118,7 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
                 }
 
             })
-        reviewdialog.create()
-        reviewdialog.show()
+        reviewDialog.create()
+        reviewDialog.show()
     }
 }

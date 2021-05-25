@@ -19,7 +19,7 @@
             android:id="@+id/table_image"
             android:layout_width="180dp"
             android:layout_height="140dp"
-            android:background="#2d2d2d"
+            android:background="@color/not_load_item"
             android:scaleType="centerCrop"
             cardview:layout_constraintStart_toStartOf="parent"
             cardview:layout_constraintTop_toTopOf="parent" />
@@ -30,13 +30,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="36dp"
+            android:fontFamily="@font/eater"
             android:gravity="center"
-            tools:text="Столик номер 5"
             android:textColor="@color/blackText"
             android:textSize="17sp"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintStart_toEndOf="@+id/table_image"
-            cardview:layout_constraintTop_toTopOf="parent" />
+            cardview:layout_constraintTop_toTopOf="parent"
+            tools:text="Столик номер 5" />
 
         <TextView
             android:id="@+id/table_description"
@@ -44,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
+            android:fontFamily="@font/eater"
             android:gravity="center"
             android:maxLength="30"
             android:text="@string/count_people"
@@ -58,14 +60,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:fontFamily="@font/eater"
             android:gravity="center"
             android:maxLength="30"
-            tools:text="6"
             android:textColor="@color/blackText"
             android:textSize="20sp"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintStart_toEndOf="@+id/table_image"
-            cardview:layout_constraintTop_toBottomOf="@id/table_description" />
+            cardview:layout_constraintTop_toBottomOf="@id/table_description"
+            tools:text="6" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

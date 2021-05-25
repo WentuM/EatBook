@@ -19,6 +19,13 @@ class ReviewConverterImpl : ReviewConverter {
             )
         }
 
+    override fun fbtoModel(reviewResponse: ReviewResponse): Review =
+        with(reviewResponse) {
+            Review(
+                id, text, dateSend, rating, idRest, nameUser, imageUser
+            )
+        }
+
     override fun modeltoFb(review: Review): ReviewResponse {
         TODO("Not yet implemented")
     }
@@ -40,7 +47,7 @@ class ReviewConverterImpl : ReviewConverter {
         ReviewEntity(
             review.id,
             review.text,
-            review.userName,
+            review.nameUser,
             review.dateSend,
             review.rating,
             review.idRest

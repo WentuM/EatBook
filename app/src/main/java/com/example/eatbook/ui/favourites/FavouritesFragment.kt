@@ -8,22 +8,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.domain.model.Restaurant
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
-import com.example.eatbook.ui.restaurants.list.RestaurantAdapter
-import com.example.eatbook.ui.restaurants.list.RestaurantViewModel
 import kotlinx.android.synthetic.main.cardview_item_restaurant.*
-import kotlinx.android.synthetic.main.cardview_item_restaurant.view.*
 import kotlinx.android.synthetic.main.fragment_list_rest.*
-import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
-class FavouritesFragment: Fragment(), FavouritesAdapter.FavouritesItemHandler {
+class FavouritesFragment : Fragment(), FavouritesAdapter.FavouritesItemHandler {
 
     @Inject
     lateinit var favouritesViewModel: FavouritesViewModel
-//    private var currentListRest = arrayListOf<Restaurant>()
     private val favouritesAdapter =
         FavouritesAdapter(this)
 
@@ -45,7 +39,6 @@ class FavouritesFragment: Fragment(), FavouritesAdapter.FavouritesItemHandler {
 
         favouritesViewModel.restaurants().observe(viewLifecycleOwner, Observer {
             favouritesAdapter.submitList(it)
-//            currentListRest.addAll(it)
         })
 
         favouritesViewModel.getAllRestaurants()
@@ -54,7 +47,10 @@ class FavouritesFragment: Fragment(), FavouritesAdapter.FavouritesItemHandler {
     override fun onItemClick(idRestaurant: String) {
         val bundle = Bundle()
         bundle.putString("idRestaurant", idRestaurant)
-        findNavController().navigate(R.id.action_navigation_favourites_to_navigation_rest_detail, bundle)
+        findNavController().navigate(
+            R.id.action_navigation_favourites_to_navigation_rest_detail,
+            bundle
+        )
     }
 
     override fun onFavourite(idRestaurant: String, likeRest: Int) {
