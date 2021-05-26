@@ -10,15 +10,15 @@ data class ReviewEntity(
 
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: String,
+    val id: String = "",
     @ColumnInfo(name = "text")
-    val text: String,
-    @ColumnInfo(name = "idUser")
-    val idUser: String,
+    val text: String = "",
+    @ColumnInfo(name = "id_user")
+    val idUser: String = "",
     @ColumnInfo(name = "date")
-    val dateSend: String,
+    val dateSend: String = "",
     @ColumnInfo(name = "rating")
-    var rating: Double,
-    @ColumnInfo(name = "idRest")
-    val idRest: String
+    var rating: Double = 0.0,
+    @ColumnInfo(name = "id_rest")
+    val idRest: String = ""
 )

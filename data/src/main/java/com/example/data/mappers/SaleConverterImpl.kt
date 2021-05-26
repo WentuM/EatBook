@@ -37,4 +37,10 @@ class SaleConverterImpl : SaleConverter {
                 titleRestaurant
             )
         }
+
+    override fun fbtoDb(saleResponse: SaleResponse): SaleEntity =
+        with(saleResponse) {
+            SaleEntity(id, title, description, imageSale, idRestaurant, titleRestaurant)
+        }
+
 }

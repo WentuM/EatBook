@@ -53,8 +53,8 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var slots = PhoneNumberUnderscoreSlotsParser().parseSlots("+7(___)___-__-__")
-        var inputMask = MaskImpl.createTerminated(slots)
+        val slots = PhoneNumberUnderscoreSlotsParser().parseSlots("+7(___)___-__-__")
+        val inputMask = MaskImpl.createTerminated(slots)
         inputMask.insertFront(panel_auth_number.text.toString())
         panel_auth_btn.setOnClickListener {
             login()
@@ -74,36 +74,20 @@ class SignInFragment : Fragment() {
                 verificationId: String,
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
-
-                Log.d("qwe1","onCodeSent:   $verificationId")
                 storedVerificationId = verificationId
                 resendToken = token
                 var bundle = Bundle()
                 bundle.putString("storedVerificationId", storedVerificationId)
                 findNavController().navigate(R.id.action_navigation_sign_in_to_navigation_verify, bundle)
-
-//                var intent = Intent(applicationContext,Verify::class.java)
-//                intent.putExtra("storedVerificationId",storedVerificationId)
-//                startActivity(intent)
             }
         }
     }
 
     private fun login() {
         var number = panel_auth_number.text.toString().trim()
-//        username = panel_auth_name.text.toString().trim()
         if (!number.isEmpty()) {
             number = "+7$number"
-//            storedVerificationId =
-//                activity?.let { signInViewModel.getVerificationCode(number, it) }.toString()
             sendVerificationcode(number)
-//            Log.d("qwe111", storedVerificationId)
-//            var bundle = Bundle()
-//            bundle.putString("storedVerificationId", storedVerificationId)
-//            findNavController().navigate(
-//                R.id.action_navigation_sign_in_to_navigation_verify,
-//                bundle
-//            )
         } else {
             Toast.makeText(activity, "Введите корректный номер телефона", Toast.LENGTH_SHORT).show()
         }

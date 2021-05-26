@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.eatbook.R
-import com.example.eatbook.ui.reviews.list.model.ReviewList
+import com.example.eatbook.ui.reviews.list.model.ReviewListModel
 
 class ReviewAdapter(
     private val itemHandler: ReviewItemHandler
-) : ListAdapter<ReviewList, ReviewHolder>(reviewCallback) {
+) : ListAdapter<ReviewListModel, ReviewHolder>(reviewCallback) {
 
     interface ReviewItemHandler {
         fun onItemClick(idReview: String)
@@ -25,13 +25,13 @@ class ReviewAdapter(
     }
 }
 
-private val reviewCallback = object : DiffUtil.ItemCallback<ReviewList>() {
+private val reviewCallback = object : DiffUtil.ItemCallback<ReviewListModel>() {
 
-    override fun areItemsTheSame(oldItem: ReviewList, newItem: ReviewList): Boolean {
+    override fun areItemsTheSame(oldItem: ReviewListModel, newItem: ReviewListModel): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: ReviewList, newItem: ReviewList): Boolean {
+    override fun areContentsTheSame(oldItem: ReviewListModel, newItem: ReviewListModel): Boolean {
         return oldItem == newItem
     }
 }

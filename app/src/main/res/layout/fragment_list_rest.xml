@@ -11,9 +11,27 @@
         android:id="@+id/include"
         layout="@layout/toolbar" />
 
+    <include
+        android:id="@+id/progress_bar"
+        layout="@layout/progress_bar" />
+
+    <TextView
+        android:id="@+id/txv_rest_dont_favourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txv_list_rest_dont_favourite"
+        android:textColor="@color/blackText"
+        android:fontFamily="@font/eater"
+        android:visibility="gone"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="582dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">

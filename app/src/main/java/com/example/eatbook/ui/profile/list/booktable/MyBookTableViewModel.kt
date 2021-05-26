@@ -7,12 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.interactor.BookTableInteractor
 import com.example.domain.model.BookTable
-import com.example.domain.model.Restaurant
-import com.example.domain.model.Review
 import com.example.eatbook.ui.profile.list.booktable.model.MyBookTableItemModel
-import com.example.eatbook.ui.reviews.list.model.ReviewList
-import com.example.eatbook.ui.tables.booking.list.model.BookTableItemModel
-import kotlinx.android.synthetic.main.fragment_list_my_book_table.view.*
+import kotlinx.android.synthetic.main.progress_bar.view.*
 import kotlinx.coroutines.launch
 import java.lang.Exception
 

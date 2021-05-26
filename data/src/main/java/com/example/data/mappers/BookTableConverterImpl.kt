@@ -1,9 +1,8 @@
 package com.example.data.mappers
 
 import com.example.data.database.entity.BookTableEntity
-import com.example.data.database.entity.ReviewEntity
+import com.example.data.database.entity.FullBookTable
 import com.example.data.firebase.response.BookTableResponse
-import com.example.data.firebase.response.ReviewResponse
 import com.example.domain.model.BookTable
 
 class BookTableConverterImpl : BookTableConverter {
@@ -19,16 +18,23 @@ class BookTableConverterImpl : BookTableConverter {
             )
         }
 
-
-//    override fun dbToModel(bookTableEntity: BookTableEntity): BookTable =
-//        with(bookTableEntity) {
-//            BookTable(
-//                idTable, day, time, countHour
-//            )
-//        }
-
     override fun fbToModel(bookTableResponse: BookTableResponse): BookTable =
         with(bookTableResponse) {
+            BookTable(
+                id,
+                idTable,
+                day,
+                time,
+                countHour,
+                imageTable,
+                nameTable,
+                idRestaurant,
+                nameRestaurant
+            )
+        }
+
+    override fun fullBookTableToModel(fullBookTable: FullBookTable): BookTable =
+        with(fullBookTable) {
             BookTable(
                 id,
                 idTable,

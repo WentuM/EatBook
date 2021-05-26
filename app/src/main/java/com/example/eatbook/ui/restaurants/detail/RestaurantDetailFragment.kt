@@ -37,12 +37,12 @@ class RestaurantDetailFragment : Fragment() {
             .create(this)
             .inject(this)
         val root = inflater.inflate(R.layout.fragment_restaurant_detail, container, false)
-        restaurantDetailViewModel.getRestaurantById(idRestaurant)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        restaurantDetailViewModel.getRestaurantById(idRestaurant, view)
         initFields()
         initClick()
     }

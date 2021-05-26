@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.domain.model.Restaurant
 import com.example.eatbook.R
+import com.example.eatbook.ui.favourites.model.FavouritesListModel
 
 class FavouritesAdapter(
     private val itemHandler: FavouritesItemHandler
-) : ListAdapter<Restaurant, FavouritesHolder>(favouritesCallback) {
+) : ListAdapter<FavouritesListModel, FavouritesHolder>(favouritesCallback) {
 
     interface FavouritesItemHandler {
         fun onItemClick(idRestaurant: String)
@@ -27,13 +28,13 @@ class FavouritesAdapter(
     }
 }
 
-private val favouritesCallback = object : DiffUtil.ItemCallback<Restaurant>() {
+private val favouritesCallback = object : DiffUtil.ItemCallback<FavouritesListModel>() {
 
-    override fun areItemsTheSame(oldItem: Restaurant, newItem: Restaurant): Boolean {
+    override fun areItemsTheSame(oldItem: FavouritesListModel, newItem: FavouritesListModel): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Restaurant, newItem: Restaurant): Boolean {
+    override fun areContentsTheSame(oldItem: FavouritesListModel, newItem: FavouritesListModel): Boolean {
         return oldItem == newItem
     }
 }

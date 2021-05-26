@@ -34,4 +34,5 @@
     <string name="txv_my_dont_book">Вы не забронировали ещё ни одного столика</string>
     <string name="edtx_review_create">Оставьте отзыв об этом заведении.</string>
     <string name="txv_item_rest_price">Средняя цена чека:</string>
+    <string name="txv_list_rest_dont_favourite">Вы ещё не добавили ни одного ресторана в избранное</string>
 </resources>

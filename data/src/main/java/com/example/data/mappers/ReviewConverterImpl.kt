@@ -1,5 +1,6 @@
 package com.example.data.mappers
 
+import com.example.data.database.entity.FullReview
 import com.example.data.database.entity.ReviewEntity
 import com.example.data.database.entity.UserEntity
 import com.example.data.firebase.response.ReviewResponse
@@ -26,10 +27,6 @@ class ReviewConverterImpl : ReviewConverter {
             )
         }
 
-    override fun modeltoFb(review: Review): ReviewResponse {
-        TODO("Not yet implemented")
-    }
-
     override fun dbtoModel(reviewEntity: ReviewEntity, userEntity: UserEntity): Review =
         with(reviewEntity) {
             Review(
@@ -44,12 +41,19 @@ class ReviewConverterImpl : ReviewConverter {
         }
 
     override fun modeltoDb(review: Review): ReviewEntity =
-        ReviewEntity(
-            review.id,
-            review.text,
-            review.nameUser,
-            review.dateSend,
-            review.rating,
-            review.idRest
-        )
+        with(review) {
+            ReviewEntity(
+                id,
+                text,
+                nameUser,
+                dateSend,
+                rating,
+                idRest
+            )
+        }
+
+    override fun reviewFullToModel(fullReview: FullReview): Review =
+        with(fullReview) {
+            Review(id, text, dateSend, rating, idRest, nameUser, imageUser)
+        }
 }

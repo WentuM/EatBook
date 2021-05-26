@@ -3,14 +3,14 @@ package com.example.eatbook.ui.tables.list
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.domain.model.Table
+import com.example.eatbook.ui.tables.list.model.TableListModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_item_table.*
 
-class TableHolder(override val containerView: View):
+class TableHolder(override val containerView: View) :
     RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    fun bind(table: Table, itemHandler: TableAdapter.TableItemHandler) {
+    fun bind(table: TableListModel, itemHandler: TableAdapter.TableItemHandler) {
         with(itemView) {
             table_title.text = table.title
             table_count.text = table.countPlaces.toString()
@@ -18,7 +18,6 @@ class TableHolder(override val containerView: View):
 
             setOnClickListener {
                 itemHandler.onClick(table.id)
-//                itemHandler.onFavourite(restaurant.id)
             }
         }
 

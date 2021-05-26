@@ -23,17 +23,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/include"/>
 
-    <ProgressBar
-        android:id="@+id/progress_list"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:visibility="gone"
-        android:indeterminateDrawable="@drawable/spinner_png"
-        android:indeterminateOnly="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <include
+        android:id="@+id/progress_bar"
+        layout="@layout/progress_bar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_book_table_list"

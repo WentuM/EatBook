@@ -17,6 +17,6 @@ data class TableEntity(
     val image: String,
     @ColumnInfo(name = "id_rest")
     val idRest: String,
-    @ColumnInfo(name = "id_name")
+    @ColumnInfo(name = "name_rest")
     val nameRest: String
 )

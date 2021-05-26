@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,16 +61,16 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             .create(this)
             .inject(this)
         initListHour()
-        bookTableViewModel.getTableById(idTable)
         val root = inflater.inflate(R.layout.fragment_book_rest, container, false)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bookTableViewModel.getTableById(idTable, view)
         hour_list.adapter = hourAdapter
         initFields()
-        initClicks()
+        initClicks(view)
     }
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
@@ -85,19 +86,24 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         txv_book_date.text = SimpleDateFormat("dd, MMM yyyy").format(calendar.time)
     }
 
-    private fun initClicks() {
+    private fun initClicks(view: View) {
         imgv_book_date.setOnClickListener {
             showDatePickerDialog()
         }
 
         imgv_book_time.setOnClickListener {
             if (showTimeList) {
-                bookTableViewModel.getBookTableByDay(txv_book_date.text.toString(), idTable)
+                bookTableViewModel.getBookTableByDay(txv_book_date.text.toString(), idTable, view)
                 bookTableViewModel.bookTable().observe(viewLifecycleOwner, Observer {
-                    for (i in 0..currentListHour.size) {
-                        if (it.contains(currentListHour[i])) {
-                            for (j in i..(i + currentListHour[i].countHour)) {
-                                currentListHour[j].exist = false
+                    if (it.isNotEmpty()) {
+                        for (i in 0 until currentListHour.size) {
+                            //всем занятым часам в день бронирования проставляю
+                            //false, чтобы нельзя было забронировать
+                            if (it.contains(currentListHour[i])) {
+                                val temp = it.indexOf(currentListHour[i])
+                                for (j in i until i + it[temp].countHour) {
+                                    currentListHour[j].exist = false
+                                }
                             }
                         }
                     }
@@ -120,11 +126,11 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
 
         btn_book_table.setOnClickListener {
-            createBookTable()
+            createBookTable(view)
         }
     }
 
-    private fun createBookTable() {
+    private fun createBookTable(view: View) {
         val dayBook = txv_book_date.text.toString()
         val timeBook = txv_book_time.text.toString()
         //если проходит всю проверку, то даю возможность забронировать
@@ -141,7 +147,7 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     tableItemModel.idRestaurant,
                     tableItemModel.nameRestaurant
                 )
-            bookTableViewModel.createNewBookTable(bookTableItemModel)
+            bookTableViewModel.createNewBookTable(bookTableItemModel, view)
             bookTableViewModel.createBookTable().observe(viewLifecycleOwner, Observer {
                 if (it == "Вы успешно забронировали столик") {
                     showReviewDialog(it, bookTableItemModel)
@@ -213,16 +219,25 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         //проверка, если человек выбрал свободное время, и его количество часов
         //бронирования не пересекается с бронированием другого человека
         val splitTimeBook = timeBook.split(":")
-        val j = splitTimeBook[0].toInt() - 5
-        for (i in j..(j + countHours)) {
-            if (!currentListHour[i].exist) {
-                Snackbar.make(
-                    requireActivity().findViewById(android.R.id.content),
-                    "Время на ${currentListHour[i].countHour} занято",
-                    Snackbar.LENGTH_LONG
-                ).show()
-                return false
+        val j = splitTimeBook[0].toInt() - 6
+        if (j + countHours <= currentListHour.size) {
+            for (i in j until j + countHours) {
+                if (!currentListHour[i].exist) {
+                    Snackbar.make(
+                        requireActivity().findViewById(android.R.id.content),
+                        "Время на ${currentListHour[i]} занято",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                    return false
+                }
             }
+        } else {
+            Snackbar.make(
+                requireActivity().findViewById(android.R.id.content),
+                "Невозможное время бронирования",
+                Snackbar.LENGTH_LONG
+            ).show()
+            return false
         }
         return true
     }
@@ -237,15 +252,13 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         val reviewView = layoutInflater.inflate(R.layout.dialog_book_table_create, null)
         with(reviewView) {
             txv_book_table_result_title.text =
-                "Вы успешно забронировали ${bookTableItemModel.nameRestaurant} в ресторане '${bookTableItemModel.nameRestaurant}'."
+                "Вы успешно забронировали ${bookTableItemModel.nameTable} в ресторане '${bookTableItemModel.nameRestaurant}'."
             txv_book_table_result_date.text = "Ваша дата бронирования: ${bookTableItemModel.day}."
             txv_book_table_result_time.text =
                 "Ваше время бронирования: ${bookTableItemModel.time} на ${bookTableItemModel.countHour} часа."
         }
 
         reviewDialog.setView(reviewView)
-
-        reviewDialog.setTitle(str)
         reviewDialog.setCancelable(false)
             .setPositiveButton(
                 "Перейти в 'Мои бронироваия'",
@@ -254,16 +267,6 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         findNavController().navigate(R.id.action_navigation_rest_book_to_navigation_my_table_book)
                         p0?.dismiss()
-                    }
-
-                })
-            .setNegativeButton(
-                "Остаться на экране бронирования",
-                object : DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        hour_list.visibility = View.GONE
-                        showTimeList = true
-                        p0?.cancel()
                     }
 
                 })

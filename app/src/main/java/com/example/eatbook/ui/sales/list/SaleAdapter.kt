@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.example.domain.model.Sale
 import com.example.eatbook.R
+import com.example.eatbook.ui.sales.list.model.SaleListModel
 
 class SaleAdapter(
     private val itemHandler: SaleItemHandler
-): ListAdapter<Sale, SaleHolder>(
+): ListAdapter<SaleListModel, SaleHolder>(
     saleCallback
 ) {
 
@@ -28,13 +29,13 @@ class SaleAdapter(
     }
 }
 
-private val saleCallback = object : DiffUtil.ItemCallback<Sale>() {
+private val saleCallback = object : DiffUtil.ItemCallback<SaleListModel>() {
 
-    override fun areItemsTheSame(oldItem: Sale, newItem: Sale): Boolean {
+    override fun areItemsTheSame(oldItem: SaleListModel, newItem: SaleListModel): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Sale, newItem: Sale): Boolean {
+    override fun areContentsTheSame(oldItem: SaleListModel, newItem: SaleListModel): Boolean {
         return oldItem == newItem
     }
 }

@@ -21,18 +21,10 @@ class UserInteractor(
         }
 
 
-    suspend fun updateUser(nameUser: String, imageUser: String): String {
+    suspend fun updateUser(nameUser: String): String {
         return withContext(context) {
-//            return runCatching {
-//                return@runCatching withContext(context) {
-            userRepository.updateUser(nameUser, imageUser)
-////                }
-//            }
+            userRepository.updateUser(nameUser)
         }
-        //result<string> cannot return
-        //withcontext внутри runcatching
-        //if syncResult.
-
     }
 
     suspend fun signOutUser(): String =

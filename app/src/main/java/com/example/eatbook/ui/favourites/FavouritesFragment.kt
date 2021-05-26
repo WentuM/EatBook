@@ -21,6 +21,10 @@ class FavouritesFragment : Fragment(), FavouritesAdapter.FavouritesItemHandler {
     private val favouritesAdapter =
         FavouritesAdapter(this)
 
+    companion object {
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,8 +32,7 @@ class FavouritesFragment : Fragment(), FavouritesAdapter.FavouritesItemHandler {
     ): View? {
         EatBookApp.appComponent.favouritesComponentFactory()
             .create(this).inject(this)
-        val root = inflater.inflate(R.layout.fragment_list_rest, container, false)
-        return root
+        return inflater.inflate(R.layout.fragment_list_rest, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,9 +42,12 @@ class FavouritesFragment : Fragment(), FavouritesAdapter.FavouritesItemHandler {
 
         favouritesViewModel.restaurants().observe(viewLifecycleOwner, Observer {
             favouritesAdapter.submitList(it)
+            if (it.isEmpty()) {
+                txv_rest_dont_favourite.visibility = View.VISIBLE
+            }
         })
 
-        favouritesViewModel.getAllRestaurants()
+        favouritesViewModel.getAllRestaurants(view)
     }
 
     override fun onItemClick(idRestaurant: String) {

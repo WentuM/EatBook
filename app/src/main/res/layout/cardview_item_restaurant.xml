@@ -16,7 +16,7 @@
 
         <ImageView
             android:id="@+id/rest_image"
-            android:layout_width="200dp"
+            android:layout_width="160dp"
             android:layout_height="120dp"
             android:background="#2d2d2d"
             android:scaleType="centerCrop"
@@ -80,7 +80,7 @@
             android:id="@+id/rest_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/eater"
             android:gravity="center"
             android:textColor="@color/blackText"

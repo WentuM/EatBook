@@ -1,20 +1,17 @@
 package com.example.data.repository
 
-import android.content.Context
 import com.example.data.database.dao.TableDao
 import com.example.data.firebase.response.TableResponse
-import com.example.data.mappers.TableConverterImpl
+import com.example.data.mappers.TableConverter
 import com.example.domain.interfaces.TableRepository
 import com.example.domain.model.Table
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 class TableRepositoryImpl(
     private val tableDao: TableDao,
-    private val context: Context,
-    private val firebaseAuth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val tableConverterImpl: TableConverter
 
 ) : TableRepository {
 
@@ -24,10 +21,9 @@ class TableRepositoryImpl(
     }
 
     override suspend fun getListTable(idRestaurant: String): List<Table> {
-        var tableConverterImpl = TableConverterImpl()
         var listResult: ArrayList<Table> = ArrayList()
         return try {
-            var tableList: MutableList<TableResponse> =
+            val tableList: MutableList<TableResponse> =
                 firestore.collection(TABLE_TABLE).whereEqualTo(
                     TABLE_COLUMN_ID_REST, idRestaurant
                 )
@@ -40,12 +36,11 @@ class TableRepositoryImpl(
             }
             listResult
         } catch (e: Exception) {
-            emptyList<Table>()
+            tableDao.getAllTables().map { tableConverterImpl.dbtoModel(it) }
         }
     }
 
     override suspend fun getTableById(id: String): Table {
-        val tableConverterImpl = TableConverterImpl()
         var result: Table = Table()
         return try {
             val tableResponse =
@@ -57,8 +52,8 @@ class TableRepositoryImpl(
             }
             result
         } catch (e: Exception) {
-            Table()
-            //db
+            val tableEntity = tableConverterImpl.dbtoModel(tableDao.getTableById(id))
+            tableEntity
         }
     }
 }

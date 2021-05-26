@@ -43,7 +43,7 @@ class VerifyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initSubcribes()
-        initListener()
+        initListener(view)
     }
 
     private fun initSubcribes() {
@@ -68,11 +68,11 @@ class VerifyFragment : Fragment() {
         }
     }
 
-    private fun initListener() {
+    private fun initListener(view: View) {
         verifyBtn.setOnClickListener {
             var otp = id_otp.text.toString().trim()
             if (!otp.isEmpty()) {
-                verifyViewModel.onVerifyClick(storedVerificationId, otp)
+                verifyViewModel.onVerifyClick(storedVerificationId, otp, view)
             } else {
                 Toast.makeText(activity, "Введите ваш код", Toast.LENGTH_SHORT).show()
             }

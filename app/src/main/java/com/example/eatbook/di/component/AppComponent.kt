@@ -1,6 +1,7 @@
 package com.example.eatbook.di.component
 
 import android.app.Application
+import com.example.data.di.module.ConverterModule
 import com.example.data.di.module.DbModule
 import com.example.data.di.module.FireBaseModule
 import com.example.data.di.module.RepositoryModule
@@ -22,7 +23,8 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, DbModule::class, RepositoryModule::class, FireBaseModule::class])
+@Component(modules = [AppModule::class, DbModule::class, RepositoryModule::class,
+    FireBaseModule::class, ConverterModule::class])
 interface AppComponent {
 
     @Component.Builder
@@ -35,7 +37,7 @@ interface AppComponent {
 
     fun profileComponentFactory(): ProfileComponent.Factory
 
-    fun verifyComponentFactory():  VerifyComponent.Factory
+    fun verifyComponentFactory(): VerifyComponent.Factory
 
     fun signInComponentFactory(): SignInComponent.Factory
 

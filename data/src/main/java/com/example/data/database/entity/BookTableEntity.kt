@@ -9,15 +9,15 @@ import java.util.*
 data class BookTableEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: String,
+    val id: String = "",
     @ColumnInfo(name = "id_user")
-    val idUser: String,
+    val idUser: String = "",
     @ColumnInfo(name = "id_table")
-    val idTable: String,
+    val idTable: String = "",
     @ColumnInfo(name = "day")
-    val day: String,
+    val day: String = "",
     @ColumnInfo(name = "time")
-    val time: String,
+    val time: String = "",
     @ColumnInfo(name = "count_hour")
-    val countHour: Int
+    val countHour: Int = 0
 )

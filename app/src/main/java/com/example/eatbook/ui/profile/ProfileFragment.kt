@@ -45,7 +45,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profileViewModel.onGetUser()
+        profileViewModel.onGetUser(view)
         initFields()
         initClickListener()
     }
@@ -55,7 +55,7 @@ class ProfileFragment : Fragment() {
             getUser().observe(viewLifecycleOwner, Observer {
                 Glide.with(this@ProfileFragment).load(it.image).into(profile_image)
                 txv_profile_city.text = "Казань"
-                txv_profile_number.text = it.numberPhone
+                txv_profile_number.text = it.phone
                 txv_profile_name.text = it.username
             })
         }
@@ -64,11 +64,6 @@ class ProfileFragment : Fragment() {
 
     private fun initClickListener() {
         btn_profile_book.setOnClickListener {
-//            Snackbar.make(
-//                requireActivity().findViewById(android.R.id.content),
-//                "qweqw",
-//                Snackbar.LENGTH_LONG
-//            ).show()
             findNavController().navigate(R.id.action_navigation_profile_to_navigation_my_table_book)
         }
         btn_profile_sign_out.setOnClickListener {
@@ -101,8 +96,7 @@ class ProfileFragment : Fragment() {
 
         imgv_profile_active.setOnClickListener {
             profileViewModel.onUpdateUserClick(
-                edtx_profile_name.text.toString(),
-                profile_image.toString()
+                edtx_profile_name.text.toString()
             )
             with(profileViewModel) {
                 updateUser().observe(viewLifecycleOwner, Observer {

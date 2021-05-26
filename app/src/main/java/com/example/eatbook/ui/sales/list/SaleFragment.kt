@@ -39,7 +39,7 @@ class SaleFragment : Fragment(), SaleAdapter.SaleItemHandler {
             saleAdapter.submitList(it)
         })
 
-        saleViewModel.getAllSales()
+        saleViewModel.getAllSales(view)
     }
 
     override fun onClick(idSale: String) {

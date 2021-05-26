@@ -14,7 +14,6 @@ import kotlin.coroutines.CoroutineContext
 class AppModule() {
 
     @Provides
-    @Singleton
     fun provideUserInteractor(
         userRepository: UserRepository,
         context: CoroutineContext
@@ -23,17 +22,16 @@ class AppModule() {
     }
 
     @Provides
-    @Singleton
     fun provideRestaurantInteractor(
         restaurantRepository: RestaurantRepository,
+        userRepository: UserRepository,
         favouritesRepository: FavouritesRepository,
         context: CoroutineContext
     ): RestaurantInteractor {
-        return RestaurantInteractor(restaurantRepository, favouritesRepository, context)
+        return RestaurantInteractor(restaurantRepository, userRepository, favouritesRepository, context)
     }
 
     @Provides
-    @Singleton
     fun provideSaleInteractor(
         saleRepository: SaleRepository,
         context: CoroutineContext
@@ -42,7 +40,6 @@ class AppModule() {
     }
 
     @Provides
-    @Singleton
     fun provideTableInteractor(
         tableRepository: TableRepository,
         context: CoroutineContext
@@ -51,7 +48,6 @@ class AppModule() {
     }
 
     @Provides
-    @Singleton
     fun provideReviewInteractor(
         reviewRepository: ReviewRepository,
         userRepository: UserRepository,
@@ -84,8 +80,4 @@ class AppModule() {
     @Provides
     @Singleton
     fun provideCoroutineContext(): CoroutineContext = Dispatchers.IO
-
-//    @Provides
-//    @Singleton
-//    fun provideContext(): Context = app.applicationContext
 }

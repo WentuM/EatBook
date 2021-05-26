@@ -2,6 +2,7 @@ package com.example.data.di.module
 
 import android.content.Context
 import com.example.data.database.dao.*
+import com.example.data.mappers.*
 import com.example.data.repository.*
 import com.example.domain.interfaces.*
 import com.google.firebase.auth.FirebaseAuth
@@ -14,73 +15,73 @@ import javax.inject.Singleton
 class RepositoryModule {
 
     @Provides
-    @Singleton
     fun provideUserRepository(
         userDao: UserDao,
-        context: Context,
         firebaseAuth: FirebaseAuth,
-        firestore: FirebaseFirestore
+        firestore: FirebaseFirestore,
+        userConverter: UserConverter
     ): UserRepository =
-        UserRepositoryImpl(userDao, context, firebaseAuth, firestore)
+        UserRepositoryImpl(userDao, firebaseAuth, firestore, userConverter)
 
     @Provides
-    @Singleton
     fun provideRestaurantRepository(
         restaurantDao: RestaurantDao,
         favouriteRestDao: FavouriteRestDao,
-        context: Context,
-        firebaseAuth: FirebaseAuth,
-        firestore: FirebaseFirestore
+        firestore: FirebaseFirestore,
+        restaurantConverter: RestaurantConverter
     ): RestaurantRepository =
-        RestaurantRepositoryImpl(restaurantDao, favouriteRestDao, context, firebaseAuth, firestore)
+        RestaurantRepositoryImpl(
+            restaurantDao,
+            favouriteRestDao,
+            firestore,
+            restaurantConverter
+        )
 
     @Provides
-    @Singleton
     fun provideSaleRepository(
         saleDao: SaleDao,
-        context: Context,
-        firebaseAuth: FirebaseAuth,
-        firestore: FirebaseFirestore
+        firestore: FirebaseFirestore,
+        saleConverter: SaleConverter
     ): SaleRepository =
-        SaleRepositoryImpl(saleDao, context, firebaseAuth, firestore)
+        SaleRepositoryImpl(saleDao, firestore, saleConverter)
 
     @Provides
-    @Singleton
     fun provideTableRepository(
         tableDao: TableDao,
-        context: Context,
-        firebaseAuth: FirebaseAuth,
-        firestore: FirebaseFirestore
+        firestore: FirebaseFirestore,
+        tableConverter: TableConverter
     ): TableRepository =
-        TableRepositoryImpl(tableDao, context, firebaseAuth, firestore)
+        TableRepositoryImpl(tableDao, firestore, tableConverter)
 
     @Provides
-    @Singleton
     fun provideReviewRepository(
-        userDao: UserDao,
         reviewDao: ReviewDao,
-        context: Context,
         firebaseAuth: FirebaseAuth,
-        firestore: FirebaseFirestore
+        firestore: FirebaseFirestore,
+        reviewConverter: ReviewConverter
     ): ReviewRepository =
-        ReviewRepositoryImpl(userDao, reviewDao, context, firebaseAuth, firestore)
+        ReviewRepositoryImpl(reviewDao, firebaseAuth, firestore, reviewConverter)
 
     @Provides
     fun provideBookTableRepository(
         bookTableDao: BookTableDao,
-        context: Context,
         firebaseAuth: FirebaseAuth,
-        firestore: FirebaseFirestore
+        firestore: FirebaseFirestore,
+        bookTableConverter: BookTableConverter
     ): BookTableRepository =
-        BookTableRepositoryImpl(bookTableDao, context, firebaseAuth, firestore)
+        BookTableRepositoryImpl(bookTableDao, firebaseAuth, firestore, bookTableConverter)
 
     @Provides
     fun provideFavouriteRestRepository(
         favouriteRestDao: FavouriteRestDao,
-        restaurantDao: RestaurantDao,
-        context: Context,
         firebaseAuth: FirebaseAuth,
-        firestore: FirebaseFirestore
+        firestore: FirebaseFirestore,
+        restaurantConverter: RestaurantConverter
     ): FavouritesRepository =
-        FavouritesRepositoryImpl(favouriteRestDao, restaurantDao, context, firebaseAuth, firestore)
+        FavouritesRepositoryImpl(
+            favouriteRestDao,
+            firebaseAuth,
+            firestore,
+            restaurantConverter
+        )
 }

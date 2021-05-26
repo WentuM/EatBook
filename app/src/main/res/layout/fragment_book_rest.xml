@@ -130,6 +130,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/imgv_book_time"
                 tools:text="22:00" />
 
+            <ProgressBar
+                android:id="@+id/progress_list"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:visibility="gone"
+                android:indeterminateDrawable="@drawable/spinner_png"
+                android:indeterminateOnly="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txv_book_time"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/hour_list"
                 android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.example.data.mappers
 
+import com.example.data.database.entity.FullReview
 import com.example.data.database.entity.ReviewEntity
 import com.example.data.database.entity.UserEntity
 import com.example.data.firebase.response.ReviewResponse
@@ -12,9 +13,9 @@ interface ReviewConverter {
 
     fun fbtoModel(reviewResponse: ReviewResponse): Review
 
-    fun modeltoFb(review: Review): ReviewResponse
-
     fun dbtoModel(reviewEntity: ReviewEntity, userEntity: UserEntity): Review
 
     fun modeltoDb(review: Review): ReviewEntity
+
+    fun reviewFullToModel(fullReview: FullReview): Review
 }

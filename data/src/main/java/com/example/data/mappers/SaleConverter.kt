@@ -11,4 +11,6 @@ interface SaleConverter {
     fun dbtoModel(saleEntity: SaleEntity): Sale
 
     fun modeltoDb(sale: Sale): SaleEntity
+
+    fun fbtoDb(saleResponse: SaleResponse): SaleEntity
 }

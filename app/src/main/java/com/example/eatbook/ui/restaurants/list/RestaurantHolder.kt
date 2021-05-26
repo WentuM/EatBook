@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.domain.model.Restaurant
 import com.example.eatbook.R
+import com.example.eatbook.ui.restaurants.list.model.RestaurantListModel
 import kotlinx.android.synthetic.main.cardview_item_restaurant.view.*
 
 class RestaurantHolder(containerView: View) : RecyclerView.ViewHolder(containerView) {
 
     @SuppressLint("SetTextI18n")
-    fun bind(restaurant: Restaurant, itemHandler: RestaurantAdapter.RestItemHandler) {
+    fun bind(restaurant: RestaurantListModel, itemHandler: RestaurantAdapter.RestItemHandler) {
         with(itemView) {
             rest_title.text = restaurant.title
             rest_description.text = restaurant.address

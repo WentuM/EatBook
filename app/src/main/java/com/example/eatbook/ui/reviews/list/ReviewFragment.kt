@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.domain.model.Review
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
+import com.example.eatbook.ui.reviews.list.model.ReviewListModel
 import kotlinx.android.synthetic.main.dialog_review_create.view.*
 import kotlinx.android.synthetic.main.fragment_list_review.*
 import java.text.SimpleDateFormat
@@ -43,7 +44,6 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
         EatBookApp.appComponent.reviewListComponentFactory()
             .create(this).inject(this)
         val root = inflater.inflate(R.layout.fragment_list_review, container, false)
-        reviewViewModel.getAllReviews(idRestaurant)
         return root
     }
 
@@ -57,9 +57,11 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
             txv_reviews_count.text = it.size.toString()
         })
 
+        reviewViewModel.getAllReviews(idRestaurant, view)
+
 
         initField()
-        initClick()
+        initClick(view)
     }
 
     override fun onItemClick(idReview: String) {
@@ -71,17 +73,17 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
 
     }
 
-    private fun initClick() {
+    private fun initClick(view: View) {
         btn_review_write.setOnClickListener {
             if (!reviewViewModel.getCurrentUser()) {
                 findNavController().navigate(R.id.action_navigation_review_to_navigation_sign_in)
             } else {
-                showReviewDialog()
+                showReviewDialog(view)
             }
         }
     }
 
-    private fun showReviewDialog() {
+    private fun showReviewDialog(view: View) {
         val reviewDialog = AlertDialog.Builder(activity)
         val reviewView = layoutInflater.inflate(R.layout.dialog_review_create, null)
         reviewDialog.setView(reviewView)
@@ -100,9 +102,9 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
                     val id = UUID.randomUUID().toString()
 
                     reviewViewModel.user().observe(viewLifecycleOwner, Observer {
-                        val review: Review =
-                            Review(id, textReview, currentDate, rating, idRestaurant)
-                        reviewViewModel.createReview(review)
+                        val review: ReviewListModel =
+                            ReviewListModel(id, textReview, currentDate, rating, idRestaurant)
+                        reviewViewModel.createReview(review, view)
                     })
 
                     reviewViewModel.review().observe(viewLifecycleOwner, Observer {

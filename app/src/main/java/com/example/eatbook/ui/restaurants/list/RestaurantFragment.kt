@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.domain.model.Restaurant
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
+import com.example.eatbook.ui.restaurants.list.model.RestaurantListModel
 import kotlinx.android.synthetic.main.cardview_item_restaurant.*
 import kotlinx.android.synthetic.main.cardview_item_restaurant.view.*
 import kotlinx.android.synthetic.main.fragment_list_rest.*
@@ -24,8 +25,7 @@ class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
 
     @Inject
     lateinit var restaurantViewModel: RestaurantViewModel
-    private lateinit var application: EatBookApp
-    private var currentListRest = arrayListOf<Restaurant>()
+    private var currentListRest = arrayListOf<RestaurantListModel>()
     private val restaurantAdapter =
         RestaurantAdapter(this)
 
@@ -51,7 +51,7 @@ class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
             currentListRest.addAll(it)
         })
 
-        restaurantViewModel.getAllRestaurants()
+        restaurantViewModel.getAllRestaurants(view)
         createSearchView()
     }
 
@@ -96,8 +96,8 @@ class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
     }
 
     private fun filterSearch(textSearch: String) {
-        val listSearch = arrayListOf<Restaurant>()
-        for (restaurant: Restaurant in currentListRest) {
+        val listSearch = arrayListOf<RestaurantListModel>()
+        for (restaurant: RestaurantListModel in currentListRest) {
             if (restaurant.title.toLowerCase().startsWith(textSearch)) {
                 listSearch.add(restaurant)
             }

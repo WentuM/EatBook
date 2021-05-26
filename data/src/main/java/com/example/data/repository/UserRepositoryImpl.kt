@@ -1,26 +1,25 @@
 package com.example.data.repository
 
 import android.content.Context
-import android.util.Log
 import com.example.data.database.dao.UserDao
 import com.example.data.database.entity.UserEntity
 import com.example.data.firebase.response.UserResponse
-import com.example.data.mappers.UserConverterImpl
+import com.example.data.mappers.UserConverter
 import com.example.domain.interfaces.UserRepository
 import com.example.domain.model.User
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 
 class UserRepositoryImpl(
     private val userDao: UserDao,
-    private val context: Context,
     private val firebaseAuth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val userConverterImpl: UserConverter
 ) : UserRepository {
 
     companion object {
@@ -34,10 +33,9 @@ class UserRepositoryImpl(
     }
 
     override suspend fun getCurrentUser(): User {
-        val userConverterImpl = UserConverterImpl()
         val userId = firebaseAuth.currentUser?.uid.toString()
-        var user: User = User()
-        var userResponse: UserResponse? = UserResponse()
+        var user: User
+        val userResponse: UserResponse?
         var userEntity: UserEntity = UserEntity()
         return try {
             userResponse =
@@ -49,7 +47,7 @@ class UserRepositoryImpl(
             user = userConverterImpl.dbtoModel(userEntity)
             user
         } catch (e: Exception) {
-            //db
+            user = userConverterImpl.dbtoModel(userDao.getUserById(userId))
             user
         }
     }
@@ -83,6 +81,7 @@ class UserRepositoryImpl(
             val userMap = mutableMapOf<String, Any>()
             userMap[USER_TABLE_COLUMN_USERNAME] = name
             firestore.collection(USER_TABLE).document(uid).update(userMap).await()
+            userDao.updateUser(name, uid)
             "Данные успешно изменены"
         } catch (e: Exception) {
             "Данные изменить не удалось"
@@ -92,7 +91,6 @@ class UserRepositoryImpl(
     private suspend fun existUser(): Boolean {
         val uid = firebaseAuth.currentUser?.uid.toString()
         var result = true
-        //suspendCancellableCoroutine
         try {
             val user = firestore.collection("users").document(uid).get().await()
                 .toObject(UserResponse::class.java)
@@ -107,13 +105,16 @@ class UserRepositoryImpl(
 
     private suspend fun createUser(): String {
         val uid = firebaseAuth.currentUser?.uid.toString()
+        val phone = firebaseAuth.currentUser?.phoneNumber.toString()
+        val userEntity = UserEntity(uid, phone, "", DEFAULT_USER_IMAGE)
         val userMap = mutableMapOf<String, Any>()
         userMap[USER_TABLE_COLUMN_ID] = uid
-        userMap[USER_TABLE_COLUMN_PHONE] = firebaseAuth.currentUser?.phoneNumber.toString()
+        userMap[USER_TABLE_COLUMN_PHONE] = phone
         userMap[USER_TABLE_COLUMN_USERNAME] = ""
         userMap[USER_TABLE_COLUMN_IMAGE] = DEFAULT_USER_IMAGE
         return try {
             firestore.collection(USER_TABLE).document(uid).set(userMap).await()
+            userDao.insert(userEntity)
             "Успешный вход в аккаунт"
         } catch (e: Exception) {
             "Проверьте подключение к интернету"
@@ -132,86 +133,4 @@ class UserRepositoryImpl(
         }
         return false
     }
-
-//    override fun signIn(numberPhone: String, activity: Activity): String {
-//        var result = ""
-//        var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-//        // Callback function for Phone Auth
-////        suspendCoroutine { continuation ->
-//            callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//
-//                override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-//                }
-//
-//                override fun onVerificationFailed(e: FirebaseException) {
-//                    result = e.toString()
-//                }
-//
-//                override fun onCodeSent(
-//                    verificationId: String,
-//                    token: PhoneAuthProvider.ForceResendingToken
-//                ) {
-//                    result = verificationId
-//                    Log.d("qwe123", verificationId)
-//                }
-//            }
-//        }
-//        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
-//            .setPhoneNumber(numberPhone) // Phone number to verify
-//            .setActivity(activity)
-//            .setTimeout(60, TimeUnit.SECONDS) // Timeout and unit
-//            .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
-//            .build()
-//        PhoneAuthProvider.verifyPhoneNumber(options)
-//        Log.d("qwe124", result)
-//        return result
-//    }
-
-//    private fun get(): String {
-//        return object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//
-//            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-//            }
-//
-//            override fun onVerificationFailed(e: FirebaseException) {
-//                e.toString()
-//            }
-//
-//            override fun onCodeSent(
-//                verificationId: String,
-//                token: PhoneAuthProvider.ForceResendingToken
-//            ) {
-//                verificationId
-//                Log.d("qwe123", verificationId)
-//            }
-//        }
-//    }
-
-//    private fun generateCallbacks(): PhoneAuthProvider.OnVerificationStateChangedCallbacks? {
-//        return object : OnVerificationStateChangedCallbacks() {
-//            fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-//                this@MultiFactorSignInActivity.mPhoneAuthCredential = phoneAuthCredential
-//                mBinding.finishMfaSignIn.performClick()
-//                Toast.makeText(
-//                    this@MultiFactorSignInActivity, "Verification complete!", Toast.LENGTH_SHORT
-//                )
-//                    .show()
-//            }
-//
-//            fun onCodeSent(
-//                verificationId: String,
-//                token: PhoneAuthProvider.ForceResendingToken
-//            ) {
-//                this@MultiFactorSignInActivity.mVerificationId = verificationId
-//                mBinding.finishMfaSignIn.setClickable(true)
-//            }
-//
-//            fun onVerificationFailed(e: FirebaseException) {
-//                Toast.makeText(
-//                    this@MultiFactorSignInActivity, "Error: " + e.message, Toast.LENGTH_SHORT
-//                )
-//                    .show()
-//            }
-//        }
-//    }
 }

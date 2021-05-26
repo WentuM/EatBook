@@ -14,4 +14,7 @@ interface UserDao {
 
     @Query("SELECT * FROM user WHERE id = :idUser")
     suspend fun getUserById(idUser: String): UserEntity
+
+    @Query("UPDATE user SET username = :name WHERE id =:id")
+    suspend fun updateUser(name: String, id: String)
 }

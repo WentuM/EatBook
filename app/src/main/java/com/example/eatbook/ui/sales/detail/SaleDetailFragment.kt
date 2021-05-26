@@ -36,12 +36,12 @@ class SaleDetailFragment : Fragment() {
             .create(this)
             .inject(this)
         val root = inflater.inflate(R.layout.fragment_sale_detail, container, false)
-        saleDetailViewModel.getSaleById(idSale)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        saleDetailViewModel.getSaleById(idSale, view)
         initFields()
         initClicks()
     }

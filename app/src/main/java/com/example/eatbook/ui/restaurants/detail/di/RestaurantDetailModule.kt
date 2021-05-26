@@ -18,10 +18,9 @@ class RestaurantDetailModule {
     @Provides
     @IntoMap
     @ViewModelKey(RestaurantDetailViewModel::class)
-    fun provideViewModel(interactor: RestaurantInteractor, userInteractor: UserInteractor): ViewModel {
+    fun provideViewModel(interactor: RestaurantInteractor): ViewModel {
         return RestaurantDetailViewModel(
-            interactor,
-            userInteractor
+            interactor
         )
     }
 

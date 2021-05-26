@@ -34,12 +34,12 @@ class TableFragment : Fragment(), TableAdapter.TableItemHandler {
         EatBookApp.appComponent.tableListComponentFactory()
             .create(this).inject(this)
         val root = inflater.inflate(R.layout.fragment_list_table, container, false)
-        tableViewModel.getAllSales(idRestaurant)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        tableViewModel.getAllTables(idRestaurant, view)
 
         table_list.adapter = tableAdapter
 
@@ -51,6 +51,9 @@ class TableFragment : Fragment(), TableAdapter.TableItemHandler {
     override fun onClick(idTable: String) {
         var bundle = Bundle()
         bundle.putString("idTable", idTable)
-        findNavController().navigate(R.id.action_navigation_rest_tables_to_navigation_rest_book, bundle)
+        findNavController().navigate(
+            R.id.action_navigation_rest_tables_to_navigation_rest_book,
+            bundle
+        )
     }
 }
