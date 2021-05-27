@@ -108,6 +108,9 @@ class ProfileFragment : Fragment() {
                     ).show()
                 })
             }
+            imgv_profile_edit.visibility = View.VISIBLE
+            imgv_profile_active.visibility = View.INVISIBLE
+            imgv_profile_cancel.visibility = View.INVISIBLE
             enableProfileInfo()
         }
     }

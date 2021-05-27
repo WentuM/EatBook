@@ -60,9 +60,12 @@ class SaleDetailFragment : Fragment() {
 
     private fun initClicks() {
         btn_rest_redirect.setOnClickListener {
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString("idRestaurant", idRestaurant)
-            findNavController().navigate(R.id.action_navigation_sale_detail_to_navigation_rest_detail)
+            findNavController().navigate(
+                R.id.action_navigation_sale_detail_to_navigation_rest_detail,
+                bundle
+            )
         }
     }
 
