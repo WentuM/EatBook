@@ -6,7 +6,7 @@ import com.example.data.repository.UserRepositoryImpl
 import dagger.Component
 import javax.inject.Singleton
 
-@Singleton
-@Component(modules = [FireBaseModule::class, RepositoryModule::class])
-interface FBComponent {
-}
+//@Singleton
+//@Component(modules = [FireBaseModule::class, RepositoryModule::class])
+//interface FBComponent {
+//}

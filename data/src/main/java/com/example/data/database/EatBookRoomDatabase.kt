@@ -16,7 +16,7 @@ import com.example.data.database.entity.*
         ReviewEntity::class,
         BookTableEntity::class,
         FavouriteRestEntity::class
-    ), version = 14, exportSchema = false
+    ), version = 15, exportSchema = false
 )
 
 abstract class EatBookRoomDatabase : RoomDatabase() {

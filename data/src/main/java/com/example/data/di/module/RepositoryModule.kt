@@ -18,10 +18,11 @@ class RepositoryModule {
     fun provideUserRepository(
         userDao: UserDao,
         firebaseAuth: FirebaseAuth,
+        favouriteRestDao: FavouriteRestDao,
         firestore: FirebaseFirestore,
         userConverter: UserConverter
     ): UserRepository =
-        UserRepositoryImpl(userDao, firebaseAuth, firestore, userConverter)
+        UserRepositoryImpl(userDao, favouriteRestDao, firebaseAuth, firestore, userConverter)
 
     @Provides
     fun provideRestaurantRepository(
