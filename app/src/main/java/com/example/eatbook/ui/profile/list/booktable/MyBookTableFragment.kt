@@ -74,6 +74,7 @@ class MyBookTableFragment : Fragment(), MyBookTableAdapter.MyBookTableItemHandle
                     myBookTableViewModel.deleteMyTable().observe(viewLifecycleOwner, Observer {
                         Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
                     })
+                    findNavController().navigate(R.id.action_navigation_my_table_book_to_navigation_profile)
                     p0?.dismiss()
                 }
 

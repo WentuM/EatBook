@@ -94,12 +94,16 @@ class SignInFragment : Fragment() {
     }
 
     private fun sendVerificationcode(number: String) {
-        val options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
-            .setPhoneNumber(number) // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(activity) // Activity (for callback binding)
-            .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
+        val options = activity?.let {
+            PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
+                .setPhoneNumber(number) // Phone number to verify
+                .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                .setActivity(it) // Activity (for callback binding)
+                .setCallbacks(callbacks) // OnVerificationStateChangedCallbacks
+                .build()
+        }
+        if (options != null) {
+            PhoneAuthProvider.verifyPhoneNumber(options)
+        }
     }
 }

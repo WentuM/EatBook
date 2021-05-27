@@ -126,7 +126,11 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
 
         btn_book_table.setOnClickListener {
-            createBookTable(view)
+            if (!bookTableViewModel.getCurrentUser()) {
+                findNavController().navigate(R.id.action_navigation_rest_detail_to_navigation_sign_in)
+            } else {
+                createBookTable(view)
+            }
         }
     }
 

@@ -65,18 +65,20 @@ class RestaurantDetailFragment : Fragment() {
 
     private fun initClick() {
         btn_rest_book.setOnClickListener {
-            if (!restaurantDetailViewModel.getCurrentUser()) {
-                findNavController().navigate(R.id.action_navigation_rest_detail_to_navigation_sign_in)
-            } else {
-                var bundle = Bundle()
-                bundle.putString("idRestaurant", idRestaurant)
-                findNavController().navigate(R.id.action_navigation_rest_detail_to_navigation_rest_tables, bundle)
-            }
+            var bundle = Bundle()
+            bundle.putString("idRestaurant", idRestaurant)
+            findNavController().navigate(
+                R.id.action_navigation_rest_detail_to_navigation_rest_tables,
+                bundle
+            )
         }
         btn_rest_reviews.setOnClickListener {
             var bundle = Bundle()
             bundle.putString("idRestaurant", idRestaurant)
-            findNavController().navigate(R.id.action_navigation_rest_detail_to_navigation_review, bundle)
+            findNavController().navigate(
+                R.id.action_navigation_rest_detail_to_navigation_review,
+                bundle
+            )
         }
     }
 

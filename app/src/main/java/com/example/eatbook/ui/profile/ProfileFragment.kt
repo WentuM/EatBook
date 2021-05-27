@@ -113,21 +113,13 @@ class ProfileFragment : Fragment() {
     }
 
     private fun enableProfileInfo() {
-        txv_profile_number.visibility = View.INVISIBLE
-//        txv_profile_email.visibility = View.INVISIBLE
-        txv_profile_city.visibility = View.INVISIBLE
-//        edtx_profile_email.visibility = View.VISIBLE
-        edtx_profile_number.visibility = View.VISIBLE
-        edtx_profile_city.visibility = View.VISIBLE
+        txv_profile_name.visibility = View.INVISIBLE
+        edtx_profile_name.visibility = View.VISIBLE
     }
 
     private fun disableProfileInfo() {
-        txv_profile_number.visibility = View.VISIBLE
-//        txv_profile_email.visibility = View.VISIBLE
-        txv_profile_city.visibility = View.VISIBLE
-//        edtx_profile_email.visibility = View.INVISIBLE
-        edtx_profile_number.visibility = View.INVISIBLE
-        edtx_profile_city.visibility = View.INVISIBLE
+        txv_profile_name.visibility = View.VISIBLE
+        edtx_profile_name.visibility = View.INVISIBLE
     }
 
     private fun edit(etView: TextView, etEdit: EditText) {

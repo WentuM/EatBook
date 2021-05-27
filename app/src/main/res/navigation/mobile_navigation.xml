@@ -130,5 +130,8 @@
         <action
             android:id="@+id/action_navigation_my_table_book_to_navigation_rest_detail"
             app:destination="@id/navigation_rest_detail" />
+        <action
+            android:id="@+id/action_navigation_my_table_book_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 </navigation>

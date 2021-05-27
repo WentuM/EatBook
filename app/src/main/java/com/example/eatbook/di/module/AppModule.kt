@@ -59,10 +59,11 @@ class AppModule() {
     @Provides
     fun provideBookTableInteractor(
         bookTableRepository: BookTableRepository,
+        userRepository: UserRepository,
         tableRepository: TableRepository,
         context: CoroutineContext
     ): BookTableInteractor {
-        return BookTableInteractor(bookTableRepository, tableRepository, context)
+        return BookTableInteractor(bookTableRepository, tableRepository, userRepository, context)
     }
 
     @Provides

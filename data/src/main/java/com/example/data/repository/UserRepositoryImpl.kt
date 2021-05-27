@@ -1,6 +1,6 @@
 package com.example.data.repository
 
-import android.content.Context
+import com.example.data.database.dao.FavouriteRestDao
 import com.example.data.database.dao.UserDao
 import com.example.data.database.entity.UserEntity
 import com.example.data.firebase.response.UserResponse
@@ -17,6 +17,7 @@ import kotlinx.coroutines.tasks.await
 
 class UserRepositoryImpl(
     private val userDao: UserDao,
+    private val favouriteRestDao: FavouriteRestDao,
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
     private val userConverterImpl: UserConverter
@@ -122,6 +123,7 @@ class UserRepositoryImpl(
     }
 
     override suspend fun signOut(): String {
+        favouriteRestDao.deleteAll()
         val result = "Выход выполнен успешно"
         firebaseAuth.signOut()
         return result

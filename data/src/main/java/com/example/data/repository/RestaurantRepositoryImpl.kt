@@ -1,5 +1,6 @@
 package com.example.data.repository
 
+import android.util.Log
 import com.example.data.database.dao.FavouriteRestDao
 import com.example.data.database.dao.RestaurantDao
 import com.example.data.database.entity.RestaurantEntity
@@ -23,12 +24,13 @@ class RestaurantRepositoryImpl(
     }
 
     override suspend fun getListRestaurant(): List<Restaurant> {
-        val listFavouriteRest: List<RestaurantEntity> = favouriteRestDao.getListFavourite()
+        val listFavouriteRest = favouriteRestDao.getListFavourite()
 
-        val restaurantListEntity = try {
+        val restaurantListEntity: List<RestaurantEntity> = try {
             val restaurantListResponse = firestore.collection(RESTAURANTS_TABLE).get().await()
                 .toObjects(RestaurantResponse::class.java)
             restaurantListResponse.map { restaurantConverterImpl.fbtoDb(it) }
+
         } catch (e: Exception) {
             restaurantDao.getAllRestaurant()
         }
@@ -40,7 +42,6 @@ class RestaurantRepositoryImpl(
                 restaurantEntity.likeRest = 0
             }
         }
-
         return restaurantListEntity.map { restaurantConverterImpl.dbtoModel(it) }
     }
 

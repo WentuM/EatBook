@@ -71,6 +71,8 @@ class BookTableViewModel(
         }
     }
 
+    fun getCurrentUser(): Boolean = bookTableInteractor.loggedUser()
+
     private fun mapBookTableItemModelToBookTable(bookTableItemModel: BookTableItemModel): BookTable {
         return with(bookTableItemModel) {
             BookTable(
