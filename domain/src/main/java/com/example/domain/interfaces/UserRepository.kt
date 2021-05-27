@@ -1,8 +1,6 @@
 package com.example.domain.interfaces
 
-import android.app.Activity
 import com.example.domain.model.User
-import com.google.firebase.auth.PhoneAuthCredential
 
 interface UserRepository {
 

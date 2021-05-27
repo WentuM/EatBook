@@ -67,23 +67,17 @@ class MyBookTableFragment : Fragment(), MyBookTableAdapter.MyBookTableItemHandle
 
         reviewDialog.setTitle("Вы действительно хотите удалить бронирование?")
         reviewDialog.setCancelable(false)
-            .setPositiveButton("Удалить", object : DialogInterface.OnClickListener {
-                @SuppressLint("SimpleDateFormat")
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-                    myBookTableViewModel.deleteMyTableById(view, idBookTable)
-                    myBookTableViewModel.deleteMyTable().observe(viewLifecycleOwner, Observer {
-                        Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-                    })
-                    findNavController().navigate(R.id.action_navigation_my_table_book_to_navigation_profile)
-                    p0?.dismiss()
-                }
-
-            })
-            .setNegativeButton("Отмена", object : DialogInterface.OnClickListener {
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-                    p0?.cancel()
-                }
-            })
+            .setPositiveButton("Удалить") { dialogInterface, p1 ->
+                myBookTableViewModel.deleteMyTableById(view, idBookTable)
+                myBookTableViewModel.deleteMyTable().observe(viewLifecycleOwner, Observer {
+                    Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+                })
+                findNavController().navigate(R.id.action_navigation_my_table_book_to_navigation_profile)
+                dialogInterface?.dismiss()
+            }
+            .setNegativeButton(
+                "Отмена"
+            ) { dialogInterface, p1 -> dialogInterface?.cancel() }
         reviewDialog.create()
         reviewDialog.show()
     }

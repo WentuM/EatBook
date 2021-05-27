@@ -83,6 +83,7 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun showReviewDialog(view: View) {
         val reviewDialog = AlertDialog.Builder(activity)
         val reviewView = layoutInflater.inflate(R.layout.dialog_review_create, null)
@@ -90,36 +91,31 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
 
         reviewDialog.setTitle("Ваш отзыв")
         reviewDialog.setCancelable(false)
-            .setPositiveButton("Оставить отзыв", object : DialogInterface.OnClickListener {
-                @SuppressLint("SimpleDateFormat")
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-                    reviewViewModel.getUser()
+            .setPositiveButton(
+                "Оставить отзыв"
+            ) { dialogInterface, p1 ->
+                reviewViewModel.getUser()
 
-                    val sdf = SimpleDateFormat("dd/M/yyyy HH:mm")
-                    val currentDate: String = sdf.format(Date())
-                    val textReview: String = reviewView.review_text.text.toString()
-                    val rating: Double = reviewView.ratingbar_review_create.rating.toDouble()
-                    val id = UUID.randomUUID().toString()
+                val sdf = SimpleDateFormat("dd/M/yyyy HH:mm")
+                val currentDate: String = sdf.format(Date())
+                val textReview: String = reviewView.review_text.text.toString()
+                val rating: Double = reviewView.ratingbar_review_create.rating.toDouble()
+                val id = UUID.randomUUID().toString()
 
-                    reviewViewModel.user().observe(viewLifecycleOwner, Observer {
-                        val review: ReviewListModel =
-                            ReviewListModel(id, textReview, currentDate, rating, idRestaurant)
-                        reviewViewModel.createReview(review, view)
-                    })
+                reviewViewModel.user().observe(viewLifecycleOwner, Observer {
+                    val review: ReviewListModel =
+                        ReviewListModel(id, textReview, currentDate, rating, idRestaurant)
+                    reviewViewModel.createReview(review, view)
+                })
 
-                    reviewViewModel.review().observe(viewLifecycleOwner, Observer {
-                        Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-                    })
-                    p0?.dismiss()
-                }
-
-            })
-            .setNegativeButton("Отмена", object : DialogInterface.OnClickListener {
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-                    p0?.cancel()
-                }
-
-            })
+                reviewViewModel.review().observe(viewLifecycleOwner, Observer {
+                    Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+                })
+                dialogInterface?.dismiss()
+            }
+            .setNegativeButton(
+                "Отмена"
+            ) { dialogInterface, p1 -> dialogInterface?.cancel() }
         reviewDialog.create()
         reviewDialog.show()
     }

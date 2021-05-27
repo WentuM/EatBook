@@ -265,15 +265,13 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         reviewDialog.setView(reviewView)
         reviewDialog.setCancelable(false)
             .setPositiveButton(
-                "Перейти в 'Мои бронироваия'",
-                object : DialogInterface.OnClickListener {
-                    @SuppressLint("SimpleDateFormat")
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        findNavController().navigate(R.id.action_navigation_rest_book_to_navigation_my_table_book)
-                        p0?.dismiss()
-                    }
-
-                })
+                "Перейти в 'Мои бронироваия'"
+            ) { dialogInterface, p1 ->
+                findNavController().navigate(
+                    R.id.action_navigation_rest_book_to_navigation_my_table_book
+                )
+                dialogInterface?.dismiss()
+            }
         reviewDialog.create()
         reviewDialog.show()
     }
