@@ -1,10 +1,10 @@
 package com.example.data.repository
 
-import android.util.Log
 import com.example.data.database.dao.FavouriteRestDao
 import com.example.data.database.dao.RestaurantDao
 import com.example.data.database.entity.RestaurantEntity
 import com.example.data.firebase.response.RestaurantResponse
+import com.example.data.firebase.response.ReviewResponse
 import com.example.data.mappers.RestaurantConverter
 import com.example.domain.interfaces.RestaurantRepository
 import com.example.domain.model.Restaurant
@@ -21,6 +21,8 @@ class RestaurantRepositoryImpl(
 
     companion object {
         private const val RESTAURANTS_TABLE = "restaurants"
+        private const val REVIEW_TABLE = "reviews"
+        private const val REVIEW_TABLE_COLUMN_ID_REST = "idRest"
     }
 
     override suspend fun getListRestaurant(): List<Restaurant> {
@@ -48,11 +50,23 @@ class RestaurantRepositoryImpl(
     override suspend fun getRestaurantById(id: String): Restaurant {
         val restaurantResponse: RestaurantResponse?
         var restaurantEntity = RestaurantEntity()
+        val reviewResponseList: List<ReviewResponse>
 
         try {
+            reviewResponseList = firestore.collection(REVIEW_TABLE).whereEqualTo(
+                REVIEW_TABLE_COLUMN_ID_REST, id
+            ).get().await().toObjects(ReviewResponse::class.java)
+            var averageRating = 0.0
+            for (reviewResponse: ReviewResponse in reviewResponseList) {
+                averageRating += reviewResponse.rating
+            }
+            if (reviewResponseList.isNotEmpty()) {
+                averageRating /= reviewResponseList.size
+            }
             restaurantResponse = firestore.collection(RESTAURANTS_TABLE).document(id).get().await()
                 .toObject(RestaurantResponse::class.java)
             if (restaurantResponse != null) {
+                restaurantResponse.rating = averageRating
                 restaurantEntity = restaurantConverterImpl.fbtoDb(restaurantResponse)
             }
         } catch (e: Exception) {
