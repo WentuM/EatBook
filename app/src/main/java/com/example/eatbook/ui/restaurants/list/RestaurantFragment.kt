@@ -82,15 +82,17 @@ class RestaurantFragment : Fragment(), RestaurantAdapter.RestItemHandler {
         findNavController().navigate(R.id.action_navigation_home_to_navigation_rest_detail, bundle)
     }
 
-    override fun onFavourite(idRestaurant: String) {
-        restaurantViewModel.setLikeForRestaurant(idRestaurant)
+    override fun onFavourite(restaurantListModel: RestaurantListModel) {
+        val indexRestaurant = currentListRest.indexOf(restaurantListModel)
+        restaurantViewModel.setLikeForRestaurant(restaurantListModel.id)
         restaurantViewModel.likeRest().observe(viewLifecycleOwner, Observer {
             val resultLike = it
             if (resultLike == "Ресторан добавлен в избранное") {
-                btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
+                currentListRest[indexRestaurant].likeRest = 1
             } else if (resultLike == "Ресторан удалён из избранного") {
-                btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
+                currentListRest[indexRestaurant].likeRest = 0
             }
+            restaurantAdapter.notifyItemChanged(indexRestaurant)
             Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
         })
     }

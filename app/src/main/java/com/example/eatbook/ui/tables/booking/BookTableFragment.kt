@@ -127,7 +127,7 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
 
         btn_book_table.setOnClickListener {
             if (!bookTableViewModel.getCurrentUser()) {
-                findNavController().navigate(R.id.action_navigation_rest_detail_to_navigation_sign_in)
+                findNavController().navigate(R.id.action_navigation_rest_book_to_navigation_profile)
             } else {
                 createBookTable(view)
             }

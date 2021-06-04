@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
+import com.example.eatbook.ui.favourites.model.FavouritesListModel
+import com.example.eatbook.ui.restaurants.list.model.RestaurantListModel
 import kotlinx.android.synthetic.main.cardview_item_restaurant.*
 import kotlinx.android.synthetic.main.fragment_list_rest.*
 import javax.inject.Inject
@@ -20,9 +22,10 @@ class FavouritesFragment : Fragment(), FavouritesAdapter.FavouritesItemHandler {
     lateinit var favouritesViewModel: FavouritesViewModel
     private val favouritesAdapter =
         FavouritesAdapter(this)
+    private var currentListRest = arrayListOf<FavouritesListModel>()
 
     companion object {
-
+        private const val ID_RESTAURANT = "idRestaurant"
     }
 
     override fun onCreateView(
@@ -42,6 +45,7 @@ class FavouritesFragment : Fragment(), FavouritesAdapter.FavouritesItemHandler {
 
         favouritesViewModel.restaurants().observe(viewLifecycleOwner, Observer {
             favouritesAdapter.submitList(it)
+            currentListRest.addAll(it)
             if (it.isEmpty()) {
                 txv_rest_dont_favourite.visibility = View.VISIBLE
             }
@@ -52,22 +56,24 @@ class FavouritesFragment : Fragment(), FavouritesAdapter.FavouritesItemHandler {
 
     override fun onItemClick(idRestaurant: String) {
         val bundle = Bundle()
-        bundle.putString("idRestaurant", idRestaurant)
+        bundle.putString(ID_RESTAURANT, idRestaurant)
         findNavController().navigate(
             R.id.action_navigation_favourites_to_navigation_rest_detail,
             bundle
         )
     }
 
-    override fun onFavourite(idRestaurant: String, likeRest: Int) {
-        favouritesViewModel.setLikeForRestaurant(idRestaurant)
+    override fun onFavourite(restaurant: FavouritesListModel) {
+        val indexRestaurant = currentListRest.indexOf(restaurant)
+        favouritesViewModel.setLikeForRestaurant(restaurant.id)
         favouritesViewModel.likeRest().observe(viewLifecycleOwner, Observer {
             val resultLike = it
             if (resultLike == "Ресторан добавлен в избранное") {
-                btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
+                currentListRest[indexRestaurant].likeRest = 1
             } else if (resultLike == "Ресторан удалён из избранного") {
-                btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
+                currentListRest[indexRestaurant].likeRest = 0
             }
+            favouritesAdapter.notifyItemChanged(indexRestaurant)
             Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
         })
     }

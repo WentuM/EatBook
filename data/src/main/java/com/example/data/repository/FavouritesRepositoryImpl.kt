@@ -31,7 +31,8 @@ class FavouritesRepositoryImpl(
     override suspend fun getFavouriteRestaurant(): List<Restaurant> {
         var resultList: List<Restaurant>
         val restaurantListResponse: List<RestaurantResponse>
-        val userId = firebaseAuth.currentUser?.uid.toString()
+        val userId: String? = firebaseAuth.currentUser?.uid
+        if (userId != null) {
             try {
                 restaurantListResponse = firestore.collection(USER_TABLE).document(userId)
                     .collection(FAVOURITE_RESTAURANTS)
@@ -43,6 +44,12 @@ class FavouritesRepositoryImpl(
                 resultList = favouriteRestDao.getListFavourite()
                     .map { restaurantConverterImpl.dbtoModel(it) }
             }
+        } else {
+            resultList = favouriteRestDao.getListFavourite()
+                .map { restaurantConverterImpl.dbtoModel(it) }
+
+        }
+        Log.d("qweRRR", resultList.toString())
         return resultList
     }
 

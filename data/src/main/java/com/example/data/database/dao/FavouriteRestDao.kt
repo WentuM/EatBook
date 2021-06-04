@@ -16,7 +16,7 @@ interface FavouriteRestDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(favouriteRestEntity: FavouriteRestEntity)
 
-    @Query("SELECT * FROM restaurant LEFT JOIN favourite_rest ON restaurant.id = favourite_rest.id_rest WHERE favourite_rest.id_rest IS NULL ")
+    @Query("SELECT * FROM restaurant LEFT JOIN favourite_rest ON restaurant.id = favourite_rest.id_rest WHERE favourite_rest.id_rest IS NOT NULL ")
     suspend fun getListFavourite(): List<RestaurantEntity>
 
     @Query("SELECT * FROM favourite_rest WHERE id_rest = :idRest")

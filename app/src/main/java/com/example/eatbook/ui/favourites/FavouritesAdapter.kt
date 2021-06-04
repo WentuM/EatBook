@@ -14,7 +14,7 @@ class FavouritesAdapter(
 
     interface FavouritesItemHandler {
         fun onItemClick(idRestaurant: String)
-        fun onFavourite(idRestaurant: String, likeRest: Int)
+        fun onFavourite(restaurant: FavouritesListModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouritesHolder =

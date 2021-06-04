@@ -27,7 +27,7 @@ class FavouritesHolder(containerView: View) : RecyclerView.ViewHolder(containerV
                 btn_rest_favourite.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
             }
             btn_rest_favourite.setOnClickListener {
-                itemHandler.onFavourite(restaurant.id, restaurant.likeRest)
+                itemHandler.onFavourite(restaurant)
             }
         }
 

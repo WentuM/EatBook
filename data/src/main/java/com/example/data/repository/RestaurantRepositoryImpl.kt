@@ -1,5 +1,6 @@
 package com.example.data.repository
 
+import android.util.Log
 import com.example.data.database.dao.FavouriteRestDao
 import com.example.data.database.dao.RestaurantDao
 import com.example.data.database.entity.RestaurantEntity
@@ -27,6 +28,7 @@ class RestaurantRepositoryImpl(
 
     override suspend fun getListRestaurant(): List<Restaurant> {
         val listFavouriteRest = favouriteRestDao.getListFavourite()
+        Log.d("qweRRRR", listFavouriteRest.toString())
 
         val restaurantListEntity: List<RestaurantEntity> = try {
             val restaurantListResponse = firestore.collection(RESTAURANTS_TABLE).get().await()
@@ -40,7 +42,7 @@ class RestaurantRepositoryImpl(
         restaurantDao.insertList(restaurantListEntity)
 
         for (restaurantEntity in restaurantListEntity) {
-            if ((listFavouriteRest.contains(restaurantEntity))) {
+            if (!(listFavouriteRest.contains(restaurantEntity))) {
                 restaurantEntity.likeRest = 0
             }
         }

@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_navigation_rest_book_to_navigation_my_table_book"
             app:destination="@id/navigation_my_table_book" />
+        <action
+            android:id="@+id/action_navigation_rest_book_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 
     <fragment
