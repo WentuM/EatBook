@@ -17,7 +17,7 @@ class MyBookTableHolder(containerView: View) : RecyclerView.ViewHolder(container
         with(itemView) {
             txv_my_table_title.text = myBookTableItemModel.nameTable
             txv_my_rest_title.text = myBookTableItemModel.nameRestaurant
-            txv_my_count_people.text = "Количество человек: "
+            txv_my_count_people.text = "Количество человек: " + myBookTableItemModel.countPlaces
             txv_my_date_book.text = myBookTableItemModel.day
             txv_my_time_book.text =
                 myBookTableItemModel.time + " на ${myBookTableItemModel.countHour} часа"

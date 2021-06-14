@@ -2,8 +2,8 @@ package com.example.eatbook.ui.reviews.list
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.domain.model.Review
 import com.example.eatbook.EatBookApp
 import com.example.eatbook.R
 import com.example.eatbook.ui.reviews.list.model.ReviewListModel
@@ -25,7 +24,7 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
 
     @Inject
     lateinit var reviewViewModel: ReviewViewModel
-    private lateinit var application: EatBookApp
+    private var currentListReviews = arrayListOf<ReviewListModel>()
     private val reviewAdapter = ReviewAdapter(this)
     private var idRestaurant: String = ""
 
@@ -43,8 +42,7 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
     ): View? {
         EatBookApp.appComponent.reviewListComponentFactory()
             .create(this).inject(this)
-        val root = inflater.inflate(R.layout.fragment_list_review, container, false)
-        return root
+        return inflater.inflate(R.layout.fragment_list_review, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,7 +51,8 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
         review_list.adapter = reviewAdapter
 
         reviewViewModel.reviews().observe(viewLifecycleOwner, Observer {
-            reviewAdapter.submitList(it)
+            currentListReviews.addAll(it)
+            reviewAdapter.submitList(currentListReviews)
             txv_reviews_count.text = it.size.toString()
         })
 
@@ -93,7 +92,7 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
         reviewDialog.setCancelable(false)
             .setPositiveButton(
                 "Оставить отзыв"
-            ) { dialogInterface, p1 ->
+            ) { dialogInterface, _ ->
                 reviewViewModel.getUser()
 
                 val sdf = SimpleDateFormat("dd/M/yyyy HH:mm")
@@ -101,21 +100,47 @@ class ReviewFragment : Fragment(), ReviewAdapter.ReviewItemHandler {
                 val textReview: String = reviewView.review_text.text.toString()
                 val rating: Double = reviewView.ratingbar_review_create.rating.toDouble()
                 val id = UUID.randomUUID().toString()
+                var userNameIsExist = true
 
                 reviewViewModel.user().observe(viewLifecycleOwner, Observer {
-                    val review: ReviewListModel =
-                        ReviewListModel(id, textReview, currentDate, rating, idRestaurant)
-                    reviewViewModel.createReview(review, view)
+                    if (it.username.isEmpty()) {
+                        userNameIsExist = false
+                        Toast.makeText(
+                            activity,
+                            "Заполните имя пользователя, прежде чем отправлять отзыв",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        val review: ReviewListModel =
+                            ReviewListModel(
+                                id,
+                                textReview,
+                                currentDate,
+                                rating,
+                                idRestaurant,
+                                it.username,
+                                it.image
+                            )
+                        if (!currentListReviews.contains(review)) {
+                            currentListReviews.add(review)
+                            txv_reviews_count.text = currentListReviews.size.toString()
+                            reviewAdapter.notifyDataSetChanged()
+                            reviewViewModel.createReview(review, view)
+                        }
+                    }
                 })
 
-                reviewViewModel.review().observe(viewLifecycleOwner, Observer {
-                    Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
-                })
+                if (userNameIsExist) {
+                    reviewViewModel.review().observe(viewLifecycleOwner, Observer {
+                        Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+                    })
+                }
+
                 dialogInterface?.dismiss()
             }
             .setNegativeButton(
                 "Отмена"
-            ) { dialogInterface, p1 -> dialogInterface?.cancel() }
+            ) { dialogInterface, _ -> dialogInterface?.cancel() }
         reviewDialog.create()
         reviewDialog.show()
     }

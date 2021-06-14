@@ -14,7 +14,8 @@ class BookTableConverterImpl : BookTableConverter {
                 idTable,
                 day,
                 time,
-                countHour
+                countHour,
+                countPlaces
             )
         }
 
@@ -29,7 +30,8 @@ class BookTableConverterImpl : BookTableConverter {
                 imageTable,
                 nameTable,
                 idRestaurant,
-                nameRestaurant
+                nameRestaurant,
+                countPlaces
             )
         }
 
@@ -44,7 +46,8 @@ class BookTableConverterImpl : BookTableConverter {
                 imageTable,
                 nameTable,
                 idRestaurant,
-                nameRestaurant
+                nameRestaurant,
+                countPlaces
             )
         }
 }

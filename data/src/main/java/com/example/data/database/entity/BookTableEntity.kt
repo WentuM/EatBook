@@ -19,5 +19,7 @@ data class BookTableEntity(
     @ColumnInfo(name = "time")
     val time: String = "",
     @ColumnInfo(name = "count_hour")
-    val countHour: Int = 0
+    val countHour: Int = 0,
+    @ColumnInfo(name = "count_places")
+    val countPlaces: Int = 0
 )

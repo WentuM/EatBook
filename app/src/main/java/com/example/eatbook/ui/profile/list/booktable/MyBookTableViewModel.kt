@@ -54,7 +54,7 @@ class MyBookTableViewModel(
         var resultMyBookTableItemList: ArrayList<MyBookTableItemModel> = ArrayList()
         for (bookTable: BookTable in listBookTable) {
             with(bookTable) {
-                var myBookTableItemModel = MyBookTableItemModel(
+                val myBookTableItemModel = MyBookTableItemModel(
                     id,
                     idTable,
                     day,
@@ -63,7 +63,8 @@ class MyBookTableViewModel(
                     imageTable,
                     nameTable,
                     idRestaurant,
-                    nameRestaurant
+                    nameRestaurant,
+                    countPlaces
                 )
                 resultMyBookTableItemList.add(myBookTableItemModel)
             }

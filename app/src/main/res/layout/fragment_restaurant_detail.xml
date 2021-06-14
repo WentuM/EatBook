@@ -84,6 +84,7 @@
                 android:id="@+id/txv_rest_raiting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLength="4"
                 android:layout_marginStart="2dp"
                 app:layout_constraintBottom_toBottomOf="@+id/ratingbar_rest"
                 app:layout_constraintStart_toEndOf="@+id/ratingbar_rest"

@@ -17,5 +17,7 @@ data class FullBookTable(
     @ColumnInfo(name = "id_rest")
     val idRestaurant: String,
     @ColumnInfo(name = "name_rest")
-    val nameRestaurant: String
+    val nameRestaurant: String,
+    @ColumnInfo(name = "count_places")
+    val countPlaces: Int
 )

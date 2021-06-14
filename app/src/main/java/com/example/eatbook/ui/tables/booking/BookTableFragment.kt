@@ -149,7 +149,8 @@ class BookTableFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                     tableItemModel.image,
                     tableItemModel.title,
                     tableItemModel.idRestaurant,
-                    tableItemModel.nameRestaurant
+                    tableItemModel.nameRestaurant,
+                    tableItemModel.countPlaces
                 )
             bookTableViewModel.createNewBookTable(bookTableItemModel, view)
             bookTableViewModel.createBookTable().observe(viewLifecycleOwner, Observer {

@@ -20,7 +20,8 @@ interface BookTableDao {
 
     @Query(
         "SELECT book_table.id, book_table.id_table, book_table.day, book_table.time," +
-                "book_table.count_hour, `table`.title, `table`.image, `table`.id_rest, `table`.name_rest " +
+                "book_table.count_hour, `table`.title, `table`.image, `table`.id_rest, `table`.name_rest," +
+                " `table`.count_places " +
                 "FROM book_table, `table` " +
                 "WHERE (book_table.day = :day AND book_table.id_table = :idTable)"
     )
@@ -28,7 +29,8 @@ interface BookTableDao {
 
     @Query(
         "SELECT book_table.id, book_table.id_table, book_table.day, book_table.time," +
-                "book_table.count_hour, `table`.title, `table`.image, `table`.id_rest, `table`.name_rest " +
+                "book_table.count_hour, `table`.title, `table`.image, `table`.id_rest, `table`.name_rest," +
+                " `table`.count_places " +
                 "FROM book_table, `table` " +
                 "WHERE (book_table.id_user = :idUser AND `table`.id = book_table.id_table)"
     )

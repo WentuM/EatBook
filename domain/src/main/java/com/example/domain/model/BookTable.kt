@@ -9,5 +9,6 @@ data class BookTable(
     val imageTable: String,
     val nameTable: String,
     val idRestaurant: String,
-    val nameRestaurant: String
+    val nameRestaurant: String,
+    val countPlaces: Int
 )

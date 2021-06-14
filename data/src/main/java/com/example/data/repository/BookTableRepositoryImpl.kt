@@ -32,6 +32,7 @@ class BookTableRepositoryImpl(
         private const val BOOK_TABLE_COLUMN_NAME_RESTAURANT = "nameRestaurant"
         private const val BOOK_TABLE_COLUMN_NAME_TABLE = "nameTable"
         private const val BOOK_TABLE_COLUMN_IMAGE_TABLE = "imageTable"
+        private const val BOOK_TABLE_COLUMN_COUNT_PLACES = "countPlaces"
     }
 
     override suspend fun getListByDay(day: String, idTable: String): List<BookTable> {
@@ -70,6 +71,7 @@ class BookTableRepositoryImpl(
                 bookTableMap[BOOK_TABLE_COLUMN_NAME_RESTAURANT] = nameRestaurant
                 bookTableMap[BOOK_TABLE_COLUMN_NAME_TABLE] = nameTable
                 bookTableMap[BOOK_TABLE_COLUMN_IMAGE_TABLE] = imageTable
+                bookTableMap[BOOK_TABLE_COLUMN_COUNT_PLACES] = countPlaces
             }
 
             firestore

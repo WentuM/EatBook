@@ -1,10 +1,6 @@
 package com.example.data.repository
 
-import android.content.Context
-import android.util.Log
 import com.example.data.database.dao.ReviewDao
-import com.example.data.database.dao.UserDao
-import com.example.data.database.entity.FullReview
 import com.example.data.database.entity.ReviewEntity
 import com.example.data.firebase.response.ReviewResponse
 import com.example.data.firebase.response.UserResponse
@@ -54,12 +50,12 @@ class ReviewRepositoryImpl(
     override suspend fun createReviewByUser(review: Review): String {
         return try {
             val userId = firebaseAuth.currentUser?.uid.toString()
-            val userResponse = firestore.collection(USER_TABLE).document(userId).get().await()
-                .toObject(UserResponse::class.java)
+//            val userResponse = firestore.collection(USER_TABLE).document(userId).get().await()
+//                .toObject(UserResponse::class.java)
             val reviewMap = mutableMapOf<String, Any>()
             var reviewEntity = ReviewEntity()
             with(review) {
-                if (userResponse != null) {
+//                if (userResponse != null) {
                     reviewEntity = ReviewEntity(id, text, userId, dateSend, rating, idRest)
                     reviewMap[REVIEW_TABLE_COLUMN_ID] = id
                     reviewMap[REVIEW_TABLE_COLUMN_TEXT] = text
@@ -67,9 +63,9 @@ class ReviewRepositoryImpl(
                     reviewMap[REVIEW_TABLE_COLUMN_DATE] = dateSend
                     reviewMap[REVIEW_TABLE_COLUMN_RATING] = rating
                     reviewMap[REVIEW_TABLE_COLUMN_ID_REST] = idRest
-                    reviewMap[REVIEW_TABLE_COLUMN_NAME_USER] = userResponse.username
-                    reviewMap[REVIEW_TABLE_COLUMN_IMAGE_USER] = userResponse.image
-                }
+                    reviewMap[REVIEW_TABLE_COLUMN_NAME_USER] = nameUser
+                    reviewMap[REVIEW_TABLE_COLUMN_IMAGE_USER] = imageUser
+//                }
             }
 
             firestore

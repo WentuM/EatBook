@@ -84,7 +84,8 @@ class BookTableViewModel(
                 imageTable,
                 nameTable,
                 idRestaurant,
-                nameRestaurant
+                nameRestaurant,
+                countPlaces
             )
         }
     }
